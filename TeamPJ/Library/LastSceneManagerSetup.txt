@@ -1,0 +1,17 @@
+sceneSetups:
+- path: Assets/01Scenes/BaseSceneManager.unity
+  isLoaded: 1
+  isActive: 1
+  isSubScene: 0
+- path: Assets/01Scenes/LobbyManager.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/01Scenes/InGameManager.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/01Scenes/Stage/Stage01.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
