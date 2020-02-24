@@ -43,7 +43,7 @@ public class FadeManager : MonoBehaviour
         else
             m_curStageIdx = 0;
 
-        theBase.SceneMoveToInGame(m_curStageIdx);
+        BaseSceneManager.BaseSceneInstance.SceneMoveToInGame(m_curStageIdx);
     }
     //---- 로비 ==> 인게임 ----//
 
@@ -59,7 +59,6 @@ public class FadeManager : MonoBehaviour
     public void SceneMoveToLobby()
     {
         theBase.SceneMoveToLobby(BaseSceneManager.eStageState.LOBBY);
-        Debug.Log("Move to Lobby");
     }
     //---- 인게임 ==> 인게임 or 인게임 ==> 로비 ----//
 }

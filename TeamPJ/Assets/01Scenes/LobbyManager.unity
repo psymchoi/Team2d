@@ -96,7 +96,6 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
-    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -177,10 +176,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 10
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 4.75
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -301,9 +300,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810529981}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 9
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -491,6 +489,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 252215368, guid: f2b8943def235024dafb6d8222beebbb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -62.600098
+      objectReference: {fileID: 0}
     - target: {fileID: 749395603, guid: f2b8943def235024dafb6d8222beebbb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -507,6 +509,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 510522763718950453}
+    - target: {fileID: 1548255901, guid: f2b8943def235024dafb6d8222beebbb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -112.3999
+      objectReference: {fileID: 0}
     - target: {fileID: 55854639220325906, guid: f2b8943def235024dafb6d8222beebbb,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -576,6 +582,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394184944616283058, guid: f2b8943def235024dafb6d8222beebbb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SceneFadeOut
       objectReference: {fileID: 0}
     - target: {fileID: 8394184945783811244, guid: f2b8943def235024dafb6d8222beebbb,
         type: 3}
@@ -687,6 +698,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1284661101}
+    - target: {fileID: 8394184945783811245, guid: f2b8943def235024dafb6d8222beebbb,
+        type: 3}
+      propertyPath: m_PlaneDistance
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8394184945783812944, guid: f2b8943def235024dafb6d8222beebbb,
         type: 3}
       propertyPath: m_Name
@@ -695,12 +711,17 @@ PrefabInstance:
     - target: {fileID: 8394184946261609404, guid: f2b8943def235024dafb6d8222beebbb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000030517578
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8394184946261609404, guid: f2b8943def235024dafb6d8222beebbb,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394184946261609405, guid: f2b8943def235024dafb6d8222beebbb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8394184946261609407, guid: f2b8943def235024dafb6d8222beebbb,
         type: 3}

@@ -13,8 +13,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -96,6 +98,8 @@ ScriptsOnlyBuild:
     - Class: 28
       Script: {instanceID: 0}
     - Class: 48
+      Script: {instanceID: 0}
+    - Class: 61
       Script: {instanceID: 0}
     - Class: 74
       Script: {instanceID: 0}
@@ -224,8 +228,6 @@ ScriptsOnlyBuild:
     - Class: 28
       Script: {instanceID: 0}
     - Class: 48
-      Script: {instanceID: 0}
-    - Class: 61
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
@@ -556,7 +558,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 520e26971276920ed6ec071623d8da9c
+      Hash: 5a09ea60b74749e7af3ded9066962f56
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: InGameManager
@@ -574,7 +576,7 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: e0b2338d76dc224fd5c69639068a4106
+      Hash: 5b7245dbc87ffd5e2aa9da017ca98831
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BaseSceneManager
@@ -794,4 +796,4 @@ ScriptsOnlyBuild:
   - Assets/01Scenes/LobbyManager.unity
   - Assets/01Scenes/InGameManager.unity
   - Assets/01Scenes/Stage/Stage01.unity
-  playerPath: F:/UnityScript/Team/TeamPJ_APK/200222_PJ1.apk
+  playerPath: F:/UnityScript/Team/TeamPJ_APK/200224_PJ4.apk

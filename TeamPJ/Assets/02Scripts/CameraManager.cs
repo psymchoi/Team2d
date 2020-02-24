@@ -39,7 +39,7 @@ public class CameraManager : MonoBehaviour
     //Vector2 direction = Vector2.zero;
    
     
-    private void Update()
+    void Update()
     {
         #region 다른 방법 (문제점 있음)
         //if (Input.GetMouseButtonDown(0))
@@ -71,33 +71,35 @@ public class CameraManager : MonoBehaviour
         #endregion
         if(InGameManager.InGameInstance.m_curGameState == InGameManager.eGameState.Play)
         {
-            if (Input.GetMouseButtonDown(0)) //우측 마우스 버튼 On
-            {
-                if (m_MouseDownOn == false)
-                {
-                    StartCoroutine(MouseRoutine());
-                }
-            }
-            else if (Input.GetMouseButtonUp(0)) //우측 마우스 버튼 Up
-            {
-                m_MouseDownOn = false;
-            }
+            #region 손가락으로 화면 터치시 이동
+            //if (Input.GetMouseButtonDown(0)) //우측 마우스 버튼 On
+            //{
+            //    if (m_MouseDownOn == false)
+            //    {
+            //        StartCoroutine(MouseRoutine());
+            //    }
+            //}
+            //else if (Input.GetMouseButtonUp(0)) //우측 마우스 버튼 Up
+            //{
+            //    m_MouseDownOn = false;
+            //}
 
-            if (!Input.GetMouseButton(0)) //우측 마우스를 띄고 있는 동안에...
-            {
-                m_MouseDownOn = false;
-                m_OrbitSpeed = m_OrbitSpeed * 0.93f; //m_CacSpeed; //94%씩 수렴해 가고 있다. 숫자가 적을수록 얘 0.91f; 둔감해 진다.  클수록 0.99f 민감해 진다.
+            //if (!Input.GetMouseButton(0)) //우측 마우스를 띄고 있는 동안에...
+            //{
+            //    m_MouseDownOn = false;
+            //    m_OrbitSpeed = m_OrbitSpeed * 0.93f; //m_CacSpeed; //94%씩 수렴해 가고 있다. 숫자가 적을수록 얘 0.91f; 둔감해 진다.  클수록 0.99f 민감해 진다.
 
-            }
+            //}
 
-            transform.Translate(m_OrbitSpeed.x * 50, 0, 0);
+            //transform.Translate(m_OrbitSpeed.x * 50, 0, 0);
 
             // 카메라가 Background를 넘지 않게 하기 위한..
-            clampedX = Mathf.Clamp(Camera.main.transform.position.x, minBound.x + halfWidth, maxBound.x - halfWidth);
-            clampedY = Mathf.Clamp(Camera.main.transform.position.y, minBound.y + halfHeight, maxBound.y - halfHeight);
+            //clampedX = Mathf.Clamp(Camera.main.transform.position.x, minBound.x + halfWidth, maxBound.x - halfWidth);
+            //clampedY = Mathf.Clamp(Camera.main.transform.position.y, minBound.y + halfHeight, maxBound.y - halfHeight);
 
-            Camera.main.transform.position = new Vector3(clampedX, clampedY, this.transform.position.z);
+            //Camera.main.transform.position = new Vector3(clampedX, clampedY, this.transform.position.z);
             // 카메라가 Background를 넘지 않게 하기 위한..
+            #endregion
         }
     }
 
@@ -280,8 +282,8 @@ public class CameraManager : MonoBehaviour
         minBound = bound.GetComponent<BoxCollider2D>().bounds.min;
         maxBound = bound.GetComponent<BoxCollider2D>().bounds.max;
 
-        target = GameObject.FindGameObjectWithTag("CameraStartPoint");
-        this.transform.position = target.transform.position;
+        //target = GameObject.FindGameObjectWithTag("CameraStartPoint");
+        //this.transform.position = target.transform.position;
 
         //this.transform.position.Set(target.transform.position.x, target.transform.position.y, this.transform.position.z);
     }

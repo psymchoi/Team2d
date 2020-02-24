@@ -87,13 +87,13 @@ public class SoundManager : MonoBehaviour
     // 음향 연출효과 관련 //
     public void FadeIn_Bgm()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         StartCoroutine(BgmOn());
     }
 
     public void FadeOut_Bgm()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         StartCoroutine(BgmOff());
     }
 

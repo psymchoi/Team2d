@@ -39,11 +39,12 @@ public class InGameManager : MonoBehaviour
 
     List<GameObject> m_myCard;
     // 캐릭터 카드 관련
-
-    public eGameState m_curGameState;
-
-    float m_timeCheck = 0;
     
+    public eGameState m_curGameState;
+    public Text t;
+
+    Animator ani;
+    float m_timeCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +59,8 @@ public class InGameManager : MonoBehaviour
         m_myCard = new List<GameObject>();
 
         m_curGameState = eGameState.Ready;
+
+        ani = GetComponent<Animator>();
     }
     
     // Update is called once per frame
@@ -66,15 +69,14 @@ public class InGameManager : MonoBehaviour
         switch(m_curGameState)
         {
             case eGameState.Ready:
-                m_timeCheck += Time.deltaTime;
-
-                if(m_timeCheck >= 2.0f)
-                    GameReady();
+                GameReady();
                 break;
             case eGameState.Mapsetting:
                 m_timeCheck += Time.deltaTime;
 
-                if (m_timeCheck >= 0.5f)
+                //if(BaseSceneManager.BaseSceneInstance.GameLoadState 
+                  //  == BaseSceneManager.eLoadingState.End)
+                if(m_timeCheck >= 2.0f)
                     GameMapSetting();
                 break;
             case eGameState.Start:
@@ -91,6 +93,8 @@ public class InGameManager : MonoBehaviour
 
                 break;
         }
+        //t.text = m_timeCheck.ToString();
+        //t.text = BaseSceneManager.BaseSceneInstance.m_curGameLoad.ToString();
     }
 
 
@@ -152,6 +156,16 @@ public class InGameManager : MonoBehaviour
         m_settingPanel.SetActive(false);
     }
     //---- 설정 관련 버튼 ----//
+
+    //---- SHOP 테스트 ----//
+    bool a = false;
+    public GameObject ShopUI;
+    public void TestShop()
+    {
+        a = !a;
+        ShopUI.GetComponent<Animator>().SetBool("ShopOnOff", a);       
+    }
+    //---- SHOP 테스트 ----//
     #endregion
 
 
