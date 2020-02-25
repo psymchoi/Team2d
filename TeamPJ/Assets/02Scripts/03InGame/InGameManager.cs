@@ -35,6 +35,8 @@ public class InGameManager : MonoBehaviour
 
     // 캐릭터 카드 관련
     public int m_cardCount = 6;
+    public int m_Money;
+    public Text m_MoneyTxt;
     public GameObject[] m_card;
 
     List<GameObject> m_myCard;
@@ -73,18 +75,15 @@ public class InGameManager : MonoBehaviour
                 break;
             case eGameState.Mapsetting:
                 m_timeCheck += Time.deltaTime;
-
-                //if(BaseSceneManager.BaseSceneInstance.GameLoadState 
-                  //  == BaseSceneManager.eLoadingState.End)
+                
                 if(m_timeCheck >= 2.0f)
                     GameMapSetting();
                 break;
             case eGameState.Start:
                 m_curGameState = eGameState.Play;
-                
                 break;
             case eGameState.Play:
-
+                GamePlay();
                 break;
             case eGameState.EndPlay:
 
@@ -120,6 +119,9 @@ public class InGameManager : MonoBehaviour
         theFade.SceneFadeIn2();
         // Fadein Screen
 
+        // 게임 UI / 변수 관련
+        m_Money = 20000;
+        // 게임 UI / 변수 관련
 
         // 내 카드 관련
         for (int n = 0; n < m_cardCount; n++)
@@ -137,6 +139,11 @@ public class InGameManager : MonoBehaviour
         // 내 카드 관련
 
         m_curGameState = eGameState.Start;
+    }
+
+    public void GamePlay()
+    {
+        m_MoneyTxt.text = m_Money.ToString();
     }
     #endregion
 

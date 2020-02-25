@@ -70,7 +70,7 @@ public class BaseSceneManager : MonoBehaviour
         Debug.Log(m_curStage.ToString());
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(m_curStage.ToString()));
 
-        Debug.Log(theSound.m_bgmVolume);
+        // Debug.Log(theSound.m_bgmVolume);
         theSound.PlayBgmSound(SoundManager.eBGM_Type.InGame, theSound.m_bgmVolume, true);
     }
     // 로비 ==> 인게임 씬으로

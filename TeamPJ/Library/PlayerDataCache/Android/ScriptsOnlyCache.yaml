@@ -3,6 +3,7 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - BaseSceneManager
     - CameraManager
+    - CardBuyList
     - FadeManager
     - InGameManager
     - LoadingWnd
@@ -13,10 +14,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -143,6 +142,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 11472}
     - Class: 114
       Script: {instanceID: 11504}
+    - Class: 114
+      Script: {instanceID: 20916}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -558,7 +559,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 5a09ea60b74749e7af3ded9066962f56
+      Hash: 28dbf5409f6db895fa89a6dda3c726ef
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: InGameManager
@@ -790,10 +791,16 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 2a66fa102b214e5e8b5b7959c15f7a9d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CardBuyList
   platform: 13
   scenePathNames:
   - Assets/01Scenes/BaseSceneManager.unity
   - Assets/01Scenes/LobbyManager.unity
   - Assets/01Scenes/InGameManager.unity
   - Assets/01Scenes/Stage/Stage01.unity
-  playerPath: F:/UnityScript/Team/TeamPJ_APK/200224_PJ4.apk
+  playerPath: F:/UnityScript/Team/TeamPJ_APK/200225_PJ1.apk
