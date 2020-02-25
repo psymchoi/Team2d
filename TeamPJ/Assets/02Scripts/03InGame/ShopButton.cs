@@ -34,13 +34,12 @@ public class ShopButton : MonoBehaviour
         for (int n = 0; n < transform.Find("MyCardSlot").childCount; n++)
         {
             // 이미지를 다시 열고, 버튼기능 다시 하게 한다.
-            transform.Find("MyCardSlot").
-            transform.GetChild(n).
-            transform.GetChild(0).gameObject.SetActive(true);
-
-            transform.Find("MyCardSlot").
-            transform.GetChild(n).
-            transform.GetChild(1).gameObject.SetActive(true);
+            for(int m = 0; m < 5; m ++)
+            {
+                transform.Find("MyCardSlot").
+                    transform.GetChild(n).
+                    transform.GetChild(m).gameObject.SetActive(true);
+            }
 
             transform.Find("MyCardSlot").
             transform.GetChild(n).

@@ -38,8 +38,11 @@ public class InGameManager : MonoBehaviour
     public int m_Money;
     public Text m_MoneyTxt;
     public GameObject[] m_card;
+    public GameObject[] m_cardPos;
 
-    List<GameObject> m_myCard;
+    public List<GameObject> m_myCard;
+
+    public bool[] m_isActiveMyCard;
     // 캐릭터 카드 관련
     
     public eGameState m_curGameState;
@@ -59,6 +62,8 @@ public class InGameManager : MonoBehaviour
         theCamera = FindObjectOfType<CameraManager>();
 
         m_myCard = new List<GameObject>();
+
+        m_isActiveMyCard = new bool[9 * m_cardCount];
 
         m_curGameState = eGameState.Ready;
 
@@ -92,8 +97,6 @@ public class InGameManager : MonoBehaviour
 
                 break;
         }
-        //t.text = m_timeCheck.ToString();
-        //t.text = BaseSceneManager.BaseSceneInstance.m_curGameLoad.ToString();
     }
 
 
@@ -126,15 +129,20 @@ public class InGameManager : MonoBehaviour
         // 내 카드 관련
         for (int n = 0; n < m_cardCount; n++)
         {
-            for (int m = 0; m < 3; m++)
+            for(int m = 0; m < 9; m++)
             {
                 GameObject go = Instantiate(m_card[n]);
                 go.transform.parent = this.transform;
-                go.transform.position = this.transform.position;
+                go.transform.position = m_cardPos[m].transform.position;
                 go.SetActive(false);
 
                 m_myCard.Add(go);
             }
+        }
+
+        for(int n = 0; n < 9 * m_cardCount; n++)
+        {
+            m_isActiveMyCard[n] = false;
         }
         // 내 카드 관련
 
@@ -146,6 +154,7 @@ public class InGameManager : MonoBehaviour
         m_MoneyTxt.text = m_Money.ToString();
     }
     #endregion
+    
 
 
     #region //---- 설정 관련 버튼 ----//
