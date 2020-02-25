@@ -37,17 +37,16 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop");
-        Debug.Log("m_slotNum :" + m_slotNum);
         if (eventData.pointerDrag != null)
         {
             for (int n = m_slotNum * 9 + (int)eNum ; n < (m_slotNum + 1) * 9; n++)
             {
-                Debug.Log("theDragImg.dragImgNum : " + m_slotNum);
-                Debug.Log("n : " + n);
                 if(theInGameManager.m_isActiveMyCard[n] == false)
                 {
+                    // 미리 배치해 놓은 캐릭터 SetActive(true)
                     theInGameManager.m_isActiveMyCard[n] = true;
                     theInGameManager.transform.GetChild(n).gameObject.SetActive(true);
+                    // 미리 배치해 놓은 캐릭터 SetActive(true)
 
                     // 이미지를 원래 인벤토리 자리로
                     eventData.pointerDrag.GetComponent<Image>().sprite = default;

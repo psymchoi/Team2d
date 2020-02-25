@@ -40,13 +40,12 @@ public class InGameManager : MonoBehaviour
     public GameObject[] m_card;
     public GameObject[] m_cardPos;
 
-    public List<GameObject> m_myCard;
+    [SerializeField] List<GameObject> m_myCard;
 
     public bool[] m_isActiveMyCard;
     // 캐릭터 카드 관련
     
     public eGameState m_curGameState;
-    public Text t;
 
     Animator ani;
     float m_timeCheck;
@@ -63,8 +62,7 @@ public class InGameManager : MonoBehaviour
 
         m_myCard = new List<GameObject>();
 
-        m_isActiveMyCard = new bool[9 * m_cardCount];
-
+        
         m_curGameState = eGameState.Ready;
 
         ani = GetComponent<Animator>();
@@ -124,6 +122,8 @@ public class InGameManager : MonoBehaviour
 
         // 게임 UI / 변수 관련
         m_Money = 20000;
+
+        m_isActiveMyCard = new bool[9 * m_cardCount];
         // 게임 UI / 변수 관련
 
         // 내 카드 관련

@@ -17,53 +17,57 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         Seven,
     }
 
-    [SerializeField] Canvas canvas;
-    public eDragDropNum edragDropNum;
+    [SerializeField] Canvas m_canvas;
+    public eDragDropNum m_edragDropNum;
 
-    RectTransform rectTransform;
-    CanvasGroup canvasGroup;
+    RectTransform m_rectTransform;
+    CanvasGroup m_canvasGroup;
     
-    public int dragImgNum;
-    public GameObject[] CharSlot;
+    public int m_dragImgNum;
+    public int m_invenNum;
+    public GameObject[] m_CharSlot;
 
     void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvasGroup = GetComponent<CanvasGroup>();       
+        m_rectTransform = GetComponent<RectTransform>();
+        m_canvasGroup = GetComponent<CanvasGroup>();       
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("OnBeginDrag");
-        canvasGroup.alpha = .6f;
-        canvasGroup.blocksRaycasts = false;
+        m_canvasGroup.alpha = .6f;
+        m_canvasGroup.blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         Debug.Log("OnDrag");
-       
         if (this.transform.GetComponent<Image>().sprite != null)
-            rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+            m_rectTransform.anchoredPosition += eventData.delta / m_canvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         Debug.Log("OnEndDrag");
-        canvasGroup.alpha = 1f;
-        canvasGroup.blocksRaycasts = true;
+        m_canvasGroup.alpha = 1f;
+        m_canvasGroup.blocksRaycasts = true;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("OnPointerDown");
 
-        dragImgNum = int.Parse(this.transform.GetComponent<Image>().sprite.name);
-        Debug.Log("dragImgNum : " + dragImgNum);
-        
+        // 클릭한 인벤토리 공간이 비어 있는 경우 리턴
+        if (m_invenNum == 0)
+            return;
+        // 클릭한 인벤토리 공간이 비어 있는 경우 리턴
+
+        m_dragImgNum = int.Parse(this.transform.GetComponent<Image>().sprite.name);
+     
         for(int n = 0; n < 9; n++)
         {
-            CharSlot[n].GetComponent<CharacterSlot>().m_slotNum = dragImgNum;
+            m_CharSlot[n].GetComponent<CharacterSlot>().m_slotNum = m_dragImgNum;
         }
     }
 

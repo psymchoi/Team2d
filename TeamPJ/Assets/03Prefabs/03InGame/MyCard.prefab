@@ -626,18 +626,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8f658cd84efaa4299fb8c450094031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_myCardImg:
+  m_CardImg:
   - {fileID: 21300000, guid: 468244f274f38f64b85773c7888444b6, type: 3}
   - {fileID: 21300000, guid: f7e7bed775fff8347b9e53c67e20875f, type: 3}
   - {fileID: 21300000, guid: ae2d3e3bacfacde4981510b116293dba, type: 3}
   - {fileID: 21300000, guid: dcb72940063c94f44abc2366768e713a, type: 3}
   - {fileID: 21300000, guid: 20eb058aea3c3a744bb5d47a1610550a, type: 3}
   - {fileID: 21300000, guid: 04f6c40e52535b941b42e11550f9cb8c, type: 3}
-  m_myCardTxt:
+  m_CardTxt:
   - "\uAC08\uC0C9\uB2CC\uC790"
   - "\uCD08\uB85D\uB2CC\uC790"
   - "\uD30C\uB791\uB2CC\uC790"
   - "\uD68C\uC0C9\uB2CC\uC790"
   - "\uBE68\uAC04\uB2CC\uC790"
   - "\uBBF8\uB0A8\uB2CC\uC790"
+  m_CardInfo:
+  - "\uAC08\uC0C9\uB2CC\uC790 \uC774\uB2E4."
+  - "\uCD08\uB85D\uB2CC\uC790 \uC774\uB2E4."
+  - "\uD30C\uB791\uB2CC\uC790 \uC774\uB2E4."
+  - "\uD68C\uC0C9\uB2CC\uC790 \uC774\uB2E4."
+  - "\uBE68\uAC04\uB2CC\uC790 \uC774\uB2E4."
+  - "\uBBF8\uB0A8\uB2CC\uC790 \uC774\uB2E4."
+  m_infoPanel: {fileID: 0}
+  m_infoTxt: {fileID: 0}
   m_WarningTxt: {fileID: 0}
+  m_CardNum: 0
