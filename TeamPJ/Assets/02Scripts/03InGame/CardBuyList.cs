@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class CardBuyList : MonoBehaviour
 {
     public Sprite[] m_myCardImg;
-    public bool[] m_isEmpty;
-    public int m_emptyNum;     // 현재 비워져 있는 첫 인벤토리 슬롯번호.
-    
+    public bool[] m_isEmpty;    
 
     // Start is called before the first frame update
     void Start()
@@ -27,12 +25,14 @@ public class CardBuyList : MonoBehaviour
         {
             if(m_isEmpty[n] == true)
             {
+                // 이미지 삽입
                 this.transform.GetChild(n).
                     transform.GetChild(0).
                     GetComponent<Image>().sprite = m_myCardImg[buyNum];
+                // 이미지 삽입
+                
 
                 m_isEmpty[n] = false;
-                m_emptyNum = n;
                 break;
             }
         }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ShopButton : MonoBehaviour
 {
+    SoundManager theSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,11 +15,13 @@ public class ShopButton : MonoBehaviour
                     GetComponent<Button>().onClick.AddListener
                     (delegate { RefreshCard(); });
         // 새로 고침 버튼
-        
+
 
         // 업그레이드 버튼
 
         // 업그레이드 버튼
+
+        theSound = FindObjectOfType<SoundManager>();
     }
     
     /// <summary>
@@ -25,6 +29,8 @@ public class ShopButton : MonoBehaviour
     /// </summary>
     public void RefreshCard()
     {
+        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
+
         for (int n = 0; n < transform.Find("MyCardSlot").childCount; n++)
         {
             // 이미지를 다시 열고, 버튼기능 다시 하게 한다.

@@ -63,7 +63,7 @@ public class BaseSceneManager : MonoBehaviour
 
         SceneManager.LoadSceneAsync("InGameManager", LoadSceneMode.Additive);
         SceneManager.LoadSceneAsync(m_curStage.ToString(), LoadSceneMode.Additive);
-        Invoke("LoadInGameScene", 2);
+        Invoke("LoadInGameScene", 3);
     }
     public void LoadInGameScene()
     {

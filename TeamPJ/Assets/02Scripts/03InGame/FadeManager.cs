@@ -29,6 +29,8 @@ public class FadeManager : MonoBehaviour
 
     public void SceneFadeOut()
     {
+        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
+
         m_animator.SetTrigger("FadeOut");
         
         // 사운드 서서히 줄어듬.
@@ -51,6 +53,8 @@ public class FadeManager : MonoBehaviour
     //---- 인게임 ==> 인게임 or 인게임 ==> 로비 ----//
     public void SceneFadeOut2()
     {
+        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
+
         m_animator.SetTrigger("FadeOut");
 
         // 사운드 서서히 줄어듬.

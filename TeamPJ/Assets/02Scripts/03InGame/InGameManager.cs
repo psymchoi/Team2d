@@ -154,6 +154,8 @@ public class InGameManager : MonoBehaviour
         theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
         m_settingPanel.SetActive(true);
+
+        Time.timeScale = 0.0f;          // 모든 기능 일시정지.
     }
 
     public void ClickBackToInGameBtn()
@@ -161,6 +163,8 @@ public class InGameManager : MonoBehaviour
         theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
         m_settingPanel.SetActive(false);
+
+        Time.timeScale = 1.0f;          // 원래 프레임 단위 속도로 실행.
     }
     //---- 설정 관련 버튼 ----//
 

@@ -26,20 +26,20 @@ public class LobbyManager : MonoBehaviour
     // 옵션 관련 버튼 //
     public void ClickOptionBtn()
     {// 로비 '옵션' 버튼
-        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
-
         theSound.m_bgmVolume = m_bgmVolume.value = theSound.m_bgmPlayer.volume;    
         m_effectVolume.value = theSound.m_effectVolume;
 
         m_associateLobbyBtn.SetActive(false);
         m_optionPanel.SetActive(true);
+
+        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
     }
     public void ClickOptionBackBtn()
     {// 뒤로가기 버튼
-        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
-
         m_associateLobbyBtn.SetActive(true);
         m_optionPanel.SetActive(false);
+
+        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
     }
 
     public void CurBgmVolume()
@@ -59,17 +59,17 @@ public class LobbyManager : MonoBehaviour
     // 업적 관련 버튼 //
     public void ClickAchievementBtn()
     {// 로비 '업적'버튼
-        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
-
         m_associateLobbyBtn.SetActive(false);
         m_achievementPanel.SetActive(true);
+
+        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
     }
     public void ClickAchievementBackBtn()
     {
-        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
-
         m_associateLobbyBtn.SetActive(true);
         m_achievementPanel.SetActive(false);
+
+        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
     }
     // 업적 관련 버튼 //
 

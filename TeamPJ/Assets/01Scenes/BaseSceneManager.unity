@@ -221,7 +221,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 638a567b3f9f6654a99e178ef653e0ac, type: 3}
+      objectReference: {fileID: 8300000, guid: 47e43775adeef6146aaf5e1b0f405df5, type: 3}
     - target: {fileID: 7927362785131827298, guid: c2cd38ba59d5d964887b2f126653b339,
         type: 3}
       propertyPath: m_Enabled
@@ -301,11 +301,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_bgmClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 638a567b3f9f6654a99e178ef653e0ac, type: 3}
+      objectReference: {fileID: 8300000, guid: 47e43775adeef6146aaf5e1b0f405df5, type: 3}
     - target: {fileID: 7927362785131827309, guid: c2cd38ba59d5d964887b2f126653b339,
         type: 3}
       propertyPath: m_bgmClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: dfc1cd7effebc9449aa4cdba89ef05af, type: 3}
+      objectReference: {fileID: 8300000, guid: 6dae9b994cf1de74da4931a3b8e985f4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2cd38ba59d5d964887b2f126653b339, type: 3}

@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MyCardInfo : MonoBehaviour
 {
     public Sprite[] m_myCardImg;
     public string[] m_myCardTxt;
+    public Text m_WarningTxt;
 
     InGameManager theInGame;
     CardBuyList theBuyList;
+    SoundManager theSound;
 
     // 이 카드의 정보  (0 ~ n번 닌자 중 랜덤하게 하나 추출넘버)
     int m_CardNum;          // 번호
@@ -53,6 +56,7 @@ public class MyCardInfo : MonoBehaviour
 
         theInGame = FindObjectOfType<InGameManager>();
         theBuyList = FindObjectOfType<CardBuyList>();
+        theSound = FindObjectOfType<SoundManager>();
     }
 
     void Method_Card(int cardNum)
@@ -62,6 +66,8 @@ public class MyCardInfo : MonoBehaviour
         {
             if (theInGame.m_Money - m_CardCost >= 0)
             {
+                theSound.PlayEffSound(SoundManager.eEff_Type.Button);
+
                 // 이미지를 가리고, 버튼기능을 못하게 한다.
                 this.transform.GetChild(0).gameObject.SetActive(false);
                 this.transform.GetChild(1).gameObject.SetActive(false);
@@ -73,14 +79,29 @@ public class MyCardInfo : MonoBehaviour
             }
             else
             {
-                Debug.Log("Not Enough Money");
+                string warningTxt = "Not Enough Money";
+                StartCoroutine(ShowWarningTxt(warningTxt, 2.0f));
             }
         }
         else
         {
-            Debug.Log("Inventory is Full");
+            string warningTxt = "Inventory is Full";
+            StartCoroutine(ShowWarningTxt(warningTxt, 2.0f));
         }
         // 해당 넘버 카드가 눌렸을 때 반응하게 될 함수
+    }
+    
+    /// <summary>
+    /// 경고 메세지 뜨는 코루틴 함수
+    /// </summary>
+    /// <param name="Txt">경고 메세지 글</param>
+    /// <param name="delayTime">지속시간</param>
+    /// <returns></returns>
+    IEnumerator ShowWarningTxt(string Txt, float delayTime)
+    {
+        m_WarningTxt.text = Txt;
+        yield return new WaitForSeconds(delayTime);
+        m_WarningTxt.text = "";
     }
 
     /// <summary>
@@ -92,5 +113,8 @@ public class MyCardInfo : MonoBehaviour
 
         this.transform.GetChild(0).GetComponent<Image>().sprite = m_myCardImg[m_CardNum];
         this.transform.GetChild(1).GetComponent<Text>().text = m_myCardTxt[m_CardNum];
+        this.transform.GetChild(2).GetComponent<Text>().text = m_CardCost.ToString();
     }
+
+    
 }
