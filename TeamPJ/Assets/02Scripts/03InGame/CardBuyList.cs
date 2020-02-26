@@ -8,15 +8,17 @@ public class CardBuyList : MonoBehaviour
     public Sprite[] m_myCardImg;
     public bool[] m_isEmpty;
 
-    public GameObject[] theDragDrop;
+    public int[] m_InvenNum;            // 슬롯이 채워져 있을 시 고유넘버 부여, 0 은 빈공간
 
     // Start is called before the first frame update
     void Start()
     {
-        m_isEmpty = new bool[this.transform.childCount];
-        for(int n = 0; n < this.transform.childCount; n++)
+        m_isEmpty = new bool[this.transform.childCount];            // 지금은 7칸
+        m_InvenNum = new int[this.transform.childCount];            // 7칸이니 고유번호도 7개
+        for (int n = 0; n < this.transform.childCount; n++)
         {
-            m_isEmpty[n] = true;          // 다 비어있는 상태로
+            m_isEmpty[n] = true;                // 다 비어있는 상태
+            m_InvenNum[n] = 0;                  // 고유번호 0 은 비어있는 상태
         }
     }
 
@@ -27,12 +29,10 @@ public class CardBuyList : MonoBehaviour
         {
             for (int n = 0; n < this.transform.childCount; n++)
             {
-                if (this.transform.GetChild(n).
-                        transform.GetChild(0).
-                        GetComponent<DragDropImg>().m_invenNum == 0)
+                if(m_InvenNum[n] == 0)
                 {
                     // 인벤 넘버가 0인 경우에는 빈 공간으로 간주한다.
-                    m_isEmpty[n] = true;
+                     m_isEmpty[n] = true;
                     // 인벤 넘버가 0인 경우에는 빈 공간으로 간주한다.
                 }
             }
@@ -43,7 +43,7 @@ public class CardBuyList : MonoBehaviour
     /// 상점에서 구입한 캐릭터 인벤토리로 옮기는 함수.
     /// </summary>
     /// <param name="buyNum">구매한 캐릭터 번호</param>
-    public void IncludeContents(int buyNum)
+    public void IncludeContents(Sprite slotImg, int buyNum)
     {
         int n = 0;
         for (n = 0; n < this.transform.childCount; n++)
@@ -53,14 +53,14 @@ public class CardBuyList : MonoBehaviour
                 // 이미지 삽입
                 this.transform.GetChild(n).
                     transform.GetChild(0).
-                    GetComponent<Image>().sprite = m_myCardImg[buyNum];
+                    GetComponent<Image>().sprite = slotImg;
                 // 이미지 삽입
 
                 // 넘버 부여
-                theDragDrop[n].GetComponent<DragDropImg>().m_invenNum = buyNum;
+                m_InvenNum[n] = n + 1;      // 1 ~ 8
                 // 넘버 부여
-
-                m_isEmpty[n] = false;
+                
+                m_isEmpty[n] = false;       // 해당 슬롯은 빈상태가 아닌걸로
 
                 break;
             }
@@ -103,8 +103,6 @@ public class CardBuyList : MonoBehaviour
                     tmp1.GetComponent<Image>().sprite = m_myCardImg[int.Parse(tmp2.GetComponent<Image>().sprite.name)];
                     tmp2.GetComponent<Image>().sprite = default;
                     
-                    tmp1.GetComponent<DragDropImg>().m_invenNum = tmp2.GetComponent<DragDropImg>().m_invenNum;
-                    tmp2.GetComponent<DragDropImg>().m_invenNum = 0;
 
                     nn++;
                     m++;
@@ -154,10 +152,7 @@ public class CardBuyList : MonoBehaviour
                     int tmpSpriteNum = int.Parse(tmp1.GetComponent<Image>().sprite.name);
                     tmp1.GetComponent<Image>().sprite = m_myCardImg[int.Parse(tmp2.GetComponent<Image>().sprite.name)];
                     tmp2.GetComponent<Image>().sprite = m_myCardImg[tmpSpriteNum];
-
-                    int tmpInvenNum = tmp1.GetComponent<DragDropImg>().m_invenNum;
-                    tmp1.GetComponent<DragDropImg>().m_invenNum = tmp2.GetComponent<DragDropImg>().m_invenNum;
-                    tmp2.GetComponent<DragDropImg>().m_invenNum = tmpInvenNum;
+                    
                 }
                 m++;
             }

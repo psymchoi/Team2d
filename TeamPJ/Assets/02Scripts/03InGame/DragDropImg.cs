@@ -23,14 +23,16 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     RectTransform m_rectTransform;
     CanvasGroup m_canvasGroup;
     
-    public int m_dragImgNum;
-    public int m_invenNum;
     public GameObject[] m_CharSlot;
+
+    CardBuyList theCardList;
 
     void Awake()
     {
         m_rectTransform = GetComponent<RectTransform>();
-        m_canvasGroup = GetComponent<CanvasGroup>();       
+        m_canvasGroup = GetComponent<CanvasGroup>();
+
+        theCardList = FindObjectOfType<CardBuyList>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -57,18 +59,20 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("OnPointerDown");
-
-        // 클릭한 인벤토리 공간이 비어 있는 경우 리턴
-        if (m_invenNum == 0)
-            return;
-        // 클릭한 인벤토리 공간이 비어 있는 경우 리턴
-
-        m_dragImgNum = int.Parse(this.transform.GetComponent<Image>().sprite.name);
-     
+        
+        
         for(int n = 0; n < 9; n++)
         {
-            m_CharSlot[n].GetComponent<CharacterSlot>().m_slotNum = m_dragImgNum;
+            m_CharSlot[n].GetComponent<CharacterSlot>().m_slotNum 
+                = int.Parse(this.transform.GetComponent<Image>().sprite.name);
+            
+
+            m_CharSlot[n].GetComponent<CharacterSlot>().m_invenNum
+                = (int)m_edragDropNum;
+
+            Debug.Log("CharacterSlot m_invenNum : " + m_CharSlot[n].GetComponent<CharacterSlot>().m_invenNum);
         }
+        
     }
 
     public void OnDrop(PointerEventData eventData)

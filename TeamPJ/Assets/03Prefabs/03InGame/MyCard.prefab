@@ -647,6 +647,16 @@ MonoBehaviour:
   - "\uD68C\uC0C9\uB2CC\uC790 \uC774\uB2E4."
   - "\uBE68\uAC04\uB2CC\uC790 \uC774\uB2E4."
   - "\uBBF8\uB0A8\uB2CC\uC790 \uC774\uB2E4."
+  m_charterSlot:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_infoPanel: {fileID: 0}
   m_infoTxt: {fileID: 0}
   m_WarningTxt: {fileID: 0}

@@ -21,19 +21,18 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
 
     public eSlot eNum;
     public int m_slotNum;
+    public int m_invenNum;
+
 
     InGameManager theInGameManager;
-    DragDropImg theDragImg;
-    CardBuyList theCardBuyList;
+    CardBuyList theCardList;
 
     void Start()
     {
         theInGameManager = FindObjectOfType<InGameManager>();
-        theDragImg = FindObjectOfType<DragDropImg>();
-        theCardBuyList = FindObjectOfType<CardBuyList>();
+        theCardList = FindObjectOfType<CardBuyList>();
     }
     
-
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop");
@@ -52,6 +51,9 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                     eventData.pointerDrag.GetComponent<Image>().sprite = default;
                     eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition
                              = new Vector2(0, 0);
+
+                    theCardList.m_InvenNum[m_invenNum] = 0;
+                    m_slotNum = 0;
                     // 이미지를 원래 인벤토리 자리로
                     break;
                 }
