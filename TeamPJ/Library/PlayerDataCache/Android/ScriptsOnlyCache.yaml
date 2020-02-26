@@ -17,10 +17,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -64,17 +62,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9884}
     - Class: 114
-      Script: {instanceID: 10566}
+      Script: {instanceID: 10570}
     - Class: 114
-      Script: {instanceID: 10660}
+      Script: {instanceID: 10664}
     - Class: 114
-      Script: {instanceID: 10818}
+      Script: {instanceID: 10824}
     - Class: 114
-      Script: {instanceID: 10978}
+      Script: {instanceID: 10984}
     - Class: 114
-      Script: {instanceID: 11116}
+      Script: {instanceID: 11124}
     - Class: 114
-      Script: {instanceID: 11504}
+      Script: {instanceID: 11512}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -125,37 +123,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9884}
     - Class: 114
-      Script: {instanceID: 10270}
+      Script: {instanceID: 10058}
     - Class: 114
-      Script: {instanceID: 10514}
+      Script: {instanceID: 10230}
     - Class: 114
-      Script: {instanceID: 10542}
+      Script: {instanceID: 10274}
     - Class: 114
-      Script: {instanceID: 10640}
+      Script: {instanceID: 10518}
     - Class: 114
-      Script: {instanceID: 10660}
+      Script: {instanceID: 10546}
     - Class: 114
-      Script: {instanceID: 10684}
+      Script: {instanceID: 10644}
+    - Class: 114
+      Script: {instanceID: 10664}
     - Class: 114
       Script: {instanceID: 10686}
     - Class: 114
-      Script: {instanceID: 10864}
+      Script: {instanceID: 10690}
     - Class: 114
-      Script: {instanceID: 11116}
+      Script: {instanceID: 10692}
     - Class: 114
-      Script: {instanceID: 11142}
+      Script: {instanceID: 10870}
     - Class: 114
-      Script: {instanceID: 11472}
+      Script: {instanceID: 11012}
     - Class: 114
-      Script: {instanceID: 11504}
+      Script: {instanceID: 11124}
     - Class: 114
-      Script: {instanceID: 20916}
+      Script: {instanceID: 11150}
     - Class: 114
-      Script: {instanceID: 89702}
+      Script: {instanceID: 11480}
     - Class: 114
-      Script: {instanceID: 101422}
-    - Class: 114
-      Script: {instanceID: 111522}
+      Script: {instanceID: 11512}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -206,21 +204,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9884}
     - Class: 114
-      Script: {instanceID: 10270}
+      Script: {instanceID: 10274}
     - Class: 114
-      Script: {instanceID: 10514}
+      Script: {instanceID: 10518}
     - Class: 114
-      Script: {instanceID: 10606}
+      Script: {instanceID: 10610}
     - Class: 114
-      Script: {instanceID: 10640}
+      Script: {instanceID: 10644}
     - Class: 114
-      Script: {instanceID: 11116}
+      Script: {instanceID: 11124}
     - Class: 114
-      Script: {instanceID: 11420}
+      Script: {instanceID: 11428}
     - Class: 114
-      Script: {instanceID: 11472}
+      Script: {instanceID: 11480}
     - Class: 114
-      Script: {instanceID: 11504}
+      Script: {instanceID: 11512}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -389,6 +387,12 @@ ScriptsOnlyBuild:
     className: AnimationTrack
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InventorySlot
+  - hash:
+      serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -435,6 +439,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CFX_ShurikenThreadFix
+  - hash:
+      serializedVersion: 2
+      Hash: bca5ac98eb5f7a61010fbf07e8e506e0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DragDropImg
   - hash:
       serializedVersion: 2
       Hash: cc4274b586df3c02688bac01b88bd16c
@@ -575,6 +585,12 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
+      Hash: 10b918555b2bc2d9e53c01d13b74bb46
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CardBuyList
+  - hash:
+      serializedVersion: 2
       Hash: ab58a0aeb34d8ffc547c4765071ac43d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -659,6 +675,12 @@ ScriptsOnlyBuild:
     className: LoadingWnd
   - hash:
       serializedVersion: 2
+      Hash: 2ccc178eea4055df2ea270fa9a6e0484
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharacterSlot
+  - hash:
+      serializedVersion: 2
       Hash: cc3356596293235117cfbb37e7b6fabf
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -689,7 +711,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: 48cfd27e3a8931434cb9ac92b8c2dc87
+      Hash: e3e163498ea22eaea7db93203e68a76d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MyCardInfo
@@ -807,35 +829,11 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: c19e385b2055bfbb49e13cee6558a822
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CardBuyList
-  - hash:
-      serializedVersion: 2
-      Hash: 1e614460db58a348fb33937a0c39d9e0
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: DragDropImg
-  - hash:
-      serializedVersion: 2
-      Hash: c3371647625de1cb3a39ad0a4992302a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CharacterSlot
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: InventorySlot
   platform: 13
   scenePathNames:
   - Assets/01Scenes/BaseSceneManager.unity
   - Assets/01Scenes/LobbyManager.unity
   - Assets/01Scenes/InGameManager.unity
   - Assets/01Scenes/Stage/Stage01.unity
-  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200226_PJ1(\uC0C1\uC810,\uC778\uBCA4\uD1A0\uB9AC
+  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200226_PJ2(\uC0C1\uC810,\uC778\uBCA4\uD1A0\uB9AC
     \uC815\uB82C,\uCE90\uB9AD\uD130\uC124\uCE58).apk"

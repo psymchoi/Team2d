@@ -274,3 +274,7 @@ C:\Users\psymc\Desktop\Github\PJ\2D-TeamPJ\TeamPJ\obj\Debug\Assembly-CSharp.cspr
 C:\Users\psymc\Desktop\Github\PJ\2D-TeamPJ\TeamPJ\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\psymc\Desktop\Github\PJ\2D-TeamPJ\TeamPJ\obj\Debug\Assembly-CSharp.dll
 C:\Users\psymc\Desktop\Github\PJ\2D-TeamPJ\TeamPJ\obj\Debug\Assembly-CSharp.pdb
+C:\Users\psymc\Desktop\Github\PJ\Team\TeamPJ\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\psymc\Desktop\Github\PJ\Team\TeamPJ\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+C:\Users\psymc\Desktop\Github\PJ\Team\TeamPJ\obj\Debug\Assembly-CSharp.dll
+C:\Users\psymc\Desktop\Github\PJ\Team\TeamPJ\obj\Debug\Assembly-CSharp.pdb

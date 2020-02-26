@@ -73,8 +73,21 @@ public class MyCardInfo : MonoBehaviour
     void Method_Card(GameObject shop, int cardNum)
     {
         // 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수
-        int n;
-        for (n = 0; n < theBuyList.m_isEmpty.Length; n++)
+        int count = 0;
+        for (int n = 0; n < theBuyList.m_isEmpty.Length; n++)
+        {
+            if (theBuyList.m_isEmpty[n] == false)
+                count++;
+        }
+
+        if(count == 7)
+        {
+            string warningTxt = "Inventory is Full";
+            StartCoroutine(ShowWarningTxt(warningTxt, 2.0f));
+            return;
+        }
+        
+        for (int n = 0; n < theBuyList.m_isEmpty.Length; n++)
         {
             if (theBuyList.m_isEmpty[n] == true)
             {
@@ -110,11 +123,7 @@ public class MyCardInfo : MonoBehaviour
             }
         }
 
-        if (n == 6)
-        {
-            string warningTxt = "Inventory is Full";
-            StartCoroutine(ShowWarningTxt(warningTxt, 2.0f));
-        }
+        
         // 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수
     }
 

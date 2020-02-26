@@ -15,6 +15,7 @@ public class CardBuyList : MonoBehaviour
     {
         m_isEmpty = new bool[this.transform.childCount];            // 지금은 7칸
         m_InvenNum = new int[this.transform.childCount];            // 7칸이니 고유번호도 7개
+
         for (int n = 0; n < this.transform.childCount; n++)
         {
             m_isEmpty[n] = true;                // 다 비어있는 상태
@@ -78,6 +79,8 @@ public class CardBuyList : MonoBehaviour
         // 빈 공간이 있으면 일단 다 앞으로 당긴다.
         int n = 0;
         int m = 1;
+
+        
         while(n != 7)
         {
             // Debug.Log("n1 : " + n);
@@ -96,6 +99,8 @@ public class CardBuyList : MonoBehaviour
                     if (tmp2.GetComponent<Image>().sprite == default)
                     {
                         Debug.Log("m증가");
+                        m_isEmpty[m] = true;
+
                         m++;
                         continue;
                     }
@@ -103,6 +108,12 @@ public class CardBuyList : MonoBehaviour
                     tmp1.GetComponent<Image>().sprite = m_myCardImg[int.Parse(tmp2.GetComponent<Image>().sprite.name)];
                     tmp2.GetComponent<Image>().sprite = default;
                     
+                    m_InvenNum[nn] = m_InvenNum[m];
+                    m_InvenNum[m] = 0;
+
+                    m_isEmpty[nn] = false;
+                    m_isEmpty[m] = true;
+
 
                     nn++;
                     m++;
@@ -114,6 +125,7 @@ public class CardBuyList : MonoBehaviour
             m = n + 1;
         }
         // 빈 공간이 있으면 일단 다 앞으로 당긴다.
+        
 
         // 버블정렬
         n = 0;
@@ -152,7 +164,11 @@ public class CardBuyList : MonoBehaviour
                     int tmpSpriteNum = int.Parse(tmp1.GetComponent<Image>().sprite.name);
                     tmp1.GetComponent<Image>().sprite = m_myCardImg[int.Parse(tmp2.GetComponent<Image>().sprite.name)];
                     tmp2.GetComponent<Image>().sprite = m_myCardImg[tmpSpriteNum];
-                    
+
+                    int tmp = m_InvenNum[n];
+                    m_InvenNum[n] = m_InvenNum[m];
+                    m_InvenNum[m] = tmp;
+
                 }
                 m++;
             }
