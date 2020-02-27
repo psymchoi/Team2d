@@ -19,17 +19,19 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     [SerializeField] Canvas m_canvas;
     public eDragDropNum m_edragDropNum;
+    public GameObject[] m_CharSlot;
 
     RectTransform m_rectTransform;
     CanvasGroup m_canvasGroup;
     
-    public GameObject[] m_CharSlot;
-    
+    CardBuyList theBuyList;
 
     void Awake()
     {
         m_rectTransform = GetComponent<RectTransform>();
         m_canvasGroup = GetComponent<CanvasGroup>();
+
+        theBuyList = FindObjectOfType<CardBuyList>();
     }
     
 
@@ -55,12 +57,12 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (InGameManager.InGameInstance.m_curGameState
            == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnDrag");
-
             if (this.transform.GetComponent<Image>().sprite != null)
             {
                 m_rectTransform.anchoredPosition += eventData.delta / m_canvas.scaleFactor;
             }
+
+            Debug.Log("OnDrag");
         }
         else
         {
@@ -75,12 +77,13 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (InGameManager.InGameInstance.m_curGameState
            == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnEndDrag");
             m_canvasGroup.alpha = 1f;
             m_canvasGroup.blocksRaycasts = true;
 
             for (int n = 0; n < m_CharSlot.Length; n++)
                 m_CharSlot[n].SetActive(false);
+
+            Debug.Log("OnEndDrag");
         }
     }
 
@@ -89,8 +92,8 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (InGameManager.InGameInstance.m_curGameState
            == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnPointerDown");
-
+            if (theBuyList.m_isEmpty[(int)m_edragDropNum] == true)
+                return;
 
             for (int n = 0; n < 9; n++)
             {
@@ -100,8 +103,9 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
                 m_CharSlot[n].GetComponent<CharacterSlot>().m_invenNum
                     = (int)m_edragDropNum;
 
-                Debug.Log("CharacterSlot m_invenNum : " + m_CharSlot[n].GetComponent<CharacterSlot>().m_invenNum);
+
             }
+            Debug.Log("On Pointer Down");
         }
     }
     

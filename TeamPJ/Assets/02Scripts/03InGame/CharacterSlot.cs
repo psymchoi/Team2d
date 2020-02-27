@@ -26,12 +26,12 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
 
 
     InGameManager theInGameManager;
-    CardBuyList theCardList;
+    CardBuyList theBuyList;
 
     void Start()
     {
         theInGameManager = FindObjectOfType<InGameManager>();
-        theCardList = FindObjectOfType<CardBuyList>();
+        theBuyList = FindObjectOfType<CardBuyList>();
     }
     
     public void OnDrop(PointerEventData eventData)
@@ -49,6 +49,8 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                         // 미리 배치해 놓은 캐릭터 SetActive(true)
                         theInGameManager.m_isActiveMyCard[n] = true;
                         theInGameManager.transform.GetChild(n).gameObject.SetActive(true);
+                        theInGameManager.transform.GetChild(n).
+                            GetComponent<CharController>().m_charSlotNum = (int)eNum;
                         // 미리 배치해 놓은 캐릭터 SetActive(true)
 
                         // 이미지를 원래 인벤토리 자리로
@@ -56,7 +58,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                         eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition
                                  = new Vector2(0, 0);
 
-                        theCardList.m_InvenNum[m_invenNum] = 0;
+                        theBuyList.m_InvenNum[m_invenNum] = 0;
                         m_slotNum = 0;
                         m_isSlotOn = true;
                         // 이미지를 원래 인벤토리 자리로

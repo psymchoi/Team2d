@@ -44,6 +44,7 @@ public class InGameManager : MonoBehaviour
     public Text m_MoneyTxt;
     public GameObject[] m_card;
     public GameObject[] m_cardPos;
+    public Vector3[] m_charPos;
 
     [SerializeField] List<GameObject> m_myCard;
 
@@ -136,13 +137,14 @@ public class InGameManager : MonoBehaviour
         // UI 관련
 
         // 내 카드 관련
+        m_charPos = new Vector3[m_card.Length];
         for (int n = 0; n < m_cardCount; n++)
         {
             for(int m = 0; m < 9; m++)
             {
                 GameObject go = Instantiate(m_card[n]);
                 go.transform.parent = this.transform;
-                go.transform.position = m_cardPos[m].transform.position;
+                m_charPos[n] = go.transform.position = m_cardPos[m].transform.position;
                 go.SetActive(false);
 
                 m_myCard.Add(go);
@@ -172,7 +174,7 @@ public class InGameManager : MonoBehaviour
         }
 
         
-         m_timer.value -= Time.deltaTime / 12;
+         m_timer.value -= Time.deltaTime / 50;
         
         // Debug.Log(m_timer.value);
 
@@ -184,8 +186,8 @@ public class InGameManager : MonoBehaviour
         m_MoneyTxt.text = m_Money.ToString();
     }
     #endregion
-    
 
+    
 
     #region //---- 설정 관련 버튼 ----//
     public void ClickSettingBtn()

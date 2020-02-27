@@ -7,11 +7,11 @@ using UnityEngine.EventSystems;
 public class MyCardInfo : MonoBehaviour
 {
     // 카드의 정보  
-    public Sprite[] m_CardImg;
-    public string[] m_CardTxt;
-    public string[] m_CardInfo;
-    public int[] m_CardCost;
-    public int[] m_CardNum;   // 번호
+    public Sprite[] m_CardImg;      // 캐릭터 이미지
+    public string[] m_CardName;     // 캐릭터 이름
+    public string[] m_CardInfo;     // 캐릭터 정보
+    public int[] m_CardCost;        // 캐릭터 가격
+    public int[] m_CardNum;         // 캐릭터 번호
     // 카드의 정보  
 
     public GameObject[] m_shopCard;
@@ -34,11 +34,65 @@ public class MyCardInfo : MonoBehaviour
         {
             m_CardNum[n] = Random.Range(0, m_CardImg.Length);
 
-            m_shopCard[n].transform.GetChild(0).GetComponent<Image>().sprite = m_CardImg[m_CardNum[n]];   // 카드이미지
-            m_shopCard[n].transform.GetChild(1).GetComponent<Text>().text = m_CardTxt[m_CardNum[n]];      // 카드이름
+            m_shopCard[n].transform.GetChild(0).GetComponent<Image>().sprite = m_CardImg[m_CardNum[n]];             // 카드이미지
+            m_shopCard[n].transform.GetChild(1).GetComponent<Text>().text = m_CardName[m_CardNum[n]];               // 카드이름
             m_shopCard[n].transform.GetChild(2).GetComponent<Text>().text = m_CardCost[m_CardNum[n]].ToString();     // 카드가격
         }
-        
+
+        // 이름 / 가격이 "" 일경우에
+        bool istrue = true;
+        for (int n = 0; n < m_CardName.Length; n++)
+        {
+            if(m_CardName[n] == "" || 
+                m_CardCost[n].ToString() == "" ||
+                m_CardInfo[n] == "")
+            {
+                istrue = false;
+                break;
+            }
+        }
+
+
+        if (m_CardName.Length != 6 ||
+            m_CardCost.Length != 6 ||
+            m_CardInfo.Length != 6 ||
+            istrue == false)
+        {
+            m_CardName = new string[6];
+            m_CardCost = new int[6];
+            m_CardInfo = new string[6];
+
+            m_CardName[0] = "갈색닌자";
+            m_CardName[1] = "초록닌자";
+            m_CardName[2] = "파랑닌자";
+            m_CardName[3] = "회색닌자";
+            m_CardName[4] = "빨강닌자";
+            m_CardName[5] = "미남닌자";
+
+            m_CardCost[0] = 20;
+            m_CardCost[1] = 25;
+            m_CardCost[2] = 30;
+            m_CardCost[3] = 35;
+            m_CardCost[4] = 40;
+            m_CardCost[5] = 45;
+
+            for(int n = 0; n < m_shopCard.Length; n++)
+            {
+                m_shopCard[n].transform.GetChild(1).GetComponent<Text>().text = m_CardName[m_CardNum[n]];
+                m_shopCard[n].transform.GetChild(2).GetComponent<Text>().text = m_CardCost[m_CardNum[n]].ToString();
+
+            }
+
+            m_CardInfo[0] = "갈색닌자 이다.";
+            m_CardInfo[1] = "초록닌자 이다.";
+            m_CardInfo[2] = "파랑닌자 이다.";
+            m_CardInfo[3] = "회색닌자 이다.";
+            m_CardInfo[4] = "빨강닌자 이다.";
+            m_CardInfo[5] = "미남닌자 이다.";
+        }
+        // 이름 / 가격이 "" 일경우에
+
+       
         m_shopCard[0].transform.GetChild(3).GetComponent<Button>().
                 onClick.AddListener(delegate { Method_Info(m_CardNum[0]); });                             // 카드정보
         m_shopCard[1].transform.GetChild(3).GetComponent<Button>().
@@ -72,7 +126,7 @@ public class MyCardInfo : MonoBehaviour
     /// <param name="cardNum"> 해당 캐릭터 고유넘버 </param>
     void Method_Card(GameObject shop, int cardNum)
     {
-        // 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수
+        //----- 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수
         int count = 0;
         for (int n = 0; n < theBuyList.m_isEmpty.Length; n++)
         {
@@ -80,12 +134,14 @@ public class MyCardInfo : MonoBehaviour
                 count++;
         }
 
+        // 인벤토리가 꽉 찼다는 메세지
         if(count == 7)
         {
             string warningTxt = "Inventory is Full";
             StartCoroutine(ShowWarningTxt(warningTxt, 2.0f));
             return;
         }
+        // 인벤토리가 꽉 찼다는 메세지
         
         for (int n = 0; n < theBuyList.m_isEmpty.Length; n++)
         {
@@ -122,9 +178,8 @@ public class MyCardInfo : MonoBehaviour
                 break;
             }
         }
-
         
-        // 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수
+        //----- 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수
     }
 
     /// <summary>
@@ -159,10 +214,36 @@ public class MyCardInfo : MonoBehaviour
             m_CardNum[n] = Random.Range(0, m_CardImg.Length);
 
             m_shopCard[n].transform.GetChild(0).GetComponent<Image>().sprite = m_CardImg[m_CardNum[n]];             // 카드이미지
-            m_shopCard[n].transform.GetChild(1).GetComponent<Text>().text = m_CardTxt[m_CardNum[n]];                // 카드이름
+            m_shopCard[n].transform.GetChild(1).GetComponent<Text>().text = m_CardName[m_CardNum[n]];                // 카드이름
             m_shopCard[n].transform.GetChild(2).GetComponent<Text>().text = m_CardCost[m_CardNum[n]].ToString();    // 카드가격
         }
     }
 
-    
+
+    // 캐릭터를 팔 때 관련 함수.
+    [SerializeField] GameObject[] m_sellBtn;
+    [SerializeField] GameObject m_iventorySlot;
+    public int sellCost;
+
+    public void SellOn(int CharNum)
+    {
+        sellCost = m_CardCost[CharNum] / 10;
+
+        m_sellBtn[0].SetActive(true);
+        m_sellBtn[1].SetActive(true);
+        m_sellBtn[0].transform.GetChild(0).GetComponent<Text>().text 
+            = string.Format("판매골드\n{0}", sellCost.ToString());
+        m_sellBtn[1].transform.GetChild(0).GetComponent<Text>().text
+            = string.Format("판매골드\n{0}", sellCost.ToString());
+
+        m_iventorySlot.SetActive(false);            // 내 인벤토리창 off
+    }
+
+    public void SellOff()
+    {
+        m_sellBtn[0].SetActive(false);
+        m_sellBtn[1].SetActive(false);
+        m_iventorySlot.SetActive(true);
+    }
+    // 캐릭터를 팔 때 관련 함수.
 }

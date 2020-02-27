@@ -122,6 +122,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010141028922}
   - component: {fileID: 95000012403032898}
+  - component: {fileID: 891630699591862926}
+  - component: {fileID: 4650569378989389327}
   m_Layer: 0
   m_Name: Rogue_01
   m_TagString: Untagged
@@ -163,6 +165,44 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &891630699591862926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010208881502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ee27595d5f81e4c89e76124e635383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &4650569378989389327
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010208881502}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.18657565, y: 3.7847939}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.8914046, y: 8.569588}
+  m_EdgeRadius: 0
 --- !u!1 &1000010251440012
 GameObject:
   m_ObjectHideFlags: 0
