@@ -9,6 +9,7 @@ public class CardBuyList : MonoBehaviour
     public bool[] m_isEmpty;
 
     public int[] m_InvenNum;            // 슬롯이 채워져 있을 시 고유넘버 부여, 0 은 빈공간
+    public GameObject m_sortingBtn;
 
     // Start is called before the first frame update
     void Start()
@@ -21,12 +22,14 @@ public class CardBuyList : MonoBehaviour
             m_isEmpty[n] = true;                // 다 비어있는 상태
             m_InvenNum[n] = 0;                  // 고유번호 0 은 비어있는 상태
         }
+
+        m_sortingBtn.GetComponent<Button>().onClick.AddListener(delegate { SortInventory(); });
     }
 
     void Update()
     {
         if(InGameManager.InGameInstance.m_curGameState
-            == InGameManager.eGameState.Play)
+            == InGameManager.eGameState.ReadyForPlay)
         {
             for (int n = 0; n < this.transform.childCount; n++)
             {

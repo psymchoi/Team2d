@@ -12,7 +12,7 @@ public class InGameManager : MonoBehaviour
         None,
         Ready,
         Mapsetting,
-        Start,
+        ReadyForPlay,
         Play,
         EndPlay,
         Result
@@ -23,10 +23,15 @@ public class InGameManager : MonoBehaviour
     FadeManager theFade;
     CameraManager theCamera;
 
-    // Setting 버튼 관련 Obj
+    // UI관련 객체
+    public GameObject m_settingBtn;
+    public GameObject m_shopBtn;
+
     public GameObject m_optionPanel;
     public GameObject m_settingPanel;
-    // Setting 버튼 관련 Obj
+
+    public Slider m_timer;
+    // UI관련 객체
 
     // 옵션 bgm, effect 볼륨 조절 슬라이더
     public Slider m_bgmVolume;
@@ -55,17 +60,18 @@ public class InGameManager : MonoBehaviour
     {
         InGameInstance = this;
 
+        m_curGameState = eGameState.Ready;
+
         theBase = FindObjectOfType<BaseSceneManager>();
         theSound = FindObjectOfType<SoundManager>();
         theFade = FindObjectOfType<FadeManager>();
         theCamera = FindObjectOfType<CameraManager>();
 
         m_myCard = new List<GameObject>();
-
-        
-        m_curGameState = eGameState.Ready;
-
         ani = GetComponent<Animator>();
+
+        m_settingBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickSettingBtn(); });
+        m_shopBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickShopBtn(); });
     }
     
     // Update is called once per frame
@@ -82,8 +88,8 @@ public class InGameManager : MonoBehaviour
                 if(m_timeCheck >= 2.0f)
                     GameMapSetting();
                 break;
-            case eGameState.Start:
-                m_curGameState = eGameState.Play;
+            case eGameState.ReadyForPlay:
+                ReadyForGamePlay();
                 break;
             case eGameState.Play:
                 GamePlay();
@@ -120,11 +126,14 @@ public class InGameManager : MonoBehaviour
         theFade.SceneFadeIn2();
         // Fadein Screen
 
-        // 게임 UI / 변수 관련
+        // UI 관련
         m_Money = 20000;
 
         m_isActiveMyCard = new bool[9 * m_cardCount];
-        // 게임 UI / 변수 관련
+
+        m_shopBtn.GetComponent<Button>().enabled = true;
+        m_timer.value = 1.0f;
+        // UI 관련
 
         // 내 카드 관련
         for (int n = 0; n < m_cardCount; n++)
@@ -146,7 +155,28 @@ public class InGameManager : MonoBehaviour
         }
         // 내 카드 관련
 
-        m_curGameState = eGameState.Start;
+        m_curGameState = eGameState.ReadyForPlay;
+    }
+
+    public void ReadyForGamePlay()
+    {
+        if (m_timer.value <= .0f)
+        {
+            m_timer.value = 1.0f;
+            m_timer.gameObject.SetActive(false);
+            m_shopBtn.GetComponent<Button>().enabled = false;
+            OffShopUI();
+
+            m_curGameState = eGameState.Play;
+            return;
+        }
+
+        
+         m_timer.value -= Time.deltaTime / 12;
+        
+        // Debug.Log(m_timer.value);
+
+        m_MoneyTxt.text = m_Money.ToString();
     }
 
     public void GamePlay()
@@ -177,15 +207,20 @@ public class InGameManager : MonoBehaviour
     }
     //---- 설정 관련 버튼 ----//
 
-    //---- SHOP 테스트 ----//
-    bool a = false;
+    //---- Shop UI on / off ----//
     public GameObject ShopUI;
-    public void TestShop()
+    bool m_isOpen = false;
+
+    public void ClickShopBtn()
     {
-        a = !a;
-        ShopUI.GetComponent<Animator>().SetBool("ShopOnOff", a);       
+        m_isOpen = !m_isOpen;
+        ShopUI.GetComponent<Animator>().SetBool("ShopOnOff", m_isOpen);       
     }
-    //---- SHOP 테스트 ----//
+    public void OffShopUI()
+    {
+        ShopUI.GetComponent<Animator>().SetBool("ShopOnOff", false);
+    }
+    //---- Shop UI on / off ----//
     #endregion
 
 

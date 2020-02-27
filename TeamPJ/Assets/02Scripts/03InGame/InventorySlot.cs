@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour, IDropHandler
+public class InventorySlot : MonoBehaviour, IPointerDownHandler, IDropHandler
 {
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        InGameManager.InGameInstance.OffShopUI();
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop");

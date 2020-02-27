@@ -282,9 +282,9 @@ public class CameraManager : MonoBehaviour
         minBound = bound.GetComponent<BoxCollider2D>().bounds.min;
         maxBound = bound.GetComponent<BoxCollider2D>().bounds.max;
 
-        //target = GameObject.FindGameObjectWithTag("CameraStartPoint");
-        //this.transform.position = target.transform.position;
+        target = GameObject.FindGameObjectWithTag("CameraStartPoint");
+        this.transform.position = target.transform.position;
 
-        //this.transform.position.Set(target.transform.position.x, target.transform.position.y, this.transform.position.z);
+        this.transform.position.Set(target.transform.position.x, target.transform.position.y, this.transform.position.z);
     }
 }
