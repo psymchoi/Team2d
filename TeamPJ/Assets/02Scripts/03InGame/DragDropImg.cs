@@ -24,29 +24,33 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     CanvasGroup m_canvasGroup;
     
     public GameObject[] m_CharSlot;
-
-    CardBuyList theCardList;
+    
 
     void Awake()
     {
         m_rectTransform = GetComponent<RectTransform>();
         m_canvasGroup = GetComponent<CanvasGroup>();
-
-        theCardList = FindObjectOfType<CardBuyList>();
     }
+    
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("OnBeginDrag");
         m_canvasGroup.alpha = .6f;
         m_canvasGroup.blocksRaycasts = false;
+
+        for (int n = 0; n < m_CharSlot.Length; n++)
+            m_CharSlot[n].SetActive(true);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         Debug.Log("OnDrag");
+
         if (this.transform.GetComponent<Image>().sprite != null)
+        {
             m_rectTransform.anchoredPosition += eventData.delta / m_canvas.scaleFactor;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -54,6 +58,9 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         Debug.Log("OnEndDrag");
         m_canvasGroup.alpha = 1f;
         m_canvasGroup.blocksRaycasts = true;
+
+        for (int n = 0; n < m_CharSlot.Length; n++)
+            m_CharSlot[n].SetActive(false);
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -11,8 +11,8 @@ public class CameraManager : MonoBehaviour
     GameObject bound;           // 카메라 영역 박스콜라이더
 
     // 박스컬라이더 영역의 최소.최대 xyz값을 지님.
-    Vector2 minBound;
-    Vector2 maxBound;
+    public Vector2 minBound;
+    public Vector2 maxBound;
     // 박스컬라이더 영역의 최소.최대 xyz값을 지님.
 
     // 카메라의 반너비, 반높이 값을 지닐 변수.
