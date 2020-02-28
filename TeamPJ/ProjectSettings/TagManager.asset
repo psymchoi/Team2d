@@ -7,6 +7,7 @@ TagManager:
   - CameraBound
   - CameraStartPoint
   - Sell
+  - MoveCharacter
   layers:
   - Default
   - TransparentFX

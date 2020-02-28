@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CardBuyList : MonoBehaviour
 {
     public Sprite[] m_myCardImg;
-    public bool[] m_isEmpty;
+    public bool[] m_isEmpty;            // 인벤토리를 위한 변수
 
     public int[] m_InvenNum;            // 슬롯이 채워져 있을 시 고유넘버 부여, 0 은 빈공간
     public GameObject m_sortingBtn;
@@ -15,7 +15,7 @@ public class CardBuyList : MonoBehaviour
     void Start()
     {
         m_isEmpty = new bool[this.transform.childCount];            // 지금은 7칸
-        m_InvenNum = new int[this.transform.childCount];            // 7칸이니 고유번호도 7개
+        m_InvenNum = new int[this.transform.childCount];            // 고유번호도 7개
 
         for (int n = 0; n < this.transform.childCount; n++)
         {

@@ -47,8 +47,9 @@ public class InGameManager : MonoBehaviour
 
     List<GameObject> m_myCard;
 
-    public int m_dragCardKind;
-    public int m_slotNum;
+    public int m_dragCardKind;              // 인벤토리에서 선택한 카드 종류 넘버
+    public int m_slotNum;                   // 인벤토리 해당 넘버 저장하기위한 변수
+
     public bool[] m_isActiveMyCard;
     public bool[] m_isCharSlotOn;
     // 캐릭터 카드 관련
@@ -132,8 +133,8 @@ public class InGameManager : MonoBehaviour
         // UI 관련
         m_Money = 20000;
 
-        m_dragCardKind = 0;                            // 캐릭터 종류 개수
-        m_slotNum = 0;                                             // 인벤토리 개수
+        m_dragCardKind = 0;                                 // 인벤토리에서 선택한 카드 종류 넘버
+        m_slotNum = 0;                                      // 인벤토리 해당 넘버 저장하기위한 변수
         m_isActiveMyCard = new bool[9 * m_card.Length];     // 캐릭터를 각 칸에 맞춰 9개씩 생성
         m_isCharSlotOn = new bool[9];                       // 캐릭터 설치는 9칸
 
@@ -177,10 +178,8 @@ public class InGameManager : MonoBehaviour
             m_curGameState = eGameState.Play;
             return;
         }
-
         
-         m_timer.value -= Time.deltaTime / 100;
-        
+         m_timer.value -= Time.deltaTime / 100;        
         // Debug.Log(m_timer.value);
 
         m_MoneyTxt.text = m_Money.ToString();
@@ -225,11 +224,12 @@ public class InGameManager : MonoBehaviour
     }
     public void OffShopUI()
     {
+        m_isOpen = false;
         ShopUI.GetComponent<Animator>().SetBool("ShopOnOff", false);
     }
     //---- Shop UI on / off ----//
     #endregion
-
+    
 
     #region  //---- 옵션 관련 버튼 ----//
     public void ClickOptionBtn()

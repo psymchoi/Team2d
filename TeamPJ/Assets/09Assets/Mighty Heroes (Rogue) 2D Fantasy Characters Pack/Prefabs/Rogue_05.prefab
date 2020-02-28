@@ -1650,7 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ee27595d5f81e4c89e76124e635383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eCharNum: 4
+  eCharNum: 5
   m_originPos: {x: 0, y: 0, z: 0}
   m_charSlotNum: 0
 --- !u!61 &2588753172510532775
