@@ -13,7 +13,9 @@ public class InGameManager : MonoBehaviour
         Ready,
         Mapsetting,
         ReadyForPlay,
+        WaitPlayTime,
         Play,
+        PausePlay,
         EndPlay,
         Result
     }
@@ -25,6 +27,8 @@ public class InGameManager : MonoBehaviour
 
     // UI관련 객체
     public GameObject m_settingBtn;
+    public GameObject m_optionBtn;
+    public GameObject m_backToInGameBtn;
     public GameObject m_shopBtn;
 
     public GameObject m_optionPanel;
@@ -56,7 +60,9 @@ public class InGameManager : MonoBehaviour
     
     public eGameState m_curGameState;
 
+
     Animator ani;
+
     float m_timeCheck;
 
     // Start is called before the first frame update
@@ -75,6 +81,8 @@ public class InGameManager : MonoBehaviour
         ani = GetComponent<Animator>();
 
         m_settingBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickSettingBtn(); });
+        m_optionBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickOptionBtn(); });
+        m_backToInGameBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickBackToInGameBtn(); });
         m_shopBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickShopBtn(); });
     }
     
@@ -95,6 +103,14 @@ public class InGameManager : MonoBehaviour
             case eGameState.ReadyForPlay:
                 ReadyForGamePlay();
                 break;
+            case eGameState.WaitPlayTime:
+                m_timer.value -= Time.deltaTime / 5;
+                if (m_timer.value <= .0f)
+                {
+                    m_timer.gameObject.SetActive(false);
+                    m_curGameState = eGameState.Play;
+                }
+                break;
             case eGameState.Play:
                 GamePlay();
                 break;
@@ -111,11 +127,13 @@ public class InGameManager : MonoBehaviour
     #region //---- 실제 인게임 관련 함수 ----//
     void GameReady()
     {
-        // theSound.FadeIn_Bgm();
         m_curGameState = eGameState.Mapsetting;
         m_timeCheck = 0;
     }
 
+    /// <summary>
+    /// 씬 로드할 때 맵 세팅 부분
+    /// </summary>
     public void GameMapSetting()
     {
         m_curGameState = eGameState.Mapsetting;
@@ -126,12 +144,12 @@ public class InGameManager : MonoBehaviour
         theCamera.CameraBound();
         // 카메라 관련
 
-        // Fadein Screen
+        // Fadein 하는 부분
         theFade.SceneFadeIn2();
-        // Fadein Screen
+        // Fadein 하는 부분
 
         // UI 관련
-        m_Money = 20000;
+        m_Money = 20000;                                    // 내가 처음 가지고 있을 돈
 
         m_dragCardKind = 0;                                 // 인벤토리에서 선택한 카드 종류 넘버
         m_slotNum = 0;                                      // 인벤토리 해당 넘버 저장하기위한 변수
@@ -142,12 +160,12 @@ public class InGameManager : MonoBehaviour
         m_timer.value = 1.0f;
         // UI 관련
 
-        // 내 카드 관련
+        //----- 내 카드 관련 -----
         for (int n = 0; n < m_card.Length; n++)
         {
             for(int m = 0; m < 9; m++)
             {
-                GameObject go = Instantiate(m_card[n]);
+                GameObject go = Instantiate(m_card[n]);             // 캐릭터를 오브젝트 풀 형식으로 생성
                 go.transform.parent = this.transform;
                 go.transform.position = m_cardZone[m].transform.position;
                 go.SetActive(false);
@@ -156,46 +174,82 @@ public class InGameManager : MonoBehaviour
             }
         }
 
+        // 캐릭터가 SetActive 되있는지 여부
         for(int n = 0; n < 9 * m_cardCount; n++)
             m_isActiveMyCard[n] = false;
+        // 캐릭터가 SetActive 되있는지 여부
         
+        // 캐릭터 설치가능 슬롯여부
         for(int n = 0; n < 9; n++)
             m_isCharSlotOn[n] = true;
-        // 내 카드 관련
+        // 캐릭터 설치가능 슬롯여부
+        //----- 내 카드 관련 -----
+
+        GameObject[] enmy = GameObject.FindGameObjectsWithTag("Enemy");
+        StageManager.StageInstance.m_tfEnemy = new Transform[enmy.Length];
+        Debug.Log("enmy.Length : " + enmy.Length);
+        for(int n = 0; n < enmy.Length; n++)
+        {
+            if (enmy[n] != null)
+                StageManager.StageInstance.m_tfEnemy[n] = enmy[n].transform;
+
+            Debug.Log(StageManager.StageInstance.m_tfEnemy[n].position);
+        }
+
 
         m_curGameState = eGameState.ReadyForPlay;
     }
 
+    /// <summary>
+    /// 전투 준비 전 단계
+    /// </summary>
     public void ReadyForGamePlay()
     {
         if (m_timer.value <= .0f)
         {
+            // 설치존 SetActive 끈다
+            for (int n = 0; n < 9; n++)           
+                m_cardZone[n].SetActive(false);
+            // 설치존 SetActive 끈다
+            
             m_timer.value = 1.0f;
-            m_timer.gameObject.SetActive(false);
             m_shopBtn.GetComponent<Button>().enabled = false;
-            OffShopUI();
+            OffShopUI();            // Shop UI 끈다
 
-            m_curGameState = eGameState.Play;
+            m_curGameState = eGameState.WaitPlayTime;
             return;
         }
         
-         m_timer.value -= Time.deltaTime / 100;        
+         m_timer.value -= Time.deltaTime / 4;        
         // Debug.Log(m_timer.value);
 
+        // 실시간 돈 업데이트
         m_MoneyTxt.text = m_Money.ToString();
+        // 실시간 돈 업데이트
     }
 
+    /// <summary>
+    /// 전투 준비 완료 후 단계
+    /// </summary>
     public void GamePlay()
     {
+       
+
+        // 실시간 돈 업데이트
         m_MoneyTxt.text = m_Money.ToString();
+        // 실시간 돈 업데이트
     }
     #endregion
 
-    
+
 
     #region //---- 설정 관련 버튼 ----//
+    /// <summary>
+    /// 설정창 버튼
+    /// </summary>
     public void ClickSettingBtn()
-    {// 설정창 버튼
+    {
+        m_curGameState = eGameState.PausePlay;
         theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
         m_settingPanel.SetActive(true);
@@ -203,8 +257,12 @@ public class InGameManager : MonoBehaviour
         Time.timeScale = 0.0f;          // 모든 기능 일시정지.
     }
 
+    /// <summary>
+    /// '설정창 ==> 인게임'으로 돌아가기
+    /// </summary>
     public void ClickBackToInGameBtn()
-    {// '설정창 ==> 인게임' 버튼
+    {
+        m_curGameState = eGameState.Play;
         theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
         m_settingPanel.SetActive(false);

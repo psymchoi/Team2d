@@ -3808,7 +3808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.90266997, g: 1, b: 0.19339621, a: 0.6862745}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3947,18 +3947,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 909555157}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1362104251}
-        m_MethodName: SceneFadeOut2
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &909555157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4607,18 +4596,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1062284498}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1946781472}
-        m_MethodName: ClickBackToInGameBtn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1062284498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4751,6 +4729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211669f8eaa80b14ebb9497168bbe28e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   minBound: {x: 0, y: 0}
   maxBound: {x: 0, y: 0}
 --- !u!1 &1116311883
@@ -4996,7 +4975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6175,6 +6154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c6a687b04b03c49a90d4b6875b1685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_exitBtn: {fileID: 909555154}
 --- !u!95 &1362104252
 Animator:
   serializedVersion: 3
@@ -7132,18 +7112,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1701935708}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1946781472}
-        m_MethodName: ClickOptionBtn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1701935708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8567,6 +8536,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_settingBtn: {fileID: 1776315709}
+  m_optionBtn: {fileID: 1701935705}
+  m_backToInGameBtn: {fileID: 1062284495}
   m_shopBtn: {fileID: 324963170}
   m_optionPanel: {fileID: 125169591}
   m_settingPanel: {fileID: 1123105215}
@@ -8598,6 +8569,7 @@ MonoBehaviour:
   m_isActiveMyCard: 
   m_isCharSlotOn: 
   m_curGameState: 0
+  m_tfEnemy: []
   ShopUI: {fileID: 228574690}
 --- !u!1 &1998765880
 GameObject:
@@ -10020,7 +9992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0.5803922}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

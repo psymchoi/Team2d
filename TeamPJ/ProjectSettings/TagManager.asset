@@ -8,6 +8,8 @@ TagManager:
   - CameraStartPoint
   - Sell
   - MoveCharacter
+  - Enemy
+  - AttackFromPlayer
   layers:
   - Default
   - TransparentFX
@@ -44,4 +46,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Character
+    uniqueID: 370587077
+    locked: 0
+  - name: SpawnCharacter
+    uniqueID: 2005597829
     locked: 0

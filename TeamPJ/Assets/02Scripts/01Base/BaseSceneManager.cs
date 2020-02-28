@@ -95,11 +95,11 @@ public class BaseSceneManager : MonoBehaviour
     }
     // 인게임 ==> 로비 씬으로
 
-    
+
     /// <summary>
-    /// '인게임 ==> 로비' 전환하려는 함수.
+    /// '인게임 ==> 로비' / '인게임 ==> 인게임' 전환하려는 함수.
     /// </summary>
-    /// <param name="stage">씬 전환될 매개변수</param>
+    /// <param name="stage"> 씬 전환될 매개변수 </param>
     public void SceneMoveToLobby(eStageState stage)
     {
         string[] loadStage;

@@ -690,7 +690,7 @@ ScriptsOnlyBuild:
     className: LoadingWnd
   - hash:
       serializedVersion: 2
-      Hash: 71b5fe555e73c655f6a144639bb8151c
+      Hash: 33f0529b5bf6ceae5084c6ce47ad443a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CharacterSlot
@@ -850,5 +850,5 @@ ScriptsOnlyBuild:
   - Assets/01Scenes/LobbyManager.unity
   - Assets/01Scenes/InGameManager.unity
   - Assets/01Scenes/Stage/Stage01.unity
-  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200228_PJ1(\uCE90\uB9AD\uD130 \uD310\uB9E4,
+  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200228_PJ2(\uCE90\uB9AD\uD130 \uD310\uB9E4,
     \uCE90\uB9AD\uD130 \uC124\uCE58 \uC2AC\uB86F \uC218\uC815).apk"
