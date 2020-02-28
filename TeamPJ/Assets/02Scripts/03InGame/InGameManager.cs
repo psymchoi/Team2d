@@ -43,12 +43,14 @@ public class InGameManager : MonoBehaviour
     public int m_Money;
     public Text m_MoneyTxt;
     public GameObject[] m_card;
-    public GameObject[] m_cardPos;
-    public Vector3[] m_charPos;
+    public GameObject[] m_cardZone;
 
-    [SerializeField] List<GameObject> m_myCard;
+    List<GameObject> m_myCard;
 
+    public int m_dragCardKind;
+    public int m_slotNum;
     public bool[] m_isActiveMyCard;
+    public bool[] m_isCharSlotOn;
     // 캐릭터 카드 관련
     
     public eGameState m_curGameState;
@@ -130,21 +132,23 @@ public class InGameManager : MonoBehaviour
         // UI 관련
         m_Money = 20000;
 
-        m_isActiveMyCard = new bool[9 * m_cardCount];
+        m_dragCardKind = 0;                            // 캐릭터 종류 개수
+        m_slotNum = 0;                                             // 인벤토리 개수
+        m_isActiveMyCard = new bool[9 * m_card.Length];     // 캐릭터를 각 칸에 맞춰 9개씩 생성
+        m_isCharSlotOn = new bool[9];                       // 캐릭터 설치는 9칸
 
         m_shopBtn.GetComponent<Button>().enabled = true;
         m_timer.value = 1.0f;
         // UI 관련
 
         // 내 카드 관련
-        m_charPos = new Vector3[m_card.Length];
-        for (int n = 0; n < m_cardCount; n++)
+        for (int n = 0; n < m_card.Length; n++)
         {
             for(int m = 0; m < 9; m++)
             {
                 GameObject go = Instantiate(m_card[n]);
                 go.transform.parent = this.transform;
-                m_charPos[n] = go.transform.position = m_cardPos[m].transform.position;
+                go.transform.position = m_cardZone[m].transform.position;
                 go.SetActive(false);
 
                 m_myCard.Add(go);
@@ -152,9 +156,10 @@ public class InGameManager : MonoBehaviour
         }
 
         for(int n = 0; n < 9 * m_cardCount; n++)
-        {
             m_isActiveMyCard[n] = false;
-        }
+        
+        for(int n = 0; n < 9; n++)
+            m_isCharSlotOn[n] = true;
         // 내 카드 관련
 
         m_curGameState = eGameState.ReadyForPlay;
@@ -174,7 +179,7 @@ public class InGameManager : MonoBehaviour
         }
 
         
-         m_timer.value -= Time.deltaTime / 50;
+         m_timer.value -= Time.deltaTime / 100;
         
         // Debug.Log(m_timer.value);
 

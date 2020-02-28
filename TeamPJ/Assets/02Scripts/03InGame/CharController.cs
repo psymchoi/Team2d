@@ -24,15 +24,21 @@ public class CharController : MonoBehaviour
     float startPosX;
     float startPosY;
     bool isBeginHeld = false;
-    
-    MyCardInfo theCardInfo;
+    bool isSell = false;
 
+    InGameManager theInGame;
+    MyCardInfo theCardInfo;
 
     void Start()
     {
         m_originPos = transform.position;
 
+        theInGame = FindObjectOfType<InGameManager>();
         theCardInfo = FindObjectOfType<MyCardInfo>();
+
+        // 해당 유형의 비활성화 된 객체도 가져온다
+        // theCharSlot = Resources.FindObjectsOfTypeAll<CharacterSlot>();
+        // 해당 유형의 비활성화 된 객체도 가져온다
     }
 
     void Update()
@@ -47,12 +53,25 @@ public class CharController : MonoBehaviour
                 mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
                 this.gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
+
+                // 레이를 쏴서 Sell되는 Image에 맞는지 안맞지 여부
+                Vector2 touchPos = new Vector2(mousePos.x, mousePos.y);
+                Ray2D ray = new Ray2D(touchPos, Vector2.zero);
+                RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+                
+                if (hit.collider.tag == "Sell")
+                    isSell = true;
+                else
+                    isSell = false;
+                // 레이를 쏴서 Sell되는 Image에 맞는지 안맞지 여부
             }
         }
     }
+    
 
     void OnMouseDown()
     {
+        Debug.Log("Mouse Down Char");
         if (InGameManager.InGameInstance.m_curGameState
             == InGameManager.eGameState.ReadyForPlay)
         {
@@ -62,14 +81,28 @@ public class CharController : MonoBehaviour
                 theCardInfo.SellOn((int)eCharNum);
                 // 판매 UI On
 
+                // 인벤토리 UI Off
                 InGameManager.InGameInstance.OffShopUI();
+                // 인벤토리 UI Off
                 
+                // 9칸짜리 캐릭터 슬롯 On
+                for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
+                {
+                    if (theInGame.m_isCharSlotOn[n] == true)
+                    {
+                        theInGame.m_cardZone[n].gameObject.SetActive(true);
+                    }
+                }
+                // 9칸짜리 캐릭터 슬롯 On
+
+                // 마우스를 눌렀을 때 마우스 좌표 얻기
                 Vector3 mousePos;
                 mousePos = Input.mousePosition;
                 mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
                 startPosX = mousePos.x - this.transform.localPosition.x;
                 startPosY = mousePos.y - this.transform.localPosition.y;
+                // 마우스를 눌렀을 때 마우스 좌표 얻기
 
                 isBeginHeld = true;
             }
@@ -78,21 +111,29 @@ public class CharController : MonoBehaviour
 
     void OnMouseUp()
     {
-        Debug.Log("Mouse Up");
+        Debug.Log("Mouse Up Char");
         
         transform.position = m_originPos;
 
-        Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Ray2D ray = new Ray2D(pos, Vector2.zero);
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 touchPos = new Vector2(worldPos.x, worldPos.y);
+        Ray2D ray = new Ray2D(touchPos, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
+
         // 팔렸을 경우
-        if (hit.collider.tag == "Sell")
+        Debug.Log(hit.collider.tag.ToString());
+        if (isSell == true)
         {
             Debug.Log("sell");
-            this.gameObject.SetActive(false);
+
             InGameManager.InGameInstance.m_Money += theCardInfo.sellCost;
+            theInGame.m_isCharSlotOn[m_charSlotNum] = true;
+            this.gameObject.SetActive(false);
         }
+
+        for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
+            theInGame.m_cardZone[n].gameObject.SetActive(false);
         // 팔렸을 경우
 
         // 판매 UI Off
@@ -100,8 +141,7 @@ public class CharController : MonoBehaviour
         // 판매 UI Off
 
         isBeginHeld = false;
-
-       
+        isSell = false;
     }
     
 }

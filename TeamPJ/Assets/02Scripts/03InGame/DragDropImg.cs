@@ -19,11 +19,12 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     [SerializeField] Canvas m_canvas;
     public eDragDropNum m_edragDropNum;
-    public GameObject[] m_CharSlot;
+    //public GameObject[] m_CharSlot;
 
     RectTransform m_rectTransform;
     CanvasGroup m_canvasGroup;
-    
+
+    InGameManager theInGame;
     CardBuyList theBuyList;
 
     void Awake()
@@ -31,6 +32,7 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         m_rectTransform = GetComponent<RectTransform>();
         m_canvasGroup = GetComponent<CanvasGroup>();
 
+        theInGame = FindObjectOfType<InGameManager>();
         theBuyList = FindObjectOfType<CardBuyList>();
     }
     
@@ -44,10 +46,13 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             m_canvasGroup.alpha = .6f;
             m_canvasGroup.blocksRaycasts = false;
 
-            for (int n = 0; n < m_CharSlot.Length; n++)
+            for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
             {
-                if(m_CharSlot[n].GetComponent<CharacterSlot>().m_isSlotOn == false)
-                    m_CharSlot[n].SetActive(true);
+                //if(theCharSlot[n].m_isSlotOn == true)
+                //    theCharSlot[n].gameObject.SetActive(true);
+
+                if (theInGame.m_isCharSlotOn[n] == true)
+                    theInGame.m_cardZone[n].SetActive(true);
             }
         }
     }
@@ -80,8 +85,8 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             m_canvasGroup.alpha = 1f;
             m_canvasGroup.blocksRaycasts = true;
 
-            for (int n = 0; n < m_CharSlot.Length; n++)
-                m_CharSlot[n].SetActive(false);
+            for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
+                theInGame.m_cardZone[n].gameObject.SetActive(false);
 
             Debug.Log("OnEndDrag");
         }
@@ -97,13 +102,10 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
             for (int n = 0; n < 9; n++)
             {
-                m_CharSlot[n].GetComponent<CharacterSlot>().m_slotNum
-                    = int.Parse(this.transform.GetComponent<Image>().sprite.name);
-                
-                m_CharSlot[n].GetComponent<CharacterSlot>().m_invenNum
-                    = (int)m_edragDropNum;
-
-
+                // 카드 종류, 설치 위치
+                theInGame.m_dragCardKind = int.Parse(this.transform.GetComponent<Image>().sprite.name);
+                theInGame.m_slotNum = (int)m_edragDropNum;
+                // 카드 종류, 설치 위치
             }
             Debug.Log("On Pointer Down");
         }

@@ -20,20 +20,27 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
     }
 
     public eSlot eNum;
-    public int m_slotNum;
-    public int m_invenNum;
-    public bool m_isSlotOn = false;
+    public bool m_isSlotOn = true;
 
 
-    InGameManager theInGameManager;
+    InGameManager theInGame;
     CardBuyList theBuyList;
 
     void Start()
     {
-        theInGameManager = FindObjectOfType<InGameManager>();
+        theInGame = FindObjectOfType<InGameManager>();
         theBuyList = FindObjectOfType<CardBuyList>();
     }
-    
+
+    void Update()
+    {
+        if (InGameManager.InGameInstance.m_curGameState
+           == InGameManager.eGameState.ReadyForPlay)
+        {
+
+        }
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
         if (InGameManager.InGameInstance.m_curGameState
@@ -42,14 +49,14 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
             Debug.Log("OnDrop");
             if (eventData.pointerDrag != null)
             {
-                for (int n = m_slotNum * 9 + (int)eNum ; n < (m_slotNum + 1) * 9; n++)
+                for (int n = theInGame.m_dragCardKind * 9 + (int)eNum ; n < (theInGame.m_dragCardKind + 1) * 9; n++)
                 {
-                    if (theInGameManager.m_isActiveMyCard[n] == false && m_isSlotOn == false)
+                    if (theInGame.m_isActiveMyCard[(int)eNum] == false && theInGame.m_isCharSlotOn[(int)eNum] == true)
                     {
                         // 미리 배치해 놓은 캐릭터 SetActive(true)
-                        theInGameManager.m_isActiveMyCard[n] = true;
-                        theInGameManager.transform.GetChild(n).gameObject.SetActive(true);
-                        theInGameManager.transform.GetChild(n).
+                        theInGame.m_isActiveMyCard[n] = true;                            // 캐릭터 on
+                        theInGame.transform.GetChild(n).gameObject.SetActive(true);      // 미리배치해둔 캐릭터 On
+                        theInGame.transform.GetChild(n).
                             GetComponent<CharController>().m_charSlotNum = (int)eNum;
                         // 미리 배치해 놓은 캐릭터 SetActive(true)
 
@@ -58,9 +65,8 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                         eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition
                                  = new Vector2(0, 0);
 
-                        theBuyList.m_InvenNum[m_invenNum] = 0;
-                        m_slotNum = 0;
-                        m_isSlotOn = true;
+                        theBuyList.m_InvenNum[theInGame.m_slotNum] = 0;
+                        theInGame.m_isCharSlotOn[(int)eNum] = m_isSlotOn = false;
                         // 이미지를 원래 인벤토리 자리로
                         break;
                     }

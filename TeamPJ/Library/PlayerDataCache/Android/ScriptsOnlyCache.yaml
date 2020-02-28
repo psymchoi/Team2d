@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - BaseSceneManager
     - CameraManager
     - CardBuyList
+    - CharController
     - CharacterSlot
     - DragDropImg
     - FadeManager
@@ -17,8 +18,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -154,6 +157,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 11480}
     - Class: 114
       Script: {instanceID: 11512}
+    - Class: 114
+      Script: {instanceID: 57462}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -585,19 +590,19 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 10b918555b2bc2d9e53c01d13b74bb46
+      Hash: 59b4e7032e612809e50aafbbabe39d1d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CardBuyList
   - hash:
       serializedVersion: 2
-      Hash: ab58a0aeb34d8ffc547c4765071ac43d
+      Hash: 3dcdec309f751ed7daa055a8a184797c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: InGameManager
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 4b884508c6017b5c3b6240dbae6cb0a0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraManager
@@ -675,7 +680,7 @@ ScriptsOnlyBuild:
     className: LoadingWnd
   - hash:
       serializedVersion: 2
-      Hash: 2ccc178eea4055df2ea270fa9a6e0484
+      Hash: fdb3806b87238bb8081442879bda8143
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CharacterSlot
@@ -711,7 +716,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: e3e163498ea22eaea7db93203e68a76d
+      Hash: 06b102eb7eaa93c5204934170b55d0e5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MyCardInfo
@@ -829,11 +834,23 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 2b9f592af58bda72038aedf53c6191de
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharController
+  - hash:
+      serializedVersion: 2
+      Hash: 4ea6fa43d9e7ef03fbc7b70345e9acd0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SellCharacter
   platform: 13
   scenePathNames:
   - Assets/01Scenes/BaseSceneManager.unity
   - Assets/01Scenes/LobbyManager.unity
   - Assets/01Scenes/InGameManager.unity
   - Assets/01Scenes/Stage/Stage01.unity
-  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200226_PJ2(\uC0C1\uC810,\uC778\uBCA4\uD1A0\uB9AC
-    \uC815\uB82C,\uCE90\uB9AD\uD130\uC124\uCE58).apk"
+  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200227_PJ1(\uC55E \uC218\uC815, \uCE90\uB9AD\uD130
+    \uC0AD\uC81C, \uC804\uD22C\uC900\uBE44\uC2DC\uAC04).apk"

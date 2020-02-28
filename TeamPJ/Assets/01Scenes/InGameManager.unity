@@ -1356,7 +1356,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240545579}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1817022111}
@@ -1380,9 +1380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eNum: 3
-  m_slotNum: 0
-  m_invenNum: 0
-  m_isSlotOn: 0
+  m_isSlotOn: 1
 --- !u!114 &240545582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1831,16 +1829,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_canvas: {fileID: 70467700}
   m_edragDropNum: 2
-  m_CharSlot:
-  - {fileID: 1932436193}
-  - {fileID: 404829270}
-  - {fileID: 400632389}
-  - {fileID: 240545579}
-  - {fileID: 1854309018}
-  - {fileID: 1737111915}
-  - {fileID: 1780192031}
-  - {fileID: 1116311883}
-  - {fileID: 2022862523}
 --- !u!114 &365836647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2051,7 +2039,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 400632389}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1817022111}
@@ -2075,9 +2063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eNum: 2
-  m_slotNum: 0
-  m_invenNum: 0
-  m_isSlotOn: 0
+  m_isSlotOn: 1
 --- !u!114 &400632392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2141,7 +2127,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 404829270}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1817022111}
@@ -2165,9 +2151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eNum: 1
-  m_slotNum: 0
-  m_invenNum: 0
-  m_isSlotOn: 0
+  m_isSlotOn: 1
 --- !u!114 &404829273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2536,16 +2520,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_canvas: {fileID: 70467700}
   m_edragDropNum: 6
-  m_CharSlot:
-  - {fileID: 1932436193}
-  - {fileID: 404829270}
-  - {fileID: 400632389}
-  - {fileID: 240545579}
-  - {fileID: 1854309018}
-  - {fileID: 1737111915}
-  - {fileID: 1780192031}
-  - {fileID: 1116311883}
-  - {fileID: 2022862523}
 --- !u!114 &473437836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3017,16 +2991,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_canvas: {fileID: 70467700}
   m_edragDropNum: 3
-  m_CharSlot:
-  - {fileID: 1932436193}
-  - {fileID: 404829270}
-  - {fileID: 400632389}
-  - {fileID: 240545579}
-  - {fileID: 1854309018}
-  - {fileID: 1737111915}
-  - {fileID: 1780192031}
-  - {fileID: 1116311883}
-  - {fileID: 2022862523}
 --- !u!114 &562177528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4297,16 +4261,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_canvas: {fileID: 70467700}
   m_edragDropNum: 4
-  m_CharSlot:
-  - {fileID: 1932436193}
-  - {fileID: 404829270}
-  - {fileID: 400632389}
-  - {fileID: 240545579}
-  - {fileID: 1854309018}
-  - {fileID: 1737111915}
-  - {fileID: 1780192031}
-  - {fileID: 1116311883}
-  - {fileID: 2022862523}
 --- !u!114 &969961739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4748,7 +4702,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116311883}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1817022111}
@@ -4772,9 +4726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eNum: 7
-  m_slotNum: 0
-  m_invenNum: 0
-  m_isSlotOn: 0
+  m_isSlotOn: 1
 --- !u!114 &1116311886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6757,16 +6709,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_canvas: {fileID: 70467700}
   m_edragDropNum: 1
-  m_CharSlot:
-  - {fileID: 1932436193}
-  - {fileID: 404829270}
-  - {fileID: 400632389}
-  - {fileID: 240545579}
-  - {fileID: 1854309018}
-  - {fileID: 1737111915}
-  - {fileID: 1780192031}
-  - {fileID: 1116311883}
-  - {fileID: 2022862523}
 --- !u!114 &1634961439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6969,16 +6911,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_canvas: {fileID: 70467700}
   m_edragDropNum: 5
-  m_CharSlot:
-  - {fileID: 1932436193}
-  - {fileID: 404829270}
-  - {fileID: 400632389}
-  - {fileID: 240545579}
-  - {fileID: 1854309018}
-  - {fileID: 1737111915}
-  - {fileID: 1780192031}
-  - {fileID: 1116311883}
-  - {fileID: 2022862523}
 --- !u!114 &1655597809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7207,7 +7139,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737111915}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1817022111}
@@ -7231,9 +7163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eNum: 5
-  m_slotNum: 0
-  m_invenNum: 0
-  m_isSlotOn: 0
+  m_isSlotOn: 1
 --- !u!114 &1737111918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7415,7 +7345,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1780192031}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1817022111}
@@ -7439,9 +7369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eNum: 6
-  m_slotNum: 0
-  m_invenNum: 0
-  m_isSlotOn: 0
+  m_isSlotOn: 1
 --- !u!114 &1780192034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8149,7 +8077,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1854309018}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1817022111}
@@ -8173,9 +8101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eNum: 4
-  m_slotNum: 0
-  m_invenNum: 0
-  m_isSlotOn: 0
+  m_isSlotOn: 1
 --- !u!114 &1854309021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8449,19 +8375,20 @@ MonoBehaviour:
   - {fileID: 1000011922212602, guid: b3d1057caadaef44ab620edfef78b14f, type: 3}
   - {fileID: 1000011821036864, guid: 5b210609803658e488f512fc13a6163e, type: 3}
   - {fileID: 1000013304306144, guid: 30ef59945f2a7ea499bbbe10a7d48f1a, type: 3}
-  m_cardPos:
-  - {fileID: 358012917}
-  - {fileID: 759585689}
-  - {fileID: 2135652476}
-  - {fileID: 650444683}
-  - {fileID: 1614980554}
-  - {fileID: 1228907756}
-  - {fileID: 2128028771}
-  - {fileID: 605865932}
-  - {fileID: 475250847}
-  m_charPos: []
-  m_myCard: []
+  m_cardZone:
+  - {fileID: 1932436193}
+  - {fileID: 404829270}
+  - {fileID: 400632389}
+  - {fileID: 240545579}
+  - {fileID: 1854309018}
+  - {fileID: 1737111915}
+  - {fileID: 1780192031}
+  - {fileID: 1116311883}
+  - {fileID: 2022862523}
+  m_dragCardKind: 0
+  m_slotNum: 0
   m_isActiveMyCard: 
+  m_isCharSlotOn: 
   m_curGameState: 0
   ShopUI: {fileID: 228574690}
 --- !u!1 &1998765880
@@ -8577,7 +8504,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022862523}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1817022111}
@@ -8601,9 +8528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eNum: 8
-  m_slotNum: 0
-  m_invenNum: 0
-  m_isSlotOn: 0
+  m_isSlotOn: 1
 --- !u!114 &2022862526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10096,7 +10021,7 @@ PrefabInstance:
     - target: {fileID: 3587453484104237940, guid: 1579664b0e0d28b4db8ed1a353a352e3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3587453484104237940, guid: 1579664b0e0d28b4db8ed1a353a352e3,
         type: 3}
@@ -10202,11 +10127,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 0}
     - target: {fileID: 3587453484104237941, guid: 1579664b0e0d28b4db8ed1a353a352e3,
         type: 3}
       propertyPath: m_Type
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3587453484104237941, guid: 1579664b0e0d28b4db8ed1a353a352e3,
         type: 3}
