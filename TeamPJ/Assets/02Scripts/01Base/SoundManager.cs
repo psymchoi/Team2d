@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
     public enum eEff_Type
     {
         Button,
+        Char_BAttack
     }
 
     [SerializeField] AudioClip[] m_bgmClips;

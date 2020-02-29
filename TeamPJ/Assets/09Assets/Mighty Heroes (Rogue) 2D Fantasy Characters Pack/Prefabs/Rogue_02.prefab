@@ -1407,7 +1407,7 @@ GameObject:
   - component: {fileID: -4990417460989512263}
   m_Layer: 0
   m_Name: Rogue_02
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1462,7 +1462,16 @@ MonoBehaviour:
   eCharNum: 1
   m_originPos: {x: 0, y: 0, z: 0}
   m_charSlotNum: 0
+  m_level: 1
+  m_hp: 200
+  m_curHp: 0
+  m_atk: 100
+  m_atkRange: 2
+  m_def: 1
   m_movSpeed: 5
+  a_upHp: 1.1
+  a_upAtk: 1.2
+  a_upMSpeed: 2
 --- !u!61 &-4990417460989512263
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1917,6 +1926,7 @@ GameObject:
   - component: {fileID: 2690535806794945695}
   - component: {fileID: 1026028543622619749}
   - component: {fileID: 2949751822056810889}
+  - component: {fileID: 3904036373321863870}
   m_Layer: 0
   m_Name: AttackRange
   m_TagString: AttackFromPlayer
@@ -1951,7 +1961,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.5946779, y: 1.084515}
+  m_Offset: {x: 1.5946779, y: -0.030847073}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1962,7 +1972,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.189355, y: 9.243965}
+  m_Size: {x: 4.189355, y: 11.4746895}
   m_EdgeRadius: 0
 --- !u!50 &2949751822056810889
 Rigidbody2D:
@@ -1985,3 +1995,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &3904036373321863870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7190231530041757242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e8a6a1b68174d44f999106413f38c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -20,20 +20,17 @@ public class InGameManager : MonoBehaviour
         Result
     }
 
-    BaseSceneManager theBase;
-    SoundManager theSound;
-    FadeManager theFade;
-    CameraManager theCamera;
-
     // UI관련 객체
+    public GameObject m_shopBtn;
     public GameObject m_settingBtn;
     public GameObject m_optionBtn;
     public GameObject m_backToInGameBtn;
     public GameObject m_backToLobbyBtn;
-    public GameObject m_shopBtn;
 
     public GameObject m_optionPanel;
     public GameObject m_settingPanel;
+
+    public GameObject m_cardInfoPanel;
 
     public Slider m_timer;
     // UI관련 객체
@@ -43,28 +40,38 @@ public class InGameManager : MonoBehaviour
     public Slider m_effectVolume;
     // 옵션 bgm, effect 볼륨 조절 슬라이더
 
-    // 캐릭터 카드 관련
-    public int m_cardCount = 6;
-    public int m_Money;
-    public Text m_MoneyTxt;
-    public GameObject[] m_card;
-    public GameObject[] m_cardZone;
+    public int m_curStage;
+    public Text m_curStageTxt;
+    public Text m_warningTxt;
 
-    public List<GameObject> m_myCard;
+    // 캐릭터 카드 관련
+    public int m_cardCount = 6;             // 캐릭터 이미지 개수
+    public int m_money;                     // 플레이어 돈
+    public Text m_moneyTxt;                 // 플레이어 돈을 보여줄 텍스트
+    public GameObject[] m_card;             // 캐릭터 객체
+    public GameObject[] m_cardZone;         // 캐릭터 설치존
+
+
+    public List<GameObject> m_myCard;       // 현재 스폰되어 있는 캐릭터를 담을 리스트
 
     public int m_dragCardKind;              // 인벤토리에서 선택한 카드 종류 넘버
     public int m_slotNum;                   // 인벤토리 해당 넘버 저장하기위한 변수
 
-    public bool[] m_isActiveMyCard;
-    public bool[] m_isCharSlotOn;
+    public bool[] m_isActiveMyCard;         // 미리 생성해 놓은 캐릭터 중에서 Active 되어있는 객체 판별변수
+    public bool[] m_isCharSlotOn;           // 캐릭터 설치존 열려 있는지 판단여부
     // 캐릭터 카드 관련
     
     public eGameState m_curGameState;
-
-
+    
     Animator ani;
 
     float m_timeCheck;
+
+    BaseSceneManager theBase;
+    SoundManager theSound;
+    FadeManager theFade;
+    CameraManager theCamera;
+    MyCardInfo theCardInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -77,15 +84,16 @@ public class InGameManager : MonoBehaviour
         theSound = FindObjectOfType<SoundManager>();
         theFade = FindObjectOfType<FadeManager>();
         theCamera = FindObjectOfType<CameraManager>();
+        theCardInfo = FindObjectOfType<MyCardInfo>();
 
         m_myCard = new List<GameObject>();
         ani = GetComponent<Animator>();
 
+        m_shopBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickShopBtn(); });
         m_settingBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickSettingBtn(); });
         m_optionBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickOptionBtn(); });
         m_backToInGameBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickBackToInGameBtn(); });
         m_backToLobbyBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickExitToLobbyBtn(); });
-        m_shopBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickShopBtn(); });
     }
     
     // Update is called once per frame
@@ -145,6 +153,10 @@ public class InGameManager : MonoBehaviour
 
         m_timeCheck = 0;
 
+        m_curStage = 1;
+        // Debug.Log("curstage : " + m_curStage);
+        m_curStageTxt.text = "Stage " + m_curStage.ToString();
+
         // 카메라 관련
         theCamera.CameraBound();
         // 카메라 관련
@@ -154,7 +166,7 @@ public class InGameManager : MonoBehaviour
         // Fadein 하는 부분
 
         // UI 관련
-        m_Money = 20000;                                    // 내가 처음 가지고 있을 돈
+        m_money = 200;                                    // 내가 처음 가지고 있을 돈
 
         m_dragCardKind = 0;                                 // 인벤토리에서 선택한 카드 종류 넘버
         m_slotNum = 0;                                      // 인벤토리 해당 넘버 저장하기위한 변수
@@ -188,6 +200,8 @@ public class InGameManager : MonoBehaviour
         // 캐릭터 설치가능 슬롯여부
         //----- 내 카드 관련 -----
 
+
+
         // Enemy로 된 tag 객체들 모조리 찾아오기.
         GameObject[] enmy = GameObject.FindGameObjectsWithTag("Enemy");
         foreach(GameObject obj in enmy)
@@ -195,7 +209,7 @@ public class InGameManager : MonoBehaviour
             if (obj != null)
                 StageManager.StageInstance.m_tfEnemy.Add(obj);
         }
-        Debug.Log("m_tfEnemy : " + StageManager.StageInstance.m_tfEnemy.Count);
+        // Debug.Log("m_tfEnemy : " + StageManager.StageInstance.m_tfEnemy.Count);
         // Enemy로 된 tag 객체들 모조리 찾아오기.
 
         m_curGameState = eGameState.ReadyForPlay;
@@ -204,6 +218,9 @@ public class InGameManager : MonoBehaviour
     public void NxMapSetting()
     {
         m_isClear = false;                                      // 클리어했다는걸 다시 초기화.
+
+        m_curStage += 1;
+        m_curStageTxt.text = "Stage " + m_curStage.ToString();
 
         m_timer.value = 1.0f;                                   // Slider 바 초기화.
         m_timer.gameObject.SetActive(true);                     // Slider 켜기.
@@ -217,7 +234,7 @@ public class InGameManager : MonoBehaviour
             if (obj != null)
                 StageManager.StageInstance.m_tfEnemy.Add(obj);
         }
-        Debug.Log("m_tfEnemy : " + StageManager.StageInstance.m_tfEnemy.Count);
+        // Debug.Log("m_tfEnemy : " + StageManager.StageInstance.m_tfEnemy.Count);
         // Enemy로 된 tag 객체들 모조리 찾아오기.
 
         m_curGameState = eGameState.ReadyForPlay;
@@ -230,6 +247,19 @@ public class InGameManager : MonoBehaviour
     {
         if (m_timer.value <= .0f)
         {
+            bool isAllEmpty = true;
+            for(int n = 0; n < m_isCharSlotOn.Length; n++)
+            {
+                if (m_isCharSlotOn[n] == false)
+                    isAllEmpty = false;
+            }
+            if(isAllEmpty == true)
+            {
+                m_curGameState = eGameState.Result;
+                StartCoroutine(ShowResultTxt("You Lose..", 2.5f));
+                return;
+            }
+
             // 설치존 SetActive 끈다
             for (int n = 0; n < 9; n++)           
                 m_cardZone[n].SetActive(false);
@@ -237,18 +267,25 @@ public class InGameManager : MonoBehaviour
             
             m_timer.value = 1.0f;
             m_shopBtn.GetComponent<Button>().enabled = false;
-            OffShopUI();            // Shop UI 끈다
-
+            OffShopUI();                            // Shop UI 끈다
+            theCardInfo.OffInfoPanel();           // 정보패널 끈다
+            
             m_curGameState = eGameState.WaitPlayTime;
             return;
         }
         
-         m_timer.value -= Time.deltaTime / 7;        
+         m_timer.value -= Time.deltaTime / 20;        
         // Debug.Log(m_timer.value);
 
         // 실시간 돈 업데이트
-        m_MoneyTxt.text = m_Money.ToString();
+        m_moneyTxt.text = m_money.ToString();
         // 실시간 돈 업데이트
+    }
+    IEnumerator ShowResultTxt(string Txt, float delayTime)
+    {
+        m_warningTxt.text = Txt;
+        yield return new WaitForSeconds(delayTime);
+        theFade.SceneFadeOut_ToLobby();
     }
 
     /// <summary>
@@ -263,7 +300,7 @@ public class InGameManager : MonoBehaviour
         }
 
         // 실시간 돈 업데이트
-        m_MoneyTxt.text = m_Money.ToString();
+        m_moneyTxt.text = m_money.ToString();
         // 실시간 돈 업데이트
     }
 
@@ -316,6 +353,7 @@ public class InGameManager : MonoBehaviour
 
     public void ClickShopBtn()
     {
+        Debug.Log("shop click");
         m_isOpen = !m_isOpen;
         ShopUI.GetComponent<Animator>().SetBool("ShopOnOff", m_isOpen);       
     }

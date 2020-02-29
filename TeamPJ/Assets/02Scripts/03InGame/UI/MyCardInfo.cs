@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class MyCardInfo : MonoBehaviour
 {
+    public static MyCardInfo CardInfoInstance;
+
     // 카드의 정보  
     public Sprite[] m_CardImg;      // 캐릭터 이미지
     public string[] m_CardName;     // 캐릭터 이름
@@ -17,17 +19,17 @@ public class MyCardInfo : MonoBehaviour
     public GameObject[] m_shopCard;
     public GameObject m_infoPanel;
     public Text m_infoTxt;
-    public Text m_WarningTxt;
+    public Text m_warningTxt;
 
     InGameManager theInGame;
     CardBuyList theBuyList;
     SoundManager theSound;
     
-    bool setInfo = false;
-
     // Start is called before the first frame update
     void Start()
     {
+        CardInfoInstance = this;
+
         m_CardNum = new int[m_shopCard.Length];     // 이 번호는 랜덤하게 가질 이미지번호. 최대개수는 상점목록 개수(지금은 5개)
 
         for (int n = 0; n < m_shopCard.Length; n++)
@@ -94,15 +96,15 @@ public class MyCardInfo : MonoBehaviour
 
        
         m_shopCard[0].transform.GetChild(3).GetComponent<Button>().
-                onClick.AddListener(delegate { Method_Info(m_CardNum[0]); });                             // 카드정보
+                onClick.AddListener(delegate { OnInfoPanel(m_CardNum[0]); });                             // 카드정보
         m_shopCard[1].transform.GetChild(3).GetComponent<Button>().
-               onClick.AddListener(delegate { Method_Info(m_CardNum[1]); });                             // 카드정보
+               onClick.AddListener(delegate { OnInfoPanel(m_CardNum[1]); });                             // 카드정보
         m_shopCard[2].transform.GetChild(3).GetComponent<Button>().
-               onClick.AddListener(delegate { Method_Info(m_CardNum[2]); });                             // 카드정보
+               onClick.AddListener(delegate { OnInfoPanel(m_CardNum[2]); });                             // 카드정보
         m_shopCard[3].transform.GetChild(3).GetComponent<Button>().
-               onClick.AddListener(delegate { Method_Info(m_CardNum[3]); });                             // 카드정보
+               onClick.AddListener(delegate { OnInfoPanel(m_CardNum[3]); });                             // 카드정보
         m_shopCard[4].transform.GetChild(3).GetComponent<Button>().
-               onClick.AddListener(delegate { Method_Info(m_CardNum[4]); });                             // 카드정보
+               onClick.AddListener(delegate { OnInfoPanel(m_CardNum[4]); });                             // 카드정보
 
         m_shopCard[0].GetComponent<Button>().onClick.AddListener
             (delegate { Method_Card(m_shopCard[0], m_CardNum[0]); });
@@ -150,7 +152,7 @@ public class MyCardInfo : MonoBehaviour
                 theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
                 // 돈이 부족하면 빠꾸
-                if (theInGame.m_Money - m_CardCost[cardNum] <= 0)
+                if (theInGame.m_money - m_CardCost[cardNum] <= 0)
                 {
                     string warningTxt = "Not Enough Money";
                     StartCoroutine(ShowWarningTxt(warningTxt, 2.0f));
@@ -170,7 +172,7 @@ public class MyCardInfo : MonoBehaviour
                 
 
                 // 돈 차감 및 인벤토리 추가
-                theInGame.m_Money -= m_CardCost[cardNum];
+                theInGame.m_money -= m_CardCost[cardNum];
                 theBuyList.IncludeContents(m_CardImg[cardNum], cardNum);      // 내가 산 카드목록을 채워주기 위한 함수.
                 Debug.Log("BuyCard : " + cardNum);
                 // 돈 차감 및 인벤토리 추가
@@ -190,18 +192,22 @@ public class MyCardInfo : MonoBehaviour
     /// <returns></returns>
     IEnumerator ShowWarningTxt(string Txt, float delayTime)
     {
-        m_WarningTxt.text = Txt;
+        m_warningTxt.text = Txt;
         yield return new WaitForSeconds(delayTime);
-        m_WarningTxt.text = "";
+        m_warningTxt.text = "";
     }
 
-    public void Method_Info(int infoNum)
+    bool isOpen = false;
+    public void OnInfoPanel(int infoNum)
     {
-        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
-
-        setInfo = !setInfo;
-        m_infoPanel.SetActive(setInfo);
+        isOpen = !isOpen;
+        m_infoPanel.SetActive(true);
         m_infoTxt.text = m_CardInfo[infoNum];
+    }
+    public void OffInfoPanel()
+    {
+        isOpen = false;
+        m_infoPanel.SetActive(false);
     }
 
     /// <summary>
@@ -225,9 +231,9 @@ public class MyCardInfo : MonoBehaviour
     [SerializeField] GameObject m_iventorySlot;
     public int sellCost;
 
-    public void SellOn(int CharNum)
+    public void SellOn(int charNum, int cLevel)
     {
-        sellCost = m_CardCost[CharNum] / 10;
+        sellCost = (m_CardCost[charNum] / 10) * cLevel;
 
         m_sellBtn[0].SetActive(true);
         m_sellBtn[1].SetActive(true);

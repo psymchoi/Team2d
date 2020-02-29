@@ -9,6 +9,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IDropHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         InGameManager.InGameInstance.OffShopUI();
+        MyCardInfo.CardInfoInstance.OffInfoPanel();
     }
 
     public void OnDrop(PointerEventData eventData)

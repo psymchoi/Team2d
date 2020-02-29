@@ -10,6 +10,7 @@ TagManager:
   - MoveCharacter
   - Enemy
   - AttackFromPlayer
+  - Character
   layers:
   - Default
   - TransparentFX
@@ -50,7 +51,7 @@ TagManager:
   - name: Character
     uniqueID: 370587077
     locked: 0
-  - name: SpawnCharacter
+  - name: Effect
     uniqueID: 2005597829
     locked: 0
   - name: UI

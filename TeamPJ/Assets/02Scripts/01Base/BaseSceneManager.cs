@@ -70,7 +70,7 @@ public class BaseSceneManager : MonoBehaviour
         //if (theFade != null)
         //    Debug.Log("find thefade");
 
-        Debug.Log(m_curStage.ToString());
+        // Debug.Log(m_curStage.ToString());
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(m_curStage.ToString()));
 
         // Debug.Log(theSound.m_bgmVolume);

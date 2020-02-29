@@ -47,7 +47,6 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
             // Debug.Log("OnDrop Field");
             if (eventData.pointerDrag != null)
             {
-                //for (int n = theInGame.m_dragCardKind * 9 + (int)eNum ; n < (theInGame.m_dragCardKind + 1) * 9; n++)               
                 int n = theInGame.m_dragCardKind * 9 + (int)eNum;
                 if (theInGame.m_isActiveMyCard[(int)eNum] == false && 
                     theInGame.m_isCharSlotOn[(int)eNum] == true)

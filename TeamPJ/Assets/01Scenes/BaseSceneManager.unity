@@ -290,7 +290,7 @@ PrefabInstance:
     - target: {fileID: 7927362785131827309, guid: c2cd38ba59d5d964887b2f126653b339,
         type: 3}
       propertyPath: m_effClips.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7927362785131827309, guid: c2cd38ba59d5d964887b2f126653b339,
         type: 3}
@@ -307,5 +307,10 @@ PrefabInstance:
       propertyPath: m_bgmClips.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: 33c612dc77722514091a6c6c0df39d75, type: 3}
+    - target: {fileID: 7927362785131827309, guid: c2cd38ba59d5d964887b2f126653b339,
+        type: 3}
+      propertyPath: m_effClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c612c6987700814fb78cd21919cb4e8, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2cd38ba59d5d964887b2f126653b339, type: 3}
