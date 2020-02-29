@@ -67,9 +67,6 @@ public class BaseSceneManager : MonoBehaviour
     }
     public void LoadInGameScene()
     {
-        //if (theFade != null)
-        //    Debug.Log("find thefade");
-
         // Debug.Log(m_curStage.ToString());
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(m_curStage.ToString()));
 

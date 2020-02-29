@@ -222,7 +222,7 @@ public class InGameManager : MonoBehaviour
         m_curStage += 1;
         m_curStageTxt.text = "Stage " + m_curStage.ToString();
 
-        m_timer.value = 1.0f;                                   // Slider 바 초기화.
+        m_timer.value = 1.0f;                                   // Slider.value 초기화.
         m_timer.gameObject.SetActive(true);                     // Slider 켜기.
         m_shopBtn.GetComponent<Button>().enabled = true;        // Shop버튼 활성화.
         StageManager.StageInstance.m_tfEnemy.Clear();
@@ -256,7 +256,7 @@ public class InGameManager : MonoBehaviour
             if(isAllEmpty == true)
             {
                 m_curGameState = eGameState.Result;
-                StartCoroutine(ShowResultTxt("You Lose..", 2.5f));
+                StartCoroutine(ShowLoseTxt("Y o u  L o s e..", 2.5f));
                 return;
             }
 
@@ -274,14 +274,14 @@ public class InGameManager : MonoBehaviour
             return;
         }
         
-         m_timer.value -= Time.deltaTime / 20;        
+         m_timer.value -= Time.deltaTime / 22;        
         // Debug.Log(m_timer.value);
 
         // 실시간 돈 업데이트
         m_moneyTxt.text = m_money.ToString();
         // 실시간 돈 업데이트
     }
-    IEnumerator ShowResultTxt(string Txt, float delayTime)
+    IEnumerator ShowLoseTxt(string Txt, float delayTime)
     {
         m_warningTxt.text = Txt;
         yield return new WaitForSeconds(delayTime);
@@ -297,15 +297,24 @@ public class InGameManager : MonoBehaviour
         if(m_isClear == true)
         {
             m_curGameState = eGameState.EndPlay;
+            StartCoroutine(ShowClearTxt("C l e a r !", 1.5f));
         }
 
         // 실시간 돈 업데이트
         m_moneyTxt.text = m_money.ToString();
         // 실시간 돈 업데이트
     }
+    IEnumerator ShowClearTxt(string Txt, float delayTime)
+    {
+        m_warningTxt.text = Txt;
+        yield return new WaitForSeconds(delayTime);
+        m_warningTxt.text = "";
+        StopAllCoroutines();
+    }
 
     public void ResetStage()
     {
+
         // Debug.Log("ResetStage");
         BaseSceneManager.BaseSceneInstance.SceneMoveToLobby(BaseSceneManager.eStageState.Stage01);
         m_curGameState = eGameState.Result;

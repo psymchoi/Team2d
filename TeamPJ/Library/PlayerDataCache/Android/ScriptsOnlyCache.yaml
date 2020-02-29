@@ -7,10 +7,12 @@ ScriptsOnlyBuild:
     - CardBuyList
     - CharController
     - CharacterSlot
+    - CharacterStat
     - DragDropImg
     - EffectActive
     - EnemyController
     - FadeManager
+    - HurtEnemy
     - InGameManager
     - InventorySlot
     - LoadingWnd
@@ -22,10 +24,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -75,11 +75,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10832}
     - Class: 114
-      Script: {instanceID: 10992}
+      Script: {instanceID: 10996}
     - Class: 114
-      Script: {instanceID: 11132}
+      Script: {instanceID: 11136}
     - Class: 114
-      Script: {instanceID: 11520}
+      Script: {instanceID: 11524}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -156,15 +156,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10878}
     - Class: 114
-      Script: {instanceID: 11020}
+      Script: {instanceID: 10988}
     - Class: 114
-      Script: {instanceID: 11132}
+      Script: {instanceID: 10992}
     - Class: 114
-      Script: {instanceID: 11158}
+      Script: {instanceID: 11024}
     - Class: 114
-      Script: {instanceID: 11488}
+      Script: {instanceID: 11136}
     - Class: 114
-      Script: {instanceID: 11520}
+      Script: {instanceID: 11162}
+    - Class: 114
+      Script: {instanceID: 11440}
+    - Class: 114
+      Script: {instanceID: 11492}
+    - Class: 114
+      Script: {instanceID: 11524}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -223,13 +229,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10650}
     - Class: 114
-      Script: {instanceID: 11132}
+      Script: {instanceID: 11136}
     - Class: 114
-      Script: {instanceID: 11436}
+      Script: {instanceID: 11440}
     - Class: 114
-      Script: {instanceID: 11488}
+      Script: {instanceID: 11492}
     - Class: 114
-      Script: {instanceID: 11520}
+      Script: {instanceID: 11524}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -276,7 +282,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10528}
     - Class: 114
-      Script: {instanceID: 11538}
+      Script: {instanceID: 11542}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 137
@@ -336,7 +342,7 @@ ScriptsOnlyBuild:
     className: EffectActive
   - hash:
       serializedVersion: 2
-      Hash: a4c4a146e2b11ff77f03f38950a224f6
+      Hash: a8cf2b8b3ae959e15fb70b0042c20786
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyController
@@ -576,7 +582,7 @@ ScriptsOnlyBuild:
     className: CFX_AutodestructWhenNoChildren
   - hash:
       serializedVersion: 2
-      Hash: 6aae062583b681e5e85f7067e9f07803
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FadeManager
@@ -648,7 +654,7 @@ ScriptsOnlyBuild:
     className: CardBuyList
   - hash:
       serializedVersion: 2
-      Hash: 527981920bd8406e9abd3efc3632a216
+      Hash: 1e129484b794b45415c30650ac4b7ed6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: InGameManager
@@ -660,7 +666,7 @@ ScriptsOnlyBuild:
     className: CameraManager
   - hash:
       serializedVersion: 2
-      Hash: b9cf68eec58ee319c54348950cfa3445
+      Hash: 9fbd00964bb276b857a9ac80ad9a7300
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CharController
@@ -732,6 +738,18 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HurtEnemy
+  - hash:
+      serializedVersion: 2
+      Hash: 6c585405b648254e7ee0a67f5fcea8a1
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharacterStat
+  - hash:
+      serializedVersion: 2
       Hash: cc4145aff388971e3b0762418a516854
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -774,7 +792,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: 06b102eb7eaa93c5204934170b55d0e5
+      Hash: bf8f5aeec1de35132af7a75472b194e3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MyCardInfo
@@ -888,7 +906,7 @@ ScriptsOnlyBuild:
     className: ToggleGroup
   - hash:
       serializedVersion: 2
-      Hash: 42a1e52128896017ce3fbd6b76a1c2ca
+      Hash: 2cac6250f7629fc64559b18090b7c7ef
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: StageManager
@@ -904,5 +922,5 @@ ScriptsOnlyBuild:
   - Assets/01Scenes/LobbyManager.unity
   - Assets/01Scenes/InGameManager.unity
   - Assets/01Scenes/Stage/Stage01.unity
-  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200228_PJ3(\uCE90\uB9AD\uD130 \uC774\uB3D9,
-    \uB2E4\uC74C\uC2A4\uD14C\uC774\uC9C0).apk"
+  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200229_PJ1(\uCE90\uB9AD\uD130 \uD569\uC131,
+    \uB2E4\uC74C\uC2A4\uD14C\uC774\uC9C0 \uC774\uB3D9).apk"

@@ -69,7 +69,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                     theBuyList.m_InvenNum[theInGame.m_slotNum] = 0;
                     // 드래그해온 인벤토리 번호를 빈상태로
 
-                    theInGame.m_isCharSlotOn[(int)eNum] = false;
+                    theInGame.m_isCharSlotOn[(int)eNum] = false;        // 해당 번째 자리는 차있다.
 
                     //----- 이미지를 원래 인벤토리 자리로 -----
                     //break;                    

@@ -42,7 +42,7 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if(InGameManager.InGameInstance.m_curGameState
             == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnBeginDrag");
+            // Debug.Log("OnBeginDrag");
 
             if (theBuyList.m_isEmpty[(int)m_edragDropNum] == true)
                 return;
@@ -69,7 +69,7 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (InGameManager.InGameInstance.m_curGameState
            == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnDrag");
+            // Debug.Log("OnDrag");
 
             if (this.transform.GetComponent<Image>().sprite != null)
             {
@@ -89,7 +89,7 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (InGameManager.InGameInstance.m_curGameState
            == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnEndDrag");
+            // Debug.Log("OnEndDrag");
 
             m_canvasGroup.alpha = 1f;
             m_canvasGroup.blocksRaycasts = true;
@@ -113,7 +113,7 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             if (theBuyList.m_isEmpty[(int)m_edragDropNum] == true)
                 return;
 
-            Debug.Log("On Pointer Down");
+            // Debug.Log("On Pointer Down");
 
             // 카드 종류, 설치 위치
             theInGame.m_dragCardKind = int.Parse(this.transform.GetComponent<Image>().sprite.name);

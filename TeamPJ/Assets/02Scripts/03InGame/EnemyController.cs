@@ -68,5 +68,11 @@ public class EnemyController : MonoBehaviour
 
         return a_dmg;
     }
-    
+
+    public void VanishChar()
+    {
+        Destroy(this.gameObject);
+    }
+
+
 }
