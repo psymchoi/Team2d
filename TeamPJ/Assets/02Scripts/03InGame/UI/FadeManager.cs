@@ -9,9 +9,7 @@ public class FadeManager : MonoBehaviour
     SoundManager theSound;
 
     BaseSceneManager.eStageState m_curStageIdx;
-
-    public GameObject m_exitBtn = null;
-
+    
     Animator m_animator;
 
     void Start()
@@ -20,9 +18,6 @@ public class FadeManager : MonoBehaviour
 
         theBase = FindObjectOfType<BaseSceneManager>();
         theSound = FindObjectOfType<SoundManager>();
-
-        if(m_exitBtn != null)
-            m_exitBtn.GetComponent<Button>().onClick.AddListener(delegate { SceneFadeOut2(); });
     }
 
     //---- 로비 ==> 인게임 ----//
@@ -57,11 +52,11 @@ public class FadeManager : MonoBehaviour
 
     
     //---- 인게임 ==> 인게임 or 인게임 ==> 로비 ----//
-    public void SceneFadeOut2()
+    public void SceneFadeOut_ToLobby()
     {
         theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
-        m_animator.SetTrigger("FadeOut");
+        m_animator.SetTrigger("FadeOut_Lobby");
 
         // 사운드 서서히 줄어듬.
         theSound.FadeOut_Bgm();
@@ -69,6 +64,18 @@ public class FadeManager : MonoBehaviour
     public void SceneMoveToLobby()
     {
         theBase.SceneMoveToLobby(BaseSceneManager.eStageState.LOBBY);
+    }
+
+
+    public void SceneFadeOut_Stage()
+    {
+        Debug.Log("fade out to stage");
+        m_animator.SetTrigger("FadeOut_Stage");
+    }
+    public void SceneFadeIn_Stage()
+    {
+        Debug.Log("fade in to stage");
+        m_animator.SetTrigger("FadeIn");
     }
     //---- 인게임 ==> 인게임 or 인게임 ==> 로비 ----//
 }

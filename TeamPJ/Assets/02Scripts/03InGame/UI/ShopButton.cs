@@ -30,7 +30,7 @@ public class ShopButton : MonoBehaviour
     /// </summary>
     public void RefreshCard()
     {
-        theSound.PlayEffSound(SoundManager.eEff_Type.Button);
+        // theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
         for (int n = 0; n < transform.Find("MyCardSlot").childCount; n++)
         {

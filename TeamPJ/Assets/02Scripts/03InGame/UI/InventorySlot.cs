@@ -13,7 +13,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("OnDrop InvenSlot");
+        // Debug.Log("OnDrop InvenSlot");
         if (eventData.pointerDrag != null)
         {           
             // 인벤토리 위에다 드래그앤 드롭 할 시 원래위치로

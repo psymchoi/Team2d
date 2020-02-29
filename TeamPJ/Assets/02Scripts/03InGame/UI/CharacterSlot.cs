@@ -20,8 +20,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
     }
 
     public eSlot eNum;
-
-
+    
     InGameManager theInGame;
     CardBuyList theBuyList;
 
@@ -45,7 +44,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
         if (InGameManager.InGameInstance.m_curGameState
            == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnDrop");
+            // Debug.Log("OnDrop Field");
             if (eventData.pointerDrag != null)
             {
                 //for (int n = theInGame.m_dragCardKind * 9 + (int)eNum ; n < (theInGame.m_dragCardKind + 1) * 9; n++)               

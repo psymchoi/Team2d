@@ -48,7 +48,7 @@ public class CharController : MonoBehaviour
 
     Animator m_aniCtrl;
 
-    Transform m_targetEnemy;
+    GameObject m_targetEnemy;
 
     void Start()
     {
@@ -62,6 +62,8 @@ public class CharController : MonoBehaviour
         // 해당 유형의 비활성화 된 객체도 가져온다
         // theCharSlot = Resources.FindObjectsOfTypeAll<CharacterSlot>();
         // 해당 유형의 비활성화 된 객체도 가져온다
+
+        theInGame.m_myCard.Add(this.gameObject);
 
         // 캐릭터 종류별 공격범위
         switch(eCharNum)
@@ -78,10 +80,14 @@ public class CharController : MonoBehaviour
         }
         // 캐릭터 종류별 공격범위
 
-        dist = Vector2.Distance(transform.position, StageManager.StageInstance.m_tfEnemy[0].position);
+        // 제일 가까운 적을 찾기 위한 설정
+        dist = Vector2.Distance(transform.position, StageManager.StageInstance.m_tfEnemy[0].transform.position);
         m_targetEnemy = StageManager.StageInstance.m_tfEnemy[0];
+        // 제일 가까운 적을 찾기 위한 설정
 
+        // 스폰 되면서 최초 한 번 실행 될 이펙트
         EffectActive.EffectInstance.CharacterSpawn(this.transform);
+        // 스폰 되면서 최초 한 번 실행 될 이펙트
     }
 
     void Update()
@@ -120,6 +126,12 @@ public class CharController : MonoBehaviour
                 // 레이를 쏘아 태그를 판별해서 이벤트를 발생시킬 부분
             }
         }
+        else if(theInGame.m_curGameState == InGameManager.eGameState.WaitPlayTime)
+        {
+            // 캐릭터를 원래 위치로
+            transform.position = m_originPos;
+            // 캐릭터를 원래 위치로
+        }
 
         CharacterAniState();
     }
@@ -131,60 +143,71 @@ public class CharController : MonoBehaviour
             switch (eAState)
             {
                 case eAniState.Idle:
-
-                    foreach (Transform taggedEnemy in StageManager.StageInstance.m_tfEnemy)
+                    // 객체가 없거나 죽어있는 녀석을 제외하고, 가까이 있는 적을 찾아낸다.
+                    foreach (GameObject taggedEnemy in StageManager.StageInstance.m_tfEnemy)
                     {
                         if(taggedEnemy == null ||
                             taggedEnemy.GetComponent<EnemyController>().m_isDeath == true)
                         {
-                            m_targetEnemy = null;
                             continue;
                         }
 
-                        Vector2 objPos = taggedEnemy.position;
+                        Vector2 objPos = taggedEnemy.transform.position;
                         if (Vector2.Distance(transform.position, objPos) < dist)
                         {
                             dist = Vector2.Distance(transform.position, objPos);
                             m_targetEnemy = taggedEnemy;
                         }
                     }
+                    // 객체가 없거나 죽어있는 녀석을 제외하고, 가까이 있는 적을 찾아낸다.
 
                     if (m_targetEnemy == null)
+                    {
+                        InGameManager.InGameInstance.m_isClear = true;
+
                         m_aniCtrl.SetTrigger("EndPlay");
+                        dist = 1000;
+                    }
                     else
+                    {
                         eAState = eAniState.Run;
+                    }
 
                     break;
                 case eAniState.Run:
-               
-                    // 적과 관련
-                    foreach(Transform taggedEnemy in StageManager.StageInstance.m_tfEnemy)
+                    //----- 적과 관련 ------
+                    // 객체가 없거나 죽어있는 녀석을 제외하고, 가까이 있는 적을 찾아낸다.
+                    foreach(GameObject taggedEnemy in StageManager.StageInstance.m_tfEnemy)
                     {
-                        if (taggedEnemy == null)
+                        if (taggedEnemy == null ||
+                            taggedEnemy.GetComponent<EnemyController>().m_isDeath == true)
                         {
-                            m_targetEnemy = null;
                             continue;
                         }
 
-                        Vector2 objPos = taggedEnemy.position;
+                        Vector2 objPos = taggedEnemy.transform.position;
                         if(Vector2.Distance(transform.position, objPos) < dist)
                         {
                             dist = Vector2.Distance(transform.position, objPos);
                             m_targetEnemy = taggedEnemy;
                         }
                     }
+                    // 객체가 없거나 죽어있는 녀석을 제외하고, 가까이 있는 적을 찾아낸다.
                     
                     if (m_targetEnemy == null)
+                    {
                         eAState = eAniState.Idle;
+                        dist = 1000;
+                        break;
+                    }
 
                     float mov = m_movSpeed * Time.deltaTime;
-                    transform.position = Vector2.MoveTowards(transform.position, m_targetEnemy.position, mov);
-                    if (Vector2.Distance(transform.position, m_targetEnemy.position) <= m_atkRange)
+                    transform.position = Vector2.MoveTowards(transform.position, m_targetEnemy.transform.position, mov);
+                    if (Vector2.Distance(transform.position, m_targetEnemy.transform.position) <= m_atkRange)
                     {
-                        dist = 1000;
-                        eAState = eAniState.Attack;
+                        eAState = eAniState.Attack;         // 내 위치와 적 위치가 공격범위 안쪽이면 공격!
                     }
-                    // 적과 관련
+                    //----- 적과 관련 -----
 
                     break;
                 case eAniState.Attack:
@@ -192,6 +215,7 @@ public class CharController : MonoBehaviour
                     if(m_targetEnemy.GetComponent<EnemyController>().m_isDeath == true)
                     {
                         eAState = eAniState.Idle;       // 현재 캐릭터를 Idle 상태로
+                        dist = 1000;                    // dist를 초기화
                         m_targetEnemy = null;           // 죽였다면 타겟이 없는걸로
                     }
                 
@@ -201,6 +225,8 @@ public class CharController : MonoBehaviour
                     break;
             }
             m_aniCtrl.SetInteger("AniState", (int)eAState);
+
+            Debug.Log(m_targetEnemy);
 
         }
     }

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class BaseSceneManager : MonoBehaviour
 {
     public static BaseSceneManager BaseSceneInstance;
-    SoundManager theSound;
 
     public enum eLoadingState
     {
@@ -36,11 +35,11 @@ public class BaseSceneManager : MonoBehaviour
     public eStageState m_curStage;
     public eLoadingState m_curGameLoad;
 
-    public eLoadingState GameLoadState
-    {
-        set { m_curGameLoad = value; }
-        get { return m_curGameLoad; }
-    }
+    InGameManager theInGame;
+    SoundManager theSound;
+    FadeManager theFade;
+    CameraManager theCamera;
+    ShopButton theShop;
 
     // Start is called before the first frame update
     void Start()
@@ -54,29 +53,78 @@ public class BaseSceneManager : MonoBehaviour
 
         theSound = FindObjectOfType<SoundManager>();
     }
+
     
-    
-    // 로비 ==> 인게임 씬으로
+
+    // 로비 ==> 인게임 씬
     public void UnloadLobbyScene()
     {
         SceneManager.UnloadSceneAsync("LobbyManager");
 
         SceneManager.LoadSceneAsync("InGameManager", LoadSceneMode.Additive);
         SceneManager.LoadSceneAsync(m_curStage.ToString(), LoadSceneMode.Additive);
-        Invoke("LoadInGameScene", 3);
+        Invoke("LoadInGameScene", 2);
     }
     public void LoadInGameScene()
     {
+        //if (theFade != null)
+        //    Debug.Log("find thefade");
+
         Debug.Log(m_curStage.ToString());
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(m_curStage.ToString()));
 
         // Debug.Log(theSound.m_bgmVolume);
         theSound.PlayBgmSound(SoundManager.eBGM_Type.InGame, theSound.m_bgmVolume, true);
     }
-    // 로비 ==> 인게임 씬으로
+    // 로비 ==> 인게임 씬으
 
 
-    // 인게임 ==> 로비 씬으로
+    // 인게임 ==> 인게임 씬
+    public void UnloadStageScene()
+    {
+        //  해당 객체를 찾는다.
+        theInGame = FindObjectOfType<InGameManager>();
+        theFade = FindObjectOfType<FadeManager>();
+        theCamera = FindObjectOfType<CameraManager>();
+        theShop = FindObjectOfType<ShopButton>();
+        //  해당 객체를 찾는다.
+
+        theFade.SceneFadeOut_Stage();
+
+        Invoke("LoadStageScene", 2);
+    }
+    public void LoadStageScene()
+    {
+        m_curStage = eStageState.Stage01;
+        SceneManager.UnloadSceneAsync("Stage0" + (int)m_curStage);
+        SceneManager.LoadSceneAsync("Stage0" + (int)m_curStage, LoadSceneMode.Additive);
+        
+        Invoke("LoadSetStageScene", 2);
+    }
+    public void LoadSetStageScene()
+    {
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Stage0" + (int)m_curStage));
+
+        theFade.SceneFadeIn_Stage();
+        theCamera.CameraBound();
+        theShop.RefreshCard();
+
+        // 캐릭터 초기화
+        for (int n = 0; n < theInGame.m_myCard.Count; n++)
+        {
+            theInGame.m_myCard[n].GetComponent<CharController>().transform.position
+                = theInGame.m_myCard[n].GetComponent<CharController>().m_originPos;     // 원래 위치로 초기화.
+
+            theInGame.m_myCard[n].GetComponent<Animator>().SetInteger("AniState", 0);   // Idle로 다시 전환.
+        }
+        // 캐릭터 초기화
+
+        theInGame.m_curGameState = InGameManager.eGameState.NxMapsetting;
+    }
+    // 인게임 ==> 인게임 씬
+
+
+    // 인게임 ==> 로비 씬
     public void UnloadInGameScene()
     {
         SceneManager.UnloadSceneAsync("Stage0" + (int)m_curStage);
@@ -87,13 +135,13 @@ public class BaseSceneManager : MonoBehaviour
     }
     public void LoadLobbyScene()
     {
+        m_curStage = eStageState.Stage01;
+
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("LobbyManager"));
 
-        Debug.Log(theSound.m_bgmVolume);
         theSound.PlayBgmSound(SoundManager.eBGM_Type.Lobby, theSound.m_bgmVolume, true);
-        m_curStage = eStageState.Stage01;
     }
-    // 인게임 ==> 로비 씬으로
+    // 인게임 ==> 로비 씬
 
 
     /// <summary>
@@ -117,10 +165,13 @@ public class BaseSceneManager : MonoBehaviour
         }
         else
         {
+            // Debug.Log("stage again");
             unloadStage = new string[1];
             loadStage = new string[1];
             unloadStage[0] = "Stage0" + (int)m_curStage;
             loadStage[0] = "Stage0" + (int)stage;
+
+            Invoke("UnloadStageScene", 2f);
         }
     }
 

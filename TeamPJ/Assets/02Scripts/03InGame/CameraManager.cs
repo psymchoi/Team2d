@@ -91,7 +91,7 @@ public class CameraManager : MonoBehaviour
                 m_OrbitSpeed = m_OrbitSpeed * 0.93f; //m_CacSpeed; //94%씩 수렴해 가고 있다. 숫자가 적을수록 얘 0.91f; 둔감해 진다.  클수록 0.99f 민감해 진다.
             }
 
-            transform.Translate(m_OrbitSpeed.x * 10, 0, 0);
+            transform.Translate(m_OrbitSpeed.x * 3, 0, 0);
 
             // 카메라가 Background를 넘지 않게 하기 위한..
             clampedX = Mathf.Clamp(Camera.main.transform.position.x, minBound.x + halfWidth, maxBound.x - halfWidth);

@@ -42,7 +42,7 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if(InGameManager.InGameInstance.m_curGameState
             == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnBeginDrag");
+           // Debug.Log("OnBeginDrag");
 
             if (theBuyList.m_isEmpty[(int)m_edragDropNum] == true)
                 return;
@@ -56,6 +56,12 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
                     theInGame.m_cardZone[n].SetActive(true);
             }
         }
+        else
+        {
+            m_rectTransform.anchoredPosition = new Vector2(0, 0);
+            m_canvasGroup.alpha = 1f;
+            m_canvasGroup.blocksRaycasts = true;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -63,7 +69,7 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (InGameManager.InGameInstance.m_curGameState
            == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnDrag");
+            //Debug.Log("OnDrag");
 
             if (this.transform.GetComponent<Image>().sprite != null)
             {
@@ -83,13 +89,19 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (InGameManager.InGameInstance.m_curGameState
            == InGameManager.eGameState.ReadyForPlay)
         {
-            Debug.Log("OnEndDrag");
+            //Debug.Log("OnEndDrag");
 
             m_canvasGroup.alpha = 1f;
             m_canvasGroup.blocksRaycasts = true;
 
             for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
                 theInGame.m_cardZone[n].gameObject.SetActive(false);
+        }
+        else
+        {
+            m_rectTransform.anchoredPosition = new Vector2(0, 0);
+            m_canvasGroup.alpha = 1f;
+            m_canvasGroup.blocksRaycasts = true;
         }
     }
 
@@ -101,12 +113,18 @@ public class DragDropImg : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             if (theBuyList.m_isEmpty[(int)m_edragDropNum] == true)
                 return;
 
-            Debug.Log("On Pointer Down");
+            //Debug.Log("On Pointer Down");
 
             // 카드 종류, 설치 위치
             theInGame.m_dragCardKind = int.Parse(this.transform.GetComponent<Image>().sprite.name);
             theInGame.m_slotNum = (int)m_edragDropNum;
             // 카드 종류, 설치 위치
+        }
+        else
+        {
+            m_rectTransform.anchoredPosition = new Vector2(0, 0);
+            m_canvasGroup.alpha = 1f;
+            m_canvasGroup.blocksRaycasts = true;
         }
     }
     

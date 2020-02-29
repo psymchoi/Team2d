@@ -12,10 +12,10 @@ public class InGameManager : MonoBehaviour
         None,
         Ready,
         Mapsetting,
+        NxMapsetting,
         ReadyForPlay,
         WaitPlayTime,
         Play,
-        PausePlay,
         EndPlay,
         Result
     }
@@ -29,6 +29,7 @@ public class InGameManager : MonoBehaviour
     public GameObject m_settingBtn;
     public GameObject m_optionBtn;
     public GameObject m_backToInGameBtn;
+    public GameObject m_backToLobbyBtn;
     public GameObject m_shopBtn;
 
     public GameObject m_optionPanel;
@@ -49,7 +50,7 @@ public class InGameManager : MonoBehaviour
     public GameObject[] m_card;
     public GameObject[] m_cardZone;
 
-    List<GameObject> m_myCard;
+    public List<GameObject> m_myCard;
 
     public int m_dragCardKind;              // 인벤토리에서 선택한 카드 종류 넘버
     public int m_slotNum;                   // 인벤토리 해당 넘버 저장하기위한 변수
@@ -83,6 +84,7 @@ public class InGameManager : MonoBehaviour
         m_settingBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickSettingBtn(); });
         m_optionBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickOptionBtn(); });
         m_backToInGameBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickBackToInGameBtn(); });
+        m_backToLobbyBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickExitToLobbyBtn(); });
         m_shopBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickShopBtn(); });
     }
     
@@ -100,6 +102,9 @@ public class InGameManager : MonoBehaviour
                 if(m_timeCheck >= 2.0f)
                     GameMapSetting();
                 break;
+            case eGameState.NxMapsetting:
+                NxMapSetting();
+                break;
             case eGameState.ReadyForPlay:
                 ReadyForGamePlay();
                 break;
@@ -115,7 +120,7 @@ public class InGameManager : MonoBehaviour
                 GamePlay();
                 break;
             case eGameState.EndPlay:
-
+                ResetStage();
                 break;
             case eGameState.Result:
 
@@ -169,8 +174,6 @@ public class InGameManager : MonoBehaviour
                 go.transform.parent = this.transform;
                 go.transform.position = m_cardZone[m].transform.position;
                 go.SetActive(false);
-
-                m_myCard.Add(go);
             }
         }
 
@@ -185,17 +188,37 @@ public class InGameManager : MonoBehaviour
         // 캐릭터 설치가능 슬롯여부
         //----- 내 카드 관련 -----
 
+        // Enemy로 된 tag 객체들 모조리 찾아오기.
         GameObject[] enmy = GameObject.FindGameObjectsWithTag("Enemy");
-        StageManager.StageInstance.m_tfEnemy = new Transform[enmy.Length];
-        Debug.Log("enmy.Length : " + enmy.Length);
-        for(int n = 0; n < enmy.Length; n++)
+        foreach(GameObject obj in enmy)
         {
-            if (enmy[n] != null)
-                StageManager.StageInstance.m_tfEnemy[n] = enmy[n].transform;
-
-            Debug.Log(StageManager.StageInstance.m_tfEnemy[n].position);
+            if (obj != null)
+                StageManager.StageInstance.m_tfEnemy.Add(obj);
         }
+        Debug.Log("m_tfEnemy : " + StageManager.StageInstance.m_tfEnemy.Count);
+        // Enemy로 된 tag 객체들 모조리 찾아오기.
 
+        m_curGameState = eGameState.ReadyForPlay;
+    }
+
+    public void NxMapSetting()
+    {
+        m_isClear = false;                                      // 클리어했다는걸 다시 초기화.
+
+        m_timer.value = 1.0f;                                   // Slider 바 초기화.
+        m_timer.gameObject.SetActive(true);                     // Slider 켜기.
+        m_shopBtn.GetComponent<Button>().enabled = true;        // Shop버튼 활성화.
+        StageManager.StageInstance.m_tfEnemy.Clear();
+
+        // Enemy로 된 tag 객체들 모조리 찾아오기.
+        GameObject[] enmy = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject obj in enmy)
+        {
+            if (obj != null)
+                StageManager.StageInstance.m_tfEnemy.Add(obj);
+        }
+        Debug.Log("m_tfEnemy : " + StageManager.StageInstance.m_tfEnemy.Count);
+        // Enemy로 된 tag 객체들 모조리 찾아오기.
 
         m_curGameState = eGameState.ReadyForPlay;
     }
@@ -220,7 +243,7 @@ public class InGameManager : MonoBehaviour
             return;
         }
         
-         m_timer.value -= Time.deltaTime / 4;        
+         m_timer.value -= Time.deltaTime / 7;        
         // Debug.Log(m_timer.value);
 
         // 실시간 돈 업데이트
@@ -231,13 +254,24 @@ public class InGameManager : MonoBehaviour
     /// <summary>
     /// 전투 준비 완료 후 단계
     /// </summary>
+    public bool m_isClear = false;
     public void GamePlay()
     {
-       
+        if(m_isClear == true)
+        {
+            m_curGameState = eGameState.EndPlay;
+        }
 
         // 실시간 돈 업데이트
         m_MoneyTxt.text = m_Money.ToString();
         // 실시간 돈 업데이트
+    }
+
+    public void ResetStage()
+    {
+        // Debug.Log("ResetStage");
+        BaseSceneManager.BaseSceneInstance.SceneMoveToLobby(BaseSceneManager.eStageState.Stage01);
+        m_curGameState = eGameState.Result;
     }
     #endregion
 
@@ -249,7 +283,6 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     public void ClickSettingBtn()
     {
-        m_curGameState = eGameState.PausePlay;
         theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
         m_settingPanel.SetActive(true);
@@ -262,12 +295,18 @@ public class InGameManager : MonoBehaviour
     /// </summary>
     public void ClickBackToInGameBtn()
     {
-        m_curGameState = eGameState.Play;
         theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
         m_settingPanel.SetActive(false);
 
         Time.timeScale = 1.0f;          // 원래 프레임 단위 속도로 실행.
+    }
+
+    public void ClickExitToLobbyBtn()
+    {
+        Time.timeScale = 1.0f;
+
+        theFade.SceneFadeOut_ToLobby();
     }
     //---- 설정 관련 버튼 ----//
 
