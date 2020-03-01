@@ -45,18 +45,18 @@ public class InGameManager : MonoBehaviour
     public Text m_warningTxt;
 
     // 캐릭터 카드 관련
-    public int m_cardCount = 6;             // 캐릭터 이미지 개수
+    public int m_cardCount = 6;             // 캐릭터 이미지 개수       (현재 6개)
     public int m_money;                     // 플레이어 돈
     public Text m_moneyTxt;                 // 플레이어 돈을 보여줄 텍스트
-    public GameObject[] m_card;             // 캐릭터 객체
+    public GameObject[] m_card;             // 캐릭터 객체               (현재 6개)
     public GameObject[] m_cardZone;         // 캐릭터 설치존
 
 
     public List<GameObject> m_myCard;       // 현재 스폰되어 있는 캐릭터를 담을 리스트
 
     public int m_dragCardKind;              // 인벤토리에서 선택한 카드 종류 넘버
-    public int m_slotNum;                   // 인벤토리 해당 넘버 저장하기위한 변수
-
+    public int m_slotNum;                   // 인벤토리 해당 넘버 저장하기위한 변수     (현재 7칸)
+    
     public bool[] m_isActiveMyCard;         // 미리 생성해 놓은 캐릭터 중에서 Active 되어있는 객체 판별변수
     public bool[] m_isCharSlotOn;           // 캐릭터 설치존 열려 있는지 판단여부
     // 캐릭터 카드 관련
@@ -342,6 +342,48 @@ public class InGameManager : MonoBehaviour
         // InGameManager에 있는 (m_isCharSlotOn)슬롯 상태 여부
         //----- UI 관련 -----
 
+        //----- 내 캐릭터 관련 -----
+        string[] a_charLevel = PlayerPrefs.GetString("CharLevel").Split(',');
+        for (int n = 0; n < m_card.Length; n++)
+        {
+            for (int m = 0; m < 9; m++)
+            {
+                GameObject go = Instantiate(m_card[n]);             // 캐릭터를 오브젝트 풀 형식으로 생성
+                go.transform.parent = this.transform;
+                go.transform.position = m_cardZone[m].transform.position;
+
+                int tmp;
+                if (int.TryParse(a_charLevel[n * 9 + m], out tmp))
+                {
+                    if (tmp != 0)
+                    {
+                        this.transform.GetChild(n * 9 + m).GetComponent<CharController>().m_level = tmp;
+                        this.transform.GetChild(n * 9 + m).GetComponent<CharController>().CharStatReset();
+                    }
+                }
+
+                go.SetActive(false);
+            }
+        }
+
+        m_isActiveMyCard = new bool[9 * m_card.Length];
+        string[] a_charActive = PlayerPrefs.GetString("CharActiveNum").Split(',');
+        for (int n = 0; n < m_isActiveMyCard.Length; n++)
+        {
+            int tmp;
+            if(int.TryParse(a_charActive[n], out tmp))
+            {
+                if (tmp == 1)
+                {
+                    m_isActiveMyCard[n] = true;
+                    this.transform.GetChild(n).gameObject.SetActive(true);
+                }
+                else
+                    m_isActiveMyCard[n] = false;
+            }
+        }
+        //----- 내 캐릭터 관련 -----
+
 
         // Enemy로 된 tag 객체들 모조리 찾아오기.
         GameObject[] enmy = GameObject.FindGameObjectsWithTag("Enemy");
@@ -386,13 +428,41 @@ public class InGameManager : MonoBehaviour
             // m_timer.value = 1.0f;
             m_shopBtn.GetComponent<Button>().enabled = false;
             OffShopUI();                            // Shop UI 끈다
-            theCardInfo.OffInfoPanel();           // 정보패널 끈다
-            
+            theCardInfo.OffInfoPanel();             // 정보패널 끈다
+
+            // Which Slot에 What kind Character 설치되어 있는지 저장
+            string a_charActive = "";
+            string a_charLevel = "";
+            for (int n = 0; n < m_isActiveMyCard.Length; n++)
+            {
+                if (m_isActiveMyCard[n] == true)
+                {// 해당 슬롯에 캐릭터가 있다.
+                    a_charActive = a_charActive + 1.ToString();
+                    a_charLevel = a_charLevel + this.transform.GetChild(n).GetComponent<CharController>().m_level.ToString();
+                }
+                else
+                {// 해당 슬롯에 캐릭터가 없다
+                    a_charActive = a_charActive + 0.ToString();
+                    a_charLevel = a_charLevel + 0.ToString();
+                }
+
+                if(n < m_isActiveMyCard.Length - 1)
+                {
+                    a_charActive = a_charActive + ",";
+                    a_charLevel = a_charLevel + ",";
+                }
+            }
+            // Which Slot에 What kind Character 설치되어 있는지 저장
+            PlayerPrefs.SetString("CharActiveNum", a_charActive);
+            PlayerPrefs.SetString("CharLevel", a_charLevel);
+
+            Debug.Log(a_charLevel);
+
             m_curGameState = eGameState.WaitPlayTime;
             return;
         }
         
-         m_timer.value -= Time.deltaTime / 7;        
+         m_timer.value -= Time.deltaTime / 10;        
         // Debug.Log(m_timer.value);
 
         // 실시간 돈 업데이트
@@ -422,8 +492,9 @@ public class InGameManager : MonoBehaviour
             PlayerPrefs.SetInt("curStage", m_curStage);     // 다음 스테이지 번호
             PlayerPrefs.SetInt("money", m_money);           // 현재 가지고 있는 돈 저장
             PlayerPrefs.SetInt("IsClear", 1);               // 0이면 실패, 1이면 클리어
-            
+
             // CardBuyList에 있는 (m_InvenNum) (m_isEmpty) (m_cardKind)
+            # region CardBuyList에 있는 (m_InvenNum) (m_isEmpty) (m_cardKind)
             string a_tmpIvenNum = "";
             string a_tmpIsEmpty = "";
             string a_tmpCardKind = "";
@@ -466,6 +537,7 @@ public class InGameManager : MonoBehaviour
             PlayerPrefs.SetString("IvenNum", a_tmpIvenNum);
             PlayerPrefs.SetString("IsEmpty", a_tmpIsEmpty);
             PlayerPrefs.SetString("CardKind", a_tmpCardKind);
+            #endregion
             // CardBuyList에 있는 (m_InvenNum) (m_isEmpty) (m_cardKind)
 
 

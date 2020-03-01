@@ -30,7 +30,11 @@ public class EffectActive : MonoBehaviour
     /// <param name="pos"> 이펙트 효과 위치 </param>
     public void CharacterAttack(Transform pos)
     {
-        m_effect[1].transform.position = pos.position;
-        m_effect[1].Play();
+        GameObject eff = Instantiate(m_effect[1].gameObject);
+        eff.transform.parent = this.transform;
+        eff.transform.position = pos.position;
+        eff.GetComponent<ParticleSystem>().Play();
+
+        Destroy(eff, 2);
     }
 }

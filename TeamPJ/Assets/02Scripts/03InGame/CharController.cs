@@ -31,6 +31,7 @@ public class CharController : MonoBehaviour
     // 캐릭터 애니메이션 상태
 
     public Vector3 m_originPos;     // 이 스크립트가 붙은 객체의 원래 위치
+    //public int m_charActiveNum;     // InGameManager 하위에 몇 번째가 켜져있나
     public int m_charSlotNum;       // 현재 캐릭터가 위치한 슬롯 넘버
 
     float startPosX;                // 마우스 x좌표
@@ -41,7 +42,7 @@ public class CharController : MonoBehaviour
     int m_movSlotNum = 0;           // 위치를 이동시킬 슬롯 넘버
 
     // 캐릭터 능력치 관련
-    public int m_level;
+    public int m_level;     
     public float m_hp;
     public float m_curHp;
     public float m_atk;
@@ -77,21 +78,28 @@ public class CharController : MonoBehaviour
         // theCharSlot = Resources.FindObjectsOfTypeAll<CharacterSlot>();
         // 해당 유형의 비활성화 된 객체도 가져온다
 
-        theInGame.m_myCard.Add(this.gameObject);
 
-        m_curHp = m_hp;
+        theInGame.m_myCard.Add(this.gameObject);
+        // InGameManager 에서 몇 번째꺼가 켜져있나
+        //m_charActiveNum = (int)eCharNum * 9 + m_charSlotNum;
+        // InGameManager 에서 몇 번째꺼가 켜져있나
+
+
+
+
 
         dist = 1000;
 
         // 스폰 시 최초 한 번 실행 될 effect
         EffectActive.EffectInstance.CharacterSpawn(this.transform);
         // 스폰 시 최초 한 번 실행 될 effect
+
     }
 
     void Update()
     {
         if (InGameManager.InGameInstance.m_curGameState
-            == InGameManager.eGameState.ReadyForPlay)
+          == InGameManager.eGameState.ReadyForPlay)
         {
             eAState = eAniState.Idle;
 
@@ -131,14 +139,39 @@ public class CharController : MonoBehaviour
         }
         else if(theInGame.m_curGameState == InGameManager.eGameState.WaitPlayTime)
         {
-            // 캐릭터를 원래 위치로
-            transform.position = m_originPos;
-            // 캐릭터를 원래 위치로
+             for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
+                 theInGame.m_cardZone[n].gameObject.SetActive(false);
+             
+             // 판매 UI Off
+             theCardInfo.SellOff();
+             theCardInfo.OffInfoPanel();
+             // 판매 UI Off
+             
+             this.transform.position = m_originPos;            
         }
 
         CharacterAniState();
     }
-    
+
+    public void CharStatReset()
+    {
+        // 캐릭터 능력치 상태
+        int a_lvl = m_level;
+        while (a_lvl > 1)
+        {
+            m_hp = m_hp * a_upHp;
+            m_atk = m_atk * a_upAtk;
+            m_def += 1;
+            m_movSpeed += a_upMSpeed;
+            this.transform.localScale
+                    = new Vector3(this.transform.localScale.x + 0.04f, this.transform.localScale.y + 0.04f, 1);
+
+            a_lvl--;
+        }
+        m_curHp = m_hp;
+        // 캐릭터 능력치 상태
+    }
+
     /// <summary>
     /// 캐릭터 애니메이션 부분
     /// </summary>
@@ -339,7 +372,7 @@ public class CharController : MonoBehaviour
             // 캐릭터 위치를 Change 경우
             if (isActive == false)
             {
-                int a_movSlotNum = theInGame.m_dragCardKind * 9 + m_movSlotNum;
+                int a_movSlotNum /*= m_charActiveNum*/ = theInGame.m_dragCardKind * 9 + m_movSlotNum;
                 int a_charSlotNum = theInGame.m_dragCardKind * 9 + m_charSlotNum;
                 Debug.Log("n : " + a_movSlotNum);
                 if (theInGame.m_isActiveMyCard[a_movSlotNum] == false &&
@@ -347,9 +380,9 @@ public class CharController : MonoBehaviour
                 {
                     Debug.Log("Character Move");
 
-                    theInGame.m_isActiveMyCard[a_charSlotNum] = false;              // 옮기기 전의 캐릭터 off
-                    theInGame.m_isCharSlotOn[m_movSlotNum] = false;     // 옮긴 후 자리는 차지하는 공간으로
-                    theInGame.m_isCharSlotOn[m_charSlotNum] = true;     // 옮기기 전 자리는 빈 상태로
+                    theInGame.m_isActiveMyCard[a_charSlotNum] = false;          // 옮기기 전의 캐릭터 off
+                    theInGame.m_isCharSlotOn[m_movSlotNum] = false;             // 옮긴 후 자리는 차지하는 공간으로
+                    theInGame.m_isCharSlotOn[m_charSlotNum] = true;             // 옮기기 전 자리는 빈 상태로
 
                     // 해당 칸에 미리 배치해 놓은 캐릭터 SetActive(true)
                     theInGame.m_isActiveMyCard[a_movSlotNum] = true;                            // 캐릭터 on
@@ -377,13 +410,13 @@ public class CharController : MonoBehaviour
                     return;
                 }
                 else
-                {
+                {// 등급업인 경우
                     if (theInGame.transform.GetChild(a_movSlotNum).GetComponent<CharController>().eCharNum == eCharNum &&
                         theInGame.transform.GetChild(a_movSlotNum).GetComponent<CharController>().m_level == m_level)
                     {
-                        theInGame.m_isActiveMyCard[a_charSlotNum] = false;              // 옮기기 전의 캐릭터 off
-                        theInGame.m_isCharSlotOn[m_movSlotNum] = false;     // 옮긴 후 자리는 차지하는 공간으로
-                        theInGame.m_isCharSlotOn[m_charSlotNum] = true;     // 옮기기 전 자리는 빈 상태로
+                        theInGame.m_isActiveMyCard[a_charSlotNum] = false;          // 옮기기 전의 캐릭터 off
+                        theInGame.m_isCharSlotOn[m_movSlotNum] = false;             // 옮긴 후 자리는 차지하는 공간으로
+                        theInGame.m_isCharSlotOn[m_charSlotNum] = true;             // 옮기기 전 자리는 빈 상태로
 
                         // 해당 칸에 미리 배치해 놓은 캐릭터 SetActive(true)
                         theInGame.m_isActiveMyCard[a_movSlotNum] = true;                            // 캐릭터 on
@@ -496,19 +529,6 @@ public class CharController : MonoBehaviour
 
             //    EffectActive.EffectInstance.CharacterSpawn(theInGame.transform.GetChild(n).transform);
             //}
-        }
-        else if(theInGame.m_curGameState == InGameManager.eGameState.WaitPlayTime)
-        {
-            for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
-                theInGame.m_cardZone[n].gameObject.SetActive(false);
-
-            // 판매 UI Off
-            theCardInfo.SellOff();
-            theCardInfo.OffInfoPanel();
-            // 판매 UI Off
-
-            this.transform.position = m_originPos;
-            return;
         }
     }
 
