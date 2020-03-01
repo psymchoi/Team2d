@@ -922,5 +922,5 @@ ScriptsOnlyBuild:
   - Assets/01Scenes/LobbyManager.unity
   - Assets/01Scenes/InGameManager.unity
   - Assets/01Scenes/Stage/Stage01.unity
-  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200229_PJ1(\uCE90\uB9AD\uD130 \uD569\uC131,
+  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200229_PJ2(\uCE90\uB9AD\uD130 \uD569\uC131,
     \uB2E4\uC74C\uC2A4\uD14C\uC774\uC9C0 \uC774\uB3D9).apk"

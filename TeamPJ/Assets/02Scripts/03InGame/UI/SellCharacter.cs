@@ -52,7 +52,7 @@ public class SellCharacter : MonoBehaviour
         Debug.Log("OnDrop SellPoint");
         if (eventData.pointerDrag != null)
         {
-            theBuyList.m_InvenNum[m_invenNum] = 0;
+            theBuyList.m_InvenNum[m_invenNum] = 100;
             eventData.pointerDrag.transform.position = m_CharPosition;
             eventData.pointerDrag.SetActive(false);
         }

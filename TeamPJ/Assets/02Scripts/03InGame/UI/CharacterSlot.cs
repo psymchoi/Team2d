@@ -29,15 +29,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
         theInGame = FindObjectOfType<InGameManager>();
         theBuyList = FindObjectOfType<CardBuyList>();
     }
-
-    void Update()
-    {
-        if (InGameManager.InGameInstance.m_curGameState
-           == InGameManager.eGameState.ReadyForPlay)
-        {
-
-        }
-    }
+    
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -65,12 +57,13 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                     eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition
                              = new Vector2(0, 0);
 
-                    // 드래그해온 인벤토리 번호를 빈상태로
-                    theBuyList.m_InvenNum[theInGame.m_slotNum] = 0;
-                    // 드래그해온 인벤토리 번호를 빈상태로
+                    // 드래그해온 인벤토리 번호와 캐릭터 종류를 빈상태로
+                    theBuyList.m_InvenNum[theInGame.m_slotNum] = 100;       // ★
+                    theBuyList.m_cardKind[theInGame.m_slotNum] = "100";     // ★
+                    // 드래그해온 인벤토리 번호와 캐릭터 종류를 빈상태로
 
-                    theInGame.m_isCharSlotOn[(int)eNum] = false;        // 해당 번째 자리는 차있다.
-
+                    theInGame.m_isCharSlotOn[(int)eNum] = false;            // ★ 해당 번째 자리는 차있다.
+                    
                     //----- 이미지를 원래 인벤토리 자리로 -----
                     //break;                    
                 }

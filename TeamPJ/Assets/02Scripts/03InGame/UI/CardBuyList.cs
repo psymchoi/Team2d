@@ -7,21 +7,26 @@ public class CardBuyList : MonoBehaviour
 {
     public Sprite[] m_myCardImg;
     public bool[] m_isEmpty;            // 인벤토리를 위한 변수
-
     public int[] m_InvenNum;            // 슬롯이 채워져 있을 시 고유넘버 부여, 0 은 빈공간
+    public string[] m_cardKind;            // 인벤토리에 담긴 카드 종류 번호
+
     public GameObject m_sortingBtn;
+
+    InGameManager theInGame;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_isEmpty = new bool[this.transform.childCount];            // 지금은 7칸
-        m_InvenNum = new int[this.transform.childCount];            // 고유번호도 7개
+        theInGame = FindObjectOfType<InGameManager>();
 
-        for (int n = 0; n < this.transform.childCount; n++)
-        {
-            m_isEmpty[n] = true;                // 다 비어있는 상태
-            m_InvenNum[n] = 0;                  // 고유번호 0 은 비어있는 상태
-        }
+        // m_isEmpty = new bool[this.transform.childCount];            // 지금은 7칸
+        // m_InvenNum = new int[this.transform.childCount];            // 고유번호도 7개
+
+        //for (int n = 0; n < this.transform.childCount; n++)
+        //{
+        //    m_isEmpty[n] = true;                // 다 비어있는 상태
+        //   //m_InvenNum[n] = 0;                  // 고유번호 0 은 비어있는 상태
+        //}
 
         m_sortingBtn.GetComponent<Button>().onClick.AddListener(delegate { SortInventory(); });
     }
@@ -33,7 +38,7 @@ public class CardBuyList : MonoBehaviour
         {
             for (int n = 0; n < this.transform.childCount; n++)
             {
-                if(m_InvenNum[n] == 0)
+                if(m_InvenNum[n] == 100)
                 {
                     // 인벤 넘버가 0인 경우에는 빈 공간으로 간주한다.
                      m_isEmpty[n] = true;
@@ -54,16 +59,25 @@ public class CardBuyList : MonoBehaviour
         {
             if(m_isEmpty[n] == true)
             {
+                Debug.Log("CardBuyList n : " + n);
+
                 // 이미지 삽입
                 this.transform.GetChild(n).
                     transform.GetChild(0).
                     GetComponent<Image>().sprite = slotImg;
                 // 이미지 삽입
 
+                // 어떤 카드 종류인지
+                m_cardKind[n] = this.transform.GetChild(n).
+                    transform.GetChild(0).
+                    GetComponent<Image>().sprite.name;
+                // 어떤 카드 종류인지
+
                 // 넘버 부여
-                m_InvenNum[n] = n + 1;      // 1 ~ 8
+                m_InvenNum[n] = n;      // 0 ~ 6 
                 // 넘버 부여
-                
+
+
                 m_isEmpty[n] = false;       // 해당 슬롯은 빈상태가 아닌걸로
 
                 break;
@@ -101,7 +115,7 @@ public class CardBuyList : MonoBehaviour
 
                     if (tmp2.GetComponent<Image>().sprite == default)
                     {
-                        Debug.Log("m증가");
+                        // Debug.Log("m증가");
                         m_isEmpty[m] = true;
 
                         m++;
@@ -113,6 +127,8 @@ public class CardBuyList : MonoBehaviour
                     
                     m_InvenNum[nn] = m_InvenNum[m];
                     m_InvenNum[m] = 0;
+
+                    m_cardKind[nn] = tmp2.GetComponent<Image>().sprite.name;
 
                     m_isEmpty[nn] = false;
                     m_isEmpty[m] = true;
@@ -171,6 +187,9 @@ public class CardBuyList : MonoBehaviour
                     int tmp = m_InvenNum[n];
                     m_InvenNum[n] = m_InvenNum[m];
                     m_InvenNum[m] = tmp;
+
+                    m_cardKind[n] = tmp2.GetComponent<Image>().sprite.name;
+                    m_cardKind[m] = tmp1.GetComponent<Image>().sprite.name;
 
                 }
                 m++;

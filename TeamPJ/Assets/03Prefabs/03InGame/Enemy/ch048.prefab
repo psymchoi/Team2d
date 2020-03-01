@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isDeath: 0
-  m_hp: 200
+  m_hp: 1
   m_curHp: 0
   m_atk: 20
   m_def: 1

@@ -128,14 +128,15 @@ public class MyCardInfo : MonoBehaviour
     /// <param name="cardNum"> 해당 캐릭터 고유넘버 </param>
     void Method_Card(GameObject shop, int cardNum)
     {
-        //----- 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수
+        //----- 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수 -----
         int count = 0;
         for (int n = 0; n < theBuyList.m_isEmpty.Length; n++)
         {
             if (theBuyList.m_isEmpty[n] == false)
+            {
                 count++;
+            }
         }
-
         // 인벤토리가 꽉 찼다는 메세지
         if(count == 7)
         {
@@ -149,6 +150,7 @@ public class MyCardInfo : MonoBehaviour
         {
             if (theBuyList.m_isEmpty[n] == true)
             {
+                Debug.Log("MyCardInfo n : " + n);
                 theSound.PlayEffSound(SoundManager.eEff_Type.Button);
 
                 // 돈이 부족하면 빠꾸
@@ -174,14 +176,14 @@ public class MyCardInfo : MonoBehaviour
                 // 돈 차감 및 인벤토리 추가
                 theInGame.m_money -= m_CardCost[cardNum];
                 theBuyList.IncludeContents(m_CardImg[cardNum], cardNum);      // 내가 산 카드목록을 채워주기 위한 함수.
-                Debug.Log("BuyCard : " + cardNum);
+                Debug.Log("BuyCard : " + cardNum);               
                 // 돈 차감 및 인벤토리 추가
                 
                 break;
             }
         }
         
-        //----- 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수
+        //----- 상점에서 해당 넘버 카드가 눌렸을 때 반응하게 될 함수 -----
     }
 
     /// <summary>

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class FadeManager : MonoBehaviour
 {
+    public static FadeManager FadeInstance;
+
     BaseSceneManager theBase;
     SoundManager theSound;
 
@@ -14,6 +16,8 @@ public class FadeManager : MonoBehaviour
 
     void Start()
     {
+        FadeInstance = this;
+
         m_animator = GetComponent<Animator>();
 
         theBase = FindObjectOfType<BaseSceneManager>();
