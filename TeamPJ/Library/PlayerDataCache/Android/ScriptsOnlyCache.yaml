@@ -24,8 +24,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -648,7 +650,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 59b4e7032e612809e50aafbbabe39d1d
+      Hash: b18fec16e54d2411205409775c6b5a75
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CardBuyList
@@ -922,5 +924,5 @@ ScriptsOnlyBuild:
   - Assets/01Scenes/LobbyManager.unity
   - Assets/01Scenes/InGameManager.unity
   - Assets/01Scenes/Stage/Stage01.unity
-  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200229_PJ2(\uCE90\uB9AD\uD130 \uD569\uC131,
-    \uB2E4\uC74C\uC2A4\uD14C\uC774\uC9C0 \uC774\uB3D9).apk"
+  playerPath: "F:/UnityScript/Team/TeamPJ_APK/200301_PJ2(\uC778\uBCA4\uD1A0\uB9AC
+    \uC800\uC7A5, \uCE90\uB9AD\uD130 \uC800\uC7A5 PlayerPrefs\uB85C \uC218\uC815).apk"

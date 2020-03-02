@@ -359,6 +359,11 @@ public class CharController : MonoBehaviour
 
                 this.gameObject.SetActive(false);                               // 객체를 꺼준다.
 
+                // 판매 UI Off
+                theCardInfo.SellOff();
+                theCardInfo.OffInfoPanel();
+                // 판매 UI Off
+
                 // 캐릭터 슬롯을 꺼준다
                 for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
                     theInGame.m_cardZone[n].gameObject.SetActive(false);
@@ -369,10 +374,10 @@ public class CharController : MonoBehaviour
             // 캐릭터를 Sell 경우
 
 
-            // 캐릭터 위치를 Change 경우
+            // 캐릭터 위치를 Change / 캐릭터 등급 업
             if (isActive == false)
             {
-                int a_movSlotNum /*= m_charActiveNum*/ = theInGame.m_dragCardKind * 9 + m_movSlotNum;
+                int a_movSlotNum  = theInGame.m_dragCardKind * 9 + m_movSlotNum;
                 int a_charSlotNum = theInGame.m_dragCardKind * 9 + m_charSlotNum;
                 Debug.Log("n : " + a_movSlotNum);
                 if (theInGame.m_isActiveMyCard[a_movSlotNum] == false &&
@@ -381,31 +386,41 @@ public class CharController : MonoBehaviour
                     Debug.Log("Character Move");
 
                     theInGame.m_isActiveMyCard[a_charSlotNum] = false;          // 옮기기 전의 캐릭터 off
-                    theInGame.m_isCharSlotOn[m_movSlotNum] = false;             // 옮긴 후 자리는 차지하는 공간으로
+                    theInGame.m_isActiveMyCard[a_movSlotNum] = true;            // 옮긴 후 캐릭터 on
                     theInGame.m_isCharSlotOn[m_charSlotNum] = true;             // 옮기기 전 자리는 빈 상태로
+                    theInGame.m_isCharSlotOn[m_movSlotNum] = false;             // 옮긴 후 자리는 차지하는 공간으로
 
                     // 해당 칸에 미리 배치해 놓은 캐릭터 SetActive(true)
-                    theInGame.m_isActiveMyCard[a_movSlotNum] = true;                            // 캐릭터 on
                     theInGame.transform.GetChild(a_movSlotNum).gameObject.SetActive(true);      // 미리배치해둔 캐릭터 On
                     theInGame.transform.GetChild(a_movSlotNum).
                         GetComponent<CharController>().m_charSlotNum = m_movSlotNum;
 
-                    theInGame.transform.GetChild(a_movSlotNum).
-                   GetComponent<CharController>().m_level = m_level;
-                    theInGame.transform.GetChild(a_movSlotNum).
-                        GetComponent<CharController>().m_hp = m_hp;
-                    theInGame.transform.GetChild(a_movSlotNum).
-                        GetComponent<CharController>().m_atk = m_atk;
-                    theInGame.transform.GetChild(a_movSlotNum).
-                        GetComponent<CharController>().m_def = m_def;
-                    theInGame.transform.GetChild(a_movSlotNum).
-                        GetComponent<CharController>().m_movSpeed = m_movSpeed;
+                    theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                    GetComponent<CharController>().m_level = m_level;
+                    theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                    GetComponent<CharController>().m_hp = m_hp;
+                    theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                    GetComponent<CharController>().m_atk = m_atk;
+                    theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                    GetComponent<CharController>().m_def = m_def;
+                    theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                    GetComponent<CharController>().m_movSpeed = m_movSpeed;
                     theInGame.transform.GetChild(a_movSlotNum).localScale
-                        = new Vector3(theInGame.transform.GetChild(a_charSlotNum).localScale.x,
-                                       theInGame.transform.GetChild(a_charSlotNum).localScale.y, 1);
+                                             = new Vector3(this.transform.localScale.x,
+                                                            this.transform.localScale.y, 1);
                     // 해당 칸에 미리 배치해 놓은 캐릭터 SetActive(true)
 
                     this.gameObject.SetActive(false);
+
+                    // 판매 UI Off
+                    theCardInfo.SellOff();
+                    theCardInfo.OffInfoPanel();
+                    // 판매 UI Off
+
+                    // 캐릭터 슬롯을 꺼준다
+                    for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
+                        theInGame.m_cardZone[n].gameObject.SetActive(false);
+                    // 캐릭터 슬롯을 꺼준다
 
                     return;
                 }
@@ -415,38 +430,35 @@ public class CharController : MonoBehaviour
                         theInGame.transform.GetChild(a_movSlotNum).GetComponent<CharController>().m_level == m_level)
                     {
                         theInGame.m_isActiveMyCard[a_charSlotNum] = false;          // 옮기기 전의 캐릭터 off
+                        theInGame.m_isActiveMyCard[a_movSlotNum] = true;            // 옮긴 후 캐릭터 on
                         theInGame.m_isCharSlotOn[m_movSlotNum] = false;             // 옮긴 후 자리는 차지하는 공간으로
                         theInGame.m_isCharSlotOn[m_charSlotNum] = true;             // 옮기기 전 자리는 빈 상태로
 
                         // 해당 칸에 미리 배치해 놓은 캐릭터 SetActive(true)
-                        theInGame.m_isActiveMyCard[a_movSlotNum] = true;                            // 캐릭터 on
                         theInGame.transform.GetChild(a_movSlotNum).gameObject.SetActive(true);      // 미리배치해둔 캐릭터 On
                         theInGame.transform.GetChild(a_movSlotNum).
                             GetComponent<CharController>().m_charSlotNum = m_movSlotNum;
-                        // 캐릭터 능력치 Up
-
-
-                        theInGame.transform.GetChild(a_movSlotNum).
-                            GetComponent<CharController>().m_level += 1;
-                        theInGame.transform.GetChild(a_movSlotNum).
-                            GetComponent<CharController>().m_hp = m_hp * a_upHp;
-                        theInGame.transform.GetChild(a_movSlotNum).
-                            GetComponent<CharController>().m_atk = m_atk * a_upAtk;
-                        theInGame.transform.GetChild(a_movSlotNum).
-                            GetComponent<CharController>().m_def += 1;
-                        theInGame.transform.GetChild(a_movSlotNum).
-                            GetComponent<CharController>().m_movSpeed = m_movSpeed + a_upMSpeed;
-                        theInGame.transform.GetChild(a_movSlotNum).localScale
-                            = new Vector3(theInGame.transform.GetChild(a_movSlotNum).localScale.x + 0.04f,
-                                           theInGame.transform.GetChild(a_movSlotNum).localScale.y + 0.04f, 1);
-                        // 캐릭터 능력치 Up
                         // 해당 칸에 미리 배치해 놓은 캐릭터 SetActive(true)
 
+                        // 캐릭터 능력치 Up
+                        theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                        GetComponent<CharController>().m_level += 1;
+                        theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                        GetComponent<CharController>().m_hp = m_hp * a_upHp;
+                        theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                        GetComponent<CharController>().m_atk = m_atk * a_upAtk;
+                        theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                        GetComponent<CharController>().m_def += 1;
+                        theInGame.transform.GetChild(a_movSlotNum).gameObject.
+                                        GetComponent<CharController>().m_movSpeed = m_movSpeed + a_upMSpeed;
+                        theInGame.transform.GetChild(a_movSlotNum).localScale
+                                        = new Vector3(theInGame.transform.GetChild(a_movSlotNum).localScale.x + 0.04f,
+                                                       theInGame.transform.GetChild(a_movSlotNum).localScale.y + 0.04f, 1);
+                        // 캐릭터 능력치 Up
+
                         this.gameObject.SetActive(false);
-
-                        // 캐릭터를 Level Up 시킬 경우
-
-
+                        
+                        
                         // 판매 UI Off
                         theCardInfo.SellOff();
                         theCardInfo.OffInfoPanel();
@@ -466,16 +478,24 @@ public class CharController : MonoBehaviour
                         Debug.Log("Can't Level UP");
                 }
             }
+            // 캐릭터 위치를 Change / 캐릭터 등급 업
+
 
             for (int n = 0; n < theInGame.m_isCharSlotOn.Length; n++)
                 theInGame.m_cardZone[n].gameObject.SetActive(false);
-            // 캐릭터 위치를 Change 경우
+
+            // 판매 UI Off
+            theCardInfo.SellOff();
+            theCardInfo.OffInfoPanel();
+            // 판매 UI Off
 
             isBeginHeld = false;
             isSell = false;
             isActive = true;
 
-            this.transform.position = m_originPos;
+
+
+            //this.transform.position = m_originPos;
 
             // 캐릭터를 Level Up 시킬 경우
             //if (isLevelUp == true)

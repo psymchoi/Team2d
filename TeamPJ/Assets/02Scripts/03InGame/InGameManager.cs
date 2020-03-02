@@ -261,9 +261,9 @@ public class InGameManager : MonoBehaviour
         //----- UI 관련 -----
         m_money = PlayerPrefs.GetInt("money");
 
-        // m_timer.value = 1.0f;                                   // Slider.value 초기화.
+        m_shopBtn.GetComponent<Button>().enabled = true;        // Shop버튼 활성화.
+        m_timer.value = 1.0f;                                   // Slider.value 초기화.
         // m_timer.gameObject.SetActive(true);                     // Slider 켜기.
-        // m_shopBtn.GetComponent<Button>().enabled = true;        // Shop버튼 활성화.
         // StageManager.StageInstance.m_tfEnemy.Clear();
 
         m_isActiveMyCard = new bool[9 * m_card.Length];     // 미리 생성해 줄 캐릭터 공간 생성
@@ -358,6 +358,7 @@ public class InGameManager : MonoBehaviour
                     if (tmp != 0)
                     {
                         this.transform.GetChild(n * 9 + m).GetComponent<CharController>().m_level = tmp;
+                        this.transform.GetChild(n * 9 + m).GetComponent<CharController>().m_charSlotNum = m;
                         this.transform.GetChild(n * 9 + m).GetComponent<CharController>().CharStatReset();
                     }
                 }
@@ -462,7 +463,7 @@ public class InGameManager : MonoBehaviour
             return;
         }
         
-         m_timer.value -= Time.deltaTime / 10;        
+         m_timer.value -= Time.deltaTime / 22;        
         // Debug.Log(m_timer.value);
 
         // 실시간 돈 업데이트

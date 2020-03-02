@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour
     {
         if(theInGame.m_curGameState == InGameManager.eGameState.ReadyForPlay)
         {
-            // m_hp = 200 * (theInGame.m_curStage * 1.5f);
+            m_hp = 200 * (theInGame.m_curStage * 1.5f);
             m_curHp = m_hp;
         }
     }

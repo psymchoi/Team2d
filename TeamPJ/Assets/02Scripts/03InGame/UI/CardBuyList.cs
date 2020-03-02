@@ -34,7 +34,9 @@ public class CardBuyList : MonoBehaviour
     void Update()
     {
         if(InGameManager.InGameInstance.m_curGameState
-            == InGameManager.eGameState.ReadyForPlay)
+            == InGameManager.eGameState.ReadyForPlay ||
+            InGameManager.InGameInstance.m_curGameState
+            == InGameManager.eGameState.Play)
         {
             for (int n = 0; n < this.transform.childCount; n++)
             {
