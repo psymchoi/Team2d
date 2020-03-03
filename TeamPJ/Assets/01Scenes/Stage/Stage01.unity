@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tfEnemy: []
   m_emyCard:
-  - {fileID: 7204422941307762033, guid: 76d9b9f72061e9c469b521bd0be3d65c, type: 3}
+  - {fileID: 745492215995408658, guid: ef7f6de82a987694f890555cfb77d92c, type: 3}
   m_emyZone:
   - {fileID: 571569899}
   - {fileID: 1107676311}

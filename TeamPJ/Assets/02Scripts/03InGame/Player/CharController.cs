@@ -34,12 +34,12 @@ public class CharController : MonoBehaviour
     //public int m_charActiveNum;     // InGameManager 하위에 몇 번째가 켜져있나
     public int m_charSlotNum;       // 현재 캐릭터가 위치한 슬롯 넘버
 
-    float startPosX;                // 마우스 x좌표
-    float startPosY;                // 마우스 y좌표
-    bool isBeginHeld = false;       // 터치가 일어났는지 여부
-    bool isSell = false;            // 팔 수 있는지 없는지 판단여부
-    bool isActive = true;           // 자리이동이 가능한지 판단여부
-    int m_movSlotNum = 0;           // 위치를 이동시킬 슬롯 넘버
+    float m_startPosX;                // 마우스 x좌표
+    float m_startPosY;                // 마우스 y좌표
+    bool m_isBeginHeld = false;       // 터치가 일어났는지 여부
+    bool m_isSell = false;            // 팔 수 있는지 없는지 판단여부
+    bool m_isActive = true;           // 자리이동이 가능한지 판단여부
+    int m_movSlotNum = 0;             // 위치를 이동시킬 슬롯 넘버
 
     // 캐릭터 능력치 관련
     public int m_level;     
@@ -51,9 +51,10 @@ public class CharController : MonoBehaviour
     public int m_movSpeed;          // 캐릭터 이동 속도
     float dist;                     // 가장 가까운 적과의 거리
 
-    public float a_upHp;
-    public float a_upAtk;
-    public int a_upMSpeed;
+    public float m_upHp;
+    public float m_upAtk;
+    public int m_upMSpeed;
+    public bool m_isDeath = false;
     // 캐릭터 능력치 관련
 
     InGameManager theInGame;
@@ -79,15 +80,11 @@ public class CharController : MonoBehaviour
         // 해당 유형의 비활성화 된 객체도 가져온다
 
 
-        theInGame.m_myCard.Add(this.gameObject);
         // InGameManager 에서 몇 번째꺼가 켜져있나
         //m_charActiveNum = (int)eCharNum * 9 + m_charSlotNum;
         // InGameManager 에서 몇 번째꺼가 켜져있나
 
-
-
-
-
+        
         dist = 1000;
 
         // 스폰 시 최초 한 번 실행 될 effect
@@ -102,14 +99,15 @@ public class CharController : MonoBehaviour
           == InGameManager.eGameState.ReadyForPlay)
         {
             eAState = eAniState.Idle;
+            m_curHp = m_hp;
 
-            if (isBeginHeld == true)
+            if (m_isBeginHeld == true)
             {
                 Vector3 mousePos;
                 mousePos = Input.mousePosition;
                 mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-                this.gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
+                this.gameObject.transform.localPosition = new Vector3(mousePos.x - m_startPosX, mousePos.y - m_startPosY, 0);
                 
                 //----- Ray를 쏘아 태그를 판별해서 이벤트를 발생시킬 부분 -----
                 Vector2 touchPos = new Vector2(mousePos.x, mousePos.y);
@@ -118,20 +116,20 @@ public class CharController : MonoBehaviour
                 
                 // 캐릭터 팔기
                 if (hit.collider.tag == "Sell")
-                    isSell = true;
+                    m_isSell = true;
                 else
-                    isSell = false;
+                    m_isSell = false;
                 // 캐릭터 팔기
 
                 // 캐릭터 슬롯 이동
                 if (hit.collider.tag == "MoveCharacter")
                 {
                     // Debug.Log("Move Char");
-                    isActive = false;
+                    m_isActive = false;
                      m_movSlotNum = (int)hit.collider.gameObject.GetComponent<CharacterSlot>().eNum;
                 }
                 else
-                    isActive = true;
+                    m_isActive = true;
                 // 캐릭터 슬롯 이동
                 
                 //----- Ray를 쏘아 태그를 판별해서 이벤트를 발생시킬 부분 -----
@@ -159,10 +157,10 @@ public class CharController : MonoBehaviour
         int a_lvl = m_level;
         while (a_lvl > 1)
         {
-            m_hp = m_hp * a_upHp;
-            m_atk = m_atk * a_upAtk;
+            m_hp = m_hp * m_upHp;
+            m_atk = m_atk * m_upAtk;
             m_def += 1;
-            m_movSpeed += a_upMSpeed;
+            m_movSpeed += m_upMSpeed;
             this.transform.localScale
                     = new Vector3(this.transform.localScale.x + 0.04f, this.transform.localScale.y + 0.04f, 1);
 
@@ -270,6 +268,42 @@ public class CharController : MonoBehaviour
         }
     }
 
+    public float Hit(float a_charAtk)
+    {
+        if (m_isDeath == true)
+            return 0;
+
+        EffectActive.EffectInstance.CharacterAttack(this.transform);
+
+        float EnemyAtk = a_charAtk;
+        float a_dmg;
+
+        if (m_def >= EnemyAtk)
+            a_dmg = 1;
+        else
+            a_dmg = EnemyAtk - m_def;
+
+        m_curHp -= a_dmg;
+
+        if (m_curHp <= 0)
+        {
+            m_isDeath = true;
+            m_aniCtrl.SetTrigger("Death");
+
+            Invoke("VanishChar", 3.0f);
+        }
+
+        Debug.Log("a_dmg : " + a_dmg);
+        Debug.Log("m_curHp : " + m_curHp);
+
+        return a_dmg;
+    }
+    public void VanishChar()
+    {
+        Destroy(this.gameObject);
+    }
+
+
     void OnMouseDown()
     {
         Debug.Log("Mouse Down Char");
@@ -305,11 +339,11 @@ public class CharController : MonoBehaviour
                 mousePos = Input.mousePosition;
                 mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-                startPosX = mousePos.x - this.transform.localPosition.x;
-                startPosY = mousePos.y - this.transform.localPosition.y;
+                m_startPosX = mousePos.x - this.transform.localPosition.x;
+                m_startPosY = mousePos.y - this.transform.localPosition.y;
                 // 마우스를 눌렀을 때 마우스 좌표 얻기
 
-                isBeginHeld = true;
+                m_isBeginHeld = true;
             }
         }
     }
@@ -333,9 +367,9 @@ public class CharController : MonoBehaviour
 
 
             // 캐릭터를 Sell 경우
-            Debug.Log("isSell : " + isSell);
-            Debug.Log("isActive : " + isActive);
-            if (isSell == true)
+            Debug.Log("isSell : " + m_isSell);
+            Debug.Log("isActive : " + m_isActive);
+            if (m_isSell == true)
             {
                 Debug.Log("sell");
 
@@ -375,7 +409,7 @@ public class CharController : MonoBehaviour
 
 
             // 캐릭터 위치를 Change / 캐릭터 등급 업
-            if (isActive == false)
+            if (m_isActive == false)
             {
                 int a_movSlotNum  = theInGame.m_dragCardKind * 9 + m_movSlotNum;
                 int a_charSlotNum = theInGame.m_dragCardKind * 9 + m_charSlotNum;
@@ -385,6 +419,7 @@ public class CharController : MonoBehaviour
                 {
                     Debug.Log("Character Move");
 
+                    
                     theInGame.m_isActiveMyCard[a_charSlotNum] = false;          // 옮기기 전의 캐릭터 off
                     theInGame.m_isActiveMyCard[a_movSlotNum] = true;            // 옮긴 후 캐릭터 on
                     theInGame.m_isCharSlotOn[m_charSlotNum] = true;             // 옮기기 전 자리는 빈 상태로
@@ -409,7 +444,7 @@ public class CharController : MonoBehaviour
                                              = new Vector3(this.transform.localScale.x,
                                                             this.transform.localScale.y, 1);
                     // 해당 칸에 미리 배치해 놓은 캐릭터 SetActive(true)
-
+                    
                     this.gameObject.SetActive(false);
 
                     // 판매 UI Off
@@ -444,17 +479,18 @@ public class CharController : MonoBehaviour
                         theInGame.transform.GetChild(a_movSlotNum).gameObject.
                                         GetComponent<CharController>().m_level += 1;
                         theInGame.transform.GetChild(a_movSlotNum).gameObject.
-                                        GetComponent<CharController>().m_hp = m_hp * a_upHp;
+                                        GetComponent<CharController>().m_hp = m_hp * m_upHp;
                         theInGame.transform.GetChild(a_movSlotNum).gameObject.
-                                        GetComponent<CharController>().m_atk = m_atk * a_upAtk;
+                                        GetComponent<CharController>().m_atk = m_atk * m_upAtk;
                         theInGame.transform.GetChild(a_movSlotNum).gameObject.
                                         GetComponent<CharController>().m_def += 1;
                         theInGame.transform.GetChild(a_movSlotNum).gameObject.
-                                        GetComponent<CharController>().m_movSpeed = m_movSpeed + a_upMSpeed;
+                                        GetComponent<CharController>().m_movSpeed = m_movSpeed + m_upMSpeed;
                         theInGame.transform.GetChild(a_movSlotNum).localScale
                                         = new Vector3(theInGame.transform.GetChild(a_movSlotNum).localScale.x + 0.04f,
                                                        theInGame.transform.GetChild(a_movSlotNum).localScale.y + 0.04f, 1);
                         // 캐릭터 능력치 Up
+                        
 
                         this.gameObject.SetActive(false);
                         
@@ -489,9 +525,9 @@ public class CharController : MonoBehaviour
             theCardInfo.OffInfoPanel();
             // 판매 UI Off
 
-            isBeginHeld = false;
-            isSell = false;
-            isActive = true;
+            m_isBeginHeld = false;
+            m_isSell = false;
+            m_isActive = true;
 
 
 

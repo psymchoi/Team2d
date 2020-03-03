@@ -63,9 +63,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                     // 드래그해온 m_IvenNum 와 m_cardKind 를 빈상태로
                     
                     theInGame.m_isCharSlotOn[(int)eNum] = false;            // ★ 해당 번째 자리는 차있다.
-                    
                     //----- 이미지를 원래 인벤토리 자리로 -----
-                    //break;                    
                 }
                 else
                 {

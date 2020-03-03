@@ -32,6 +32,7 @@ public class InGameManager : MonoBehaviour
 
     public GameObject m_cardInfoPanel;
 
+    public GameObject m_skipReadyForPlayBtn;
     public Slider m_timer;
     // UI관련 객체
 
@@ -96,6 +97,7 @@ public class InGameManager : MonoBehaviour
         m_optionBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickOptionBtn(); });
         m_backToInGameBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickBackToInGameBtn(); });
         m_backToLobbyBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickExitToLobbyBtn(); });
+        m_skipReadyForPlayBtn.GetComponent<Button>().onClick.AddListener(delegate { ClickSkipReady(); });
     }
     
     // Update is called once per frame
@@ -426,10 +428,11 @@ public class InGameManager : MonoBehaviour
                 m_cardZone[n].SetActive(false);
             // 설치존 SetActive 끈다
             
-            // m_timer.value = 1.0f;
-            m_shopBtn.GetComponent<Button>().enabled = false;
-            OffShopUI();                            // Shop UI 끈다
-            theCardInfo.OffInfoPanel();             // 정보패널 끈다
+            m_timer.value = 1.0f;
+            m_skipReadyForPlayBtn.SetActive(false);             // 스킵 버튼 끄기
+            m_shopBtn.GetComponent<Button>().enabled = false;   // Shop 버튼 사용 끄기
+            OffShopUI();                                        // Shop UI 끄기
+            theCardInfo.OffInfoPanel();                         // 정보패널 끄기
 
             // Which Slot에 What kind Character 설치되어 있는지 저장
             string a_charActive = "";
@@ -453,12 +456,22 @@ public class InGameManager : MonoBehaviour
                     a_charLevel = a_charLevel + ",";
                 }
             }
-            // Which Slot에 What kind Character 설치되어 있는지 저장
             PlayerPrefs.SetString("CharActiveNum", a_charActive);
             PlayerPrefs.SetString("CharLevel", a_charLevel);
-
+            // Which Slot에 What kind Character 설치되어 있는지 저장
             Debug.Log(a_charLevel);
 
+
+            // Character로 된 tag 객체들 모조리 찾아오기.
+            GameObject[] charic = GameObject.FindGameObjectsWithTag("Character");
+            foreach (GameObject obj in charic)
+            {
+                if (obj != null)
+                    m_myCard.Add(obj);
+            }
+            Debug.Log("m_myCard : " + m_myCard.Count);
+            // Character로 된 tag 객체들 모조리 찾아오기.
+            
             m_curGameState = eGameState.WaitPlayTime;
             return;
         }
@@ -469,6 +482,10 @@ public class InGameManager : MonoBehaviour
         // 실시간 돈 업데이트
         m_moneyTxt.text = m_money.ToString();
         // 실시간 돈 업데이트
+    }
+    public void ClickSkipReady()
+    {
+        m_timer.value = 0;
     }
     IEnumerator ShowLoseTxt(string Txt, float delayTime)
     {
@@ -481,6 +498,7 @@ public class InGameManager : MonoBehaviour
     /// 전투 준비 완료 후 단계
     /// </summary>
     public bool m_isClear = false;
+    public bool m_isFail = false;
     public void GamePlay()
     {
         if(m_isClear == true)
@@ -543,6 +561,7 @@ public class InGameManager : MonoBehaviour
 
 
             // InGameManager에 있는 (m_isCharSlotOn)슬롯 상태 여부
+            #region InGameManager에 있는 (m_isCharSlotOn)슬롯 상태 여부
             string a_tmpSlotOn = "";
             for(int n = 0; n < m_isCharSlotOn.Length; n++)
             {
@@ -555,11 +574,21 @@ public class InGameManager : MonoBehaviour
                     a_tmpSlotOn = a_tmpSlotOn + ",";
             }
             PlayerPrefs.SetString("OnSlot", a_tmpSlotOn);
+            #endregion
             // InGameManager에 있는 (m_isCharSlotOn)슬롯 상태 여부
 
             //----- 클리어시 저장할 것들 -----
 
             StartCoroutine(ShowClearTxt("C l e a r !", 1.5f));
+        }
+
+        if(m_isFail == true)
+        {
+            m_curGameState = eGameState.Result;
+            StartCoroutine(ShowLoseTxt("Y o u  L o s e..", 2.5f));
+            PlayerPrefs.DeleteAll();
+
+            return;
         }
 
         // 실시간 돈 업데이트

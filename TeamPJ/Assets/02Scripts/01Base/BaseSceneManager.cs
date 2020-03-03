@@ -30,8 +30,8 @@ public class BaseSceneManager : MonoBehaviour
 
     [SerializeField] GameObject m_LoadingWnd;
 
-    public float m_unloadWaitSec = 0;
-    public float m_loadWaitSec = 0;
+    // public float m_unloadWaitSec = 0;
+    // public float m_loadWaitSec = 0;
     public eStageState m_curStage;
     public eLoadingState m_curGameLoad;
 
@@ -164,23 +164,23 @@ public class BaseSceneManager : MonoBehaviour
 
         if (stage == eStageState.LOBBY)
         {
-            unloadStage = new string[2];
-            loadStage = new string[1];
+            //unloadStage = new string[2];
+            //loadStage = new string[1];
 
-            unloadStage[0] = "Stage0" + (int)m_curStage;
-            unloadStage[1] = "InGameManager";
-            loadStage[0] = "LobbyManager";
+            //unloadStage[0] = "Stage0" + (int)m_curStage;
+            //unloadStage[1] = "InGameManager";
+            //loadStage[0] = "LobbyManager";
 
             Invoke("UnloadInGameScene", 2f);
         }
         else
         {
             // Debug.Log("stage again");
-            unloadStage = new string[2];
-            loadStage = new string[1];
-            unloadStage[0] = "Stage0" + (int)m_curStage;
-            unloadStage[1] = "InGameManager";
-            loadStage[0] = "Stage0" + (int)stage;
+            //unloadStage = new string[2];
+            //loadStage = new string[1];
+            //unloadStage[0] = "Stage0" + (int)m_curStage;
+            //unloadStage[1] = "InGameManager";
+            //loadStage[0] = "Stage0" + (int)stage;
 
             Invoke("BfUnloadStageScene", 2f);
         }
@@ -194,12 +194,12 @@ public class BaseSceneManager : MonoBehaviour
     {
         m_curStage = stage;
 
-        string[] unloadStage = new string[1];
-        unloadStage[0] = "LobbyManager";
+        //string[] unloadStage = new string[1];
+        //unloadStage[0] = "LobbyManager";
 
-        string[] loadStage = new string[2];
-        loadStage[0] = "InGameManager";
-        loadStage[1] = stage.ToString();
+        //string[] loadStage = new string[2];
+        //loadStage[0] = "InGameManager";
+        //loadStage[1] = stage.ToString();
 
         Invoke("UnloadLobbyScene", 2f);
     }

@@ -1627,13 +1627,14 @@ MonoBehaviour:
   m_level: 1
   m_hp: 200
   m_curHp: 0
-  m_atk: 100
+  m_atk: 18
   m_atkRange: 2
   m_def: 1
   m_movSpeed: 5
-  a_upHp: 1.4
-  a_upAtk: 1.2
-  a_upMSpeed: 1
+  m_upHp: 1.3
+  m_upAtk: 1.1
+  m_upMSpeed: 1
+  m_isDeath: 0
 --- !u!61 &936372820775617706
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -12,6 +12,6 @@ sceneSetups:
   isActive: 0
   isSubScene: 0
 - path: Assets/01Scenes/Stage/Stage01.unity
-  isLoaded: 0
+  isLoaded: 1
   isActive: 0
   isSubScene: 0
