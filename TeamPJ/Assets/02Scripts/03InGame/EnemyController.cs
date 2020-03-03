@@ -49,9 +49,9 @@ public class EnemyController : MonoBehaviour
         {
             eAState = eAniState.Idle;
 
-            m_hp = 170 * (theInGame.m_curStage * 1.5f);
+            m_hp = 170 * (theInGame.m_curStage * 1.1f);
             m_curHp = m_hp;
-            m_atk = 17 * (theInGame.m_curStage * 1.15f);
+            m_atk = 17 * (theInGame.m_curStage * 1.1f);
         }
 
         EnemyAniState();
