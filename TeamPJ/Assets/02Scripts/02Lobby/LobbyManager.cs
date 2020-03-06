@@ -5,6 +5,16 @@ using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviour
 {
+    public static LobbyManager InstanceLobby;
+
+    public enum eGameState
+    {
+        none,
+        LoadNotice,
+        finish,
+    }
+    public eGameState eState = eGameState.none;
+
     SoundManager theSound;
 
     public GameObject m_associateLobbyBtn;
@@ -17,10 +27,31 @@ public class LobbyManager : MonoBehaviour
     public Slider m_bgmVolume;
     public Slider m_effectVolume;
 
+    BackEndNotice theBENotice;
     void Start()
     {
+        InstanceLobby = this;
+
         theSound = FindObjectOfType<SoundManager>();
-       //m_optionPanel.SetActive(false);
+        //m_optionPanel.SetActive(false);
+
+        theBENotice = FindObjectOfType<BackEndNotice>();
+    }
+
+   
+
+    void Update()
+    {
+        switch(eState)
+        {
+            case eGameState.none:
+                break;
+            case eGameState.LoadNotice:
+                theBENotice.LoadNoticeList(0);
+                break;
+            case eGameState.finish:
+                break;
+        }
     }
 
     // 옵션 관련 버튼 //

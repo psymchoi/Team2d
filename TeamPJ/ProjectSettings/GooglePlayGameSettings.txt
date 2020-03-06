@@ -1,0 +1,9 @@
+lastUpgrade=01007
+proj.pluginVersion=0.10.07
+proj.AppId=523328747826
+and.BundleId=com.DefaultCompany.TeamPJ
+proj.classDir=Assets
+proj.ConstantsClassName=GPGSIds
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e523328747826%3c%2fstring%3e%0d%0a++%3c%21--+package_name+--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.DefaultCompany.TeamPJ%3c%2fstring%3e%0d%0a++%3c%21--+achievement+%e3%85%87%e3%85%87%e3%85%87+--%3e%0d%0a++%3cstring+name%3d%22achievement%22+translatable%3d%22false%22%3eCgkIsvLLxp0PEAIQAQ%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
+and.ClientId=523328747826-4hch6teuqoekq89l8fduuqr1ve18alj5.apps.googleusercontent.com
+android.SetupDone=true
