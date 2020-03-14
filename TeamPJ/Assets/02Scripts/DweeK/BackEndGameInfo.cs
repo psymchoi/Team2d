@@ -56,6 +56,8 @@ public class BackEndGameInfo : MonoBehaviour
     }
     #endregion
 
+
+
     #region 게임정보 읽기
     public void OnClickGetTableList()
     {
@@ -103,7 +105,7 @@ public class BackEndGameInfo : MonoBehaviour
             CheckError(BRO);
         }
     }
-
+    
     string firstKey = string.Empty;
     public void OnClickPublicContentsNext()
     {
@@ -148,7 +150,7 @@ public class BackEndGameInfo : MonoBehaviour
     }
 
     /// <summary>
-    /// 공개 테이블에서 특정 유저의 정보 불러오기
+    /// 공개 테이블에서 특정 유저의 정보 불러오기 (불량 문제로 강좌에서 생략..)
     /// </summary>
     public void OnClickGetPublicContentsByGamerIndate()
     {

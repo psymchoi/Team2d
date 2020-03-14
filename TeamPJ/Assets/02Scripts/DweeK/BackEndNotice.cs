@@ -22,7 +22,7 @@ public class BackEndNotice : MonoBehaviour
     public void LoadNoticeList(int noticeNum)
     {
         BackendReturnObject BRO = Backend.Notice.NoticeList();
-
+         
         if(BRO.IsSuccess())
         {
             // 전체 공지 리스트
