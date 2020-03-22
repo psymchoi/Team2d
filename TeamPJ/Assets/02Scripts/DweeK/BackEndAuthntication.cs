@@ -10,7 +10,8 @@ public class BackEndAuthntication : MonoBehaviour
 {
     public InputField idInput;
     public InputField paInput;
-    
+
+    BackEndGameInfo theBEGameInfo;
 
     #region 동기방식
 
@@ -156,6 +157,8 @@ public class BackEndAuthntication : MonoBehaviour
     
     void Start()
     {
+        theBEGameInfo = FindObjectOfType<BackEndGameInfo>();
+
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration
             .Builder()
             .RequestServerAuthCode(false)
@@ -219,25 +222,60 @@ public class BackEndAuthntication : MonoBehaviour
     // 구글토큰으로 뒤끝서버 로그인하기 - 동기 방식
     public void OnClickGPGSLogin()
     {
-        BackendReturnObject BRO = Backend.BMember.AuthorizeFederation(GetTokens(), FederationType.Google, "gpgs로 만든계정");
-        if (BRO.IsSuccess())
+        BackendReturnObject BRO;
+        if (Social.localUser.authenticated == true)
         {
-            Debug.Log("구글 토큰으로 뒤끝서버 로그인 성공 - 동기 방식-");
-            LobbyManager.InstanceLobby.eState = LobbyManager.eGameState.LoadNotice;
+            BRO = Backend.BMember.AuthorizeFederation(GetTokens(), FederationType.Google, "gpgs");
+            Debug.Log("Google 가입 요청!");
         }
         else
         {
-            switch (BRO.GetStatusCode())
+            Social.localUser.Authenticate((bool success) =>
             {
-                case "200":
-                    Debug.Log("이미 회원가입된 회원");
-                    break;
+                if (success)
+                {
+                    // 로그인 성공 -> 뒤끝 서버에 획득한 구글 토큰으로 가입요청
+                    BRO = Backend.BMember.AuthorizeFederation(GetTokens(), FederationType.Google, "gpgs로 만든계정");
+                    theBEGameInfo.UserInfoData();
+                    Debug.Log("Google 가입 요청 New!");
+                }
+                else
+                {
+                    // 로그인 실패
+                    Debug.Log("Login failed for some reason");
+                    BRO = Backend.BMember.AuthorizeFederation(GetTokens(), FederationType.Google, "gpgs로 만든계정");
+                    switch (BRO.GetStatusCode())
+                    {
+                        case "200":
+                            Debug.Log("이미 회원가입된 회원");
+                            break;
 
-                case "403":
-                    Debug.Log("차단된 사용자 입니다. 차단 사유 : " + BRO.GetErrorCode());
-                    break;
-            }
+                        case "403":
+                            Debug.Log("차단된 사용자 입니다. 차단 사유 : " + BRO.GetErrorCode());
+                            break;
+                    }
+                }
+            });
         }
+    //    BackendReturnObject BRO = Backend.BMember.AuthorizeFederation(GetTokens(), FederationType.Google, "gpgs");
+    //    if (BRO.IsSuccess())
+    //    {
+    //        Debug.Log("구글 토큰으로 뒤끝서버 로그인 성공 - 동기 방식-");
+    //        LobbyManager.InstanceLobby.eState = LobbyManager.eGameState.LoadNotice;
+    //    }
+    //    else
+    //    {
+    //        switch (BRO.GetStatusCode())
+    //        {
+    //            case "200":
+    //                Debug.Log("이미 회원가입된 회원");
+    //                break;
+
+    //            case "403":
+    //                Debug.Log("차단된 사용자 입니다. 차단 사유 : " + BRO.GetErrorCode());
+    //                break;
+    //        }
+    //    }
     }
 
     // 이미 가입된 상태인지 확인
@@ -265,7 +303,6 @@ public class BackEndAuthntication : MonoBehaviour
         if (BRO.IsSuccess())
         {
             Debug.Log("페더레이션 계정으로 변경 완료");
-
         }
         else
         {

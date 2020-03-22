@@ -7,6 +7,9 @@ using LitJson;
 public class BackEndGameInfo : MonoBehaviour
 {
     #region 게임정보 저장
+    /// <summary>
+    /// 버튼 클릭 시 데이터 저장 (TEST)
+    /// </summary>
     public void OnClickInsertData()
     {
         int charLevel = Random.Range(0, 99);
@@ -29,7 +32,7 @@ public class BackEndGameInfo : MonoBehaviour
 
         param.Add("equipItem", equipment);
 
-        BackendReturnObject BRO = Backend.GameInfo.Insert("custom", param);
+        BackendReturnObject BRO = Backend.GameInfo.Insert("custom", param);     // "custom" 테이블에 param데이터를 추가!
 
         if(BRO.IsSuccess())
         {
@@ -54,10 +57,68 @@ public class BackEndGameInfo : MonoBehaviour
             }
         }
     }
+   
+    /// <summary>
+    /// 맨 처음 설치하고 들어올 시 게임 정보 생성 및 초기화
+    /// </summary>
+    public void UserInfoData()
+    {
+        Debug.Log("UserInfoData Active");
+
+        int charMoney = 3000;
+        int charDiamond = 0;
+        int charRank = 1;
+        int charPirce = 0;
+        int charScore = 0;
+
+        // Param은 뒤끝 서버와 통신을 할 때 넘겨주는 파라미터 클래스 입니다.
+        Param param = new Param();
+        param.Add("Mny", charMoney);            // 돈
+        param.Add("Dia", charDiamond);          // 다이아
+        param.Add("Rnk", charRank);               // 랭킹
+        param.Add("Prc", charPirce);                // 등급(보상을 위한)
+        param.Add("Scr", charScore);               // 플레이점수(층)
+
+        // 캐릭터 보유여부
+        Dictionary<string, bool> myCharacter = new Dictionary<string, bool>()
+        {
+            { "Char1", true },
+            { "Char2", true },
+            { "Char3", false},
+            { "Char4", false},
+            { "Char5", false},
+        };
+
+        param.Add("myChar", myCharacter);
+
+        BackendReturnObject BRO = Backend.GameInfo.Insert("characterInfo", param);     // "characterInfo" 테이블에 param데이터를 추가!
+
+        if (BRO.IsSuccess())
+        {
+            Debug.Log("indate : " + BRO.GetInDate());
+        }
+        else
+        {
+            switch (BRO.GetStatusCode())
+            {
+                case "404":
+                    Debug.Log("존재하지 않는 tableName인 경우");
+                    break;
+                case "412":
+                    Debug.Log("비활성화 된 tableName인 경우");
+                    break;
+                case "413":
+                    Debug.Log("하나의 row( column들의 집합 )이 400KB를 넘는 경우");
+                    break;
+                default:
+                    Debug.Log("서버 공통 에러 발생 : " + BRO.GetMessage());
+                    break;
+            }
+        }
+    }
     #endregion
 
-
-
+    
     #region 게임정보 읽기
     public void OnClickGetTableList()
     {
@@ -65,6 +126,7 @@ public class BackEndGameInfo : MonoBehaviour
 
         if(BRO.IsSuccess())
         {
+            // publicTables 값들을 읽어오는
             JsonData publics = BRO.GetReturnValuetoJSON()["publicTables"];
 
             Debug.Log("public Tables--------------------");
@@ -72,13 +134,16 @@ public class BackEndGameInfo : MonoBehaviour
             {
                 Debug.Log(row.ToString());
             }
+            // publicTables 값들을 읽어오는
 
+            // privateTables 값들을 읽어오는
             Debug.Log("private Tables--------------------");
             JsonData privates = BRO.GetReturnValuetoJSON()["privateTables"];
             foreach(JsonData row in privates)
             {
                 Debug.Log(row.ToString());
             }
+            // privateTables 값들을 읽어오는
         }
         else
         {
@@ -111,7 +176,9 @@ public class BackEndGameInfo : MonoBehaviour
     {
         BackendReturnObject BRO;
 
-        if(firstKey == null)
+        Debug.Log(firstKey);
+
+        if(firstKey == string.Empty)
         {
             BRO = Backend.GameInfo.GetPublicContents("custom", 1);
         }
@@ -133,7 +200,7 @@ public class BackEndGameInfo : MonoBehaviour
     }
 
     /// <summary>
-    /// 비공개 테이블에서 본인 정보 가져오기
+    /// 비공개 테이블에서 본인 정보 가져오기 (자기정보만)
     /// </summary>
     public void OnClickGetPrivateContents()
     {
@@ -266,5 +333,49 @@ public class BackEndGameInfo : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
+
+    #region 게임정보 수정
+    string gamerIndt = string.Empty;
+    public void OnClickGameInfoUpdate()
+    {
+        Param param = new Param();
+        param.Add("score", 9999);               // score 9999로 수정
+        
+
+        BackendReturnObject BRO = Backend.GameInfo.Update("custom", "2020-03-19T09:39:37.966Z", param);     // (테이블이름, 변경 데이터 date 값)
+        if (gamerIndt == string.Empty)
+            gamerIndt = BRO.GetInDate();
+        if(BRO.IsSuccess())
+        {
+            Debug.Log("수정 완료");
+        }
+        else
+        {
+            switch(BRO.GetStatusCode())
+            {
+                case "405":
+                    Debug.Log("param에 partition, gamer_id, inDate, updateAt 네가지 필드가 있는 경우");
+                    break;
+                case "403":
+                    Debug.Log("퍼블릭테이블의 타인정보를 수정하고자 하였을 경우");
+                    break;
+                case "404":
+                    Debug.Log("존재하지 않는 tableName인 경우");
+                    break;
+                case "412":
+                    Debug.Log("비활성화 된 tableName인 경우");
+                    break;
+                case "413":
+                    Debug.Log("하나의 row( column들의 집합 )이 400KB를 넘는 경우");
+                    break;
+                default:
+                    Debug.Log("서버 공통 에러 발생 : " + BRO.GetMessage());
+                    break;
+            }
+        }
+    }
+
     #endregion
 }

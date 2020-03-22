@@ -123,7 +123,9 @@ GameObject:
   - component: {fileID: 4000010141028922}
   - component: {fileID: 95000012403032898}
   - component: {fileID: 891630699591862926}
+  - component: {fileID: 332530925457759610}
   - component: {fileID: 4650569378989389327}
+  - component: {fileID: 5577607939978876292}
   m_Layer: 0
   m_Name: Rogue_01
   m_TagString: Character
@@ -182,16 +184,35 @@ MonoBehaviour:
   m_originPos: {x: 0, y: 0, z: 0}
   m_charSlotNum: 0
   m_level: 1
-  m_hp: 200
+  m_hp: 650
   m_curHp: 0
-  m_atk: 15
+  m_curMp: 0
+  m_maxMp: 100
+  m_atk: 50
+  m_skillAtk: 0
+  m_def: 40
+  m_magicDef: 20
+  m_atkSpeed: 0.55
   m_atkRange: 2
-  m_def: 1
+  m_stgAtkPtg: 25
+  m_stgAtk: 1.5
   m_movSpeed: 5
   m_upHp: 1.1
   m_upAtk: 1.1
   m_upMSpeed: 0
   m_isDeath: 0
+--- !u!114 &332530925457759610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010208881502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0193710536287e745a3e23c6836edd92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &4650569378989389327
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -218,6 +239,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.8914046, y: 8.569588}
   m_EdgeRadius: 0
+--- !u!114 &5577607939978876292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010208881502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0193710536287e745a3e23c6836edd92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1000010251440012
 GameObject:
   m_ObjectHideFlags: 0

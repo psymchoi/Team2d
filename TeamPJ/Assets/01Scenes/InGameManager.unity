@@ -6020,7 +6020,7 @@ MonoBehaviour:
   - "\uD68C\uC0C9\uB2CC\uC790 \uC774\uB2E4."
   - "\uBE68\uAC15\uB2CC\uC790 \uC774\uB2E4."
   - "\uBBF8\uB0A8\uB2CC\uC790 \uC774\uB2E4."
-  m_CardCost: 14000000190000001e00000023000000280000002d000000
+  m_CardCost: 010000000100000001000000020000000200000003000000
   m_CardNum: 
   m_shopCard:
   - {fileID: 460996066}
@@ -6156,7 +6156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94bab62b3cdf2de459e01ae2d2a0bd50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eCharNum: 0
 --- !u!1 &1287312938
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,32 +34,39 @@ public class CharController : MonoBehaviour
     //public int m_charActiveNum;     // InGameManager 하위에 몇 번째가 켜져있나
     public int m_charSlotNum;       // 현재 캐릭터가 위치한 슬롯 넘버
 
-    float m_startPosX;                // 마우스 x좌표
-    float m_startPosY;                // 마우스 y좌표
+    float m_startPosX;                     // 마우스 x좌표
+    float m_startPosY;                     // 마우스 y좌표
     bool m_isBeginHeld = false;       // 터치가 일어났는지 여부
-    bool m_isSell = false;            // 팔 수 있는지 없는지 판단여부
-    bool m_isActive = true;           // 자리이동이 가능한지 판단여부
-    int m_movSlotNum = 0;             // 위치를 이동시킬 슬롯 넘버
+    bool m_isSell = false;                // 팔 수 있는지 없는지 판단여부
+    bool m_isActive = true;             // 자리이동이 가능한지 판단여부
+    int m_movSlotNum = 0;            // 위치를 이동시킬 슬롯 넘버
 
     // 캐릭터 능력치 관련
-    public int m_level;     
-    public float m_hp;
-    public float m_curHp;
-    public float m_atk;
-    public int m_atkRange;               // 해당 객체 공격범위
-    public float m_def;
-    public int m_movSpeed;          // 캐릭터 이동 속도
+    public int m_level;                             // 캐릭터 등급
+    [SerializeField] float m_hp;                   // 캐릭터 체력
+    [SerializeField] float m_curHp;               // 캐릭터 현재 체력
+    [SerializeField] float m_curMp;              // 캐릭터 현재 마나
+    [SerializeField] float m_maxMp;             // 꽉찬 마나
+    public float m_atk;                             // 일반 공겨력
+    public float m_skillAtk;                        // 스킬 공격력
+    [SerializeField] float m_def;                   // 방어력
+    [SerializeField] float m_magicDef;          // 마법 방어력
+    [SerializeField] float m_atkSpeed;          // 공격속도
+    [SerializeField] float m_atkRange;             // 해당 객체 공격범위
+    public float m_stgAtkPtg;                    // 치명타 확률
+    public float m_stgAtk;                          // 치명타 공격력
+    [SerializeField] float m_movSpeed;          // 캐릭터 이동 속도
     float dist;                     // 가장 가까운 적과의 거리
+    float m_atkSpd;             // 공격속도 계산용
 
-    public float m_upHp;
-    public float m_upAtk;
-    public int m_upMSpeed;
+    [SerializeField] float m_upHp;
+    [SerializeField] float m_upAtk;
+    [SerializeField] int m_upMSpeed;
     public bool m_isDeath = false;
     // 캐릭터 능력치 관련
 
     InGameManager theInGame;
     MyCardInfo theCardInfo;
-    CharacterStat theCStat;
 
     Animator m_aniCtrl;
 
@@ -71,7 +78,6 @@ public class CharController : MonoBehaviour
 
         theInGame = FindObjectOfType<InGameManager>();
         theCardInfo = FindObjectOfType<MyCardInfo>();
-        theCStat = FindObjectOfType<CharacterStat>();
 
         m_aniCtrl = GetComponent<Animator>();
 
@@ -90,7 +96,6 @@ public class CharController : MonoBehaviour
         // 스폰 시 최초 한 번 실행 될 effect
         EffectActive.EffectInstance.CharacterSpawn(this.transform);
         // 스폰 시 최초 한 번 실행 될 effect
-
     }
 
     void Update()
@@ -175,6 +180,7 @@ public class CharController : MonoBehaviour
     /// </summary>
     public void CharacterAniState()
     {
+        // 실제 전투씬이 일어나는 부부
         if (theInGame.m_curGameState == InGameManager.eGameState.Play)
         {
             switch (eAState)
@@ -207,9 +213,22 @@ public class CharController : MonoBehaviour
                     }
                     else
                     {
-                        eAState = eAniState.Run;
+                        if (Vector2.Distance(transform.position, m_targetEnemy.transform.position) <= m_atkRange)
+                        {
+                            m_atkSpd += Time.deltaTime / m_atkSpeed;
+                            Debug.Log("UserChar m_atkSpd : " + m_atkSpd);
+                            if (m_atkSpd >= 1.0f)
+                            {
+                                m_atkSpd = 0;
+                                eAState = eAniState.Attack;
+                            }
+                        }
+                        else
+                        {
+                            eAState = eAniState.Run;                     
+                        }
                     }
-
+                    
                     break;
                 case eAniState.Run:
                     //----- 적과 관련 ------
@@ -242,17 +261,18 @@ public class CharController : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, m_targetEnemy.transform.position, mov);
                     if (Vector2.Distance(transform.position, m_targetEnemy.transform.position) <= m_atkRange)
                     {
-                        eAState = eAniState.Attack;         // 내 위치와 적 위치가 공격범위 안쪽이면 공격!
+                        //eAState = eAniState.Attack;         // 내 위치와 적 위치가 공격범위 안쪽이면 공격!                    
+                        eAState = eAniState.Idle;                   
                     }
                     //----- 적과 관련 -----
-
+                    
                     break;
                 case eAniState.Attack:
-                
-                    if(m_targetEnemy.GetComponent<EnemyController>().m_isDeath == true)
+                    
+                    if (m_targetEnemy.GetComponent<EnemyController>().m_isDeath == true)
                     {
                         eAState = eAniState.Idle;       // 현재 캐릭터를 Idle 상태로
-                        dist = 1000;                    // dist를 초기화
+                        dist = 1000;                        // dist를 초기화
                         m_targetEnemy = null;           // 죽였다면 타겟이 없는걸로
                     }
                 
@@ -261,13 +281,33 @@ public class CharController : MonoBehaviour
                     m_aniCtrl.SetTrigger("Death");
                     break;
             }
+            
             m_aniCtrl.SetInteger("AniState", (int)eAState);
 
+            if (eAState == eAniState.Attack)
+                eAState = eAniState.Idle;
             // Debug.Log(m_targetEnemy);
+
+            // mp++
+            if (m_curMp >= m_maxMp)
+            {
+                Debug.Log("Max Mp");
+                m_curMp = m_maxMp;
+                return;
+            }
+
+            m_curMp += Time.deltaTime * 1.5f;
+            //Debug.Log("m_curMp : " + m_curMp); 
+            // mp++
 
         }
     }
 
+    /// <summary>
+    /// 적 캐릭터가 유저 캐릭터를 쳤을 때 일어나는 일반공격 함수
+    /// </summary>
+    /// <param name="a_charAtk"> 적 캐릭터 일반공격력 </param>
+    /// <returns></returns>
     public float Hit(float a_charAtk)
     {
         if (m_isDeath == true)
@@ -275,9 +315,30 @@ public class CharController : MonoBehaviour
 
         EffectActive.EffectInstance.CharacterAttack(this.transform);
 
+        // 치명타 확률
+        int stgAtkPtg = Random.Range(1, 101);
+        bool isAtkPtg = false;
+
+        if (stgAtkPtg <= 25)
+            isAtkPtg = true;
+        // 치명타 확률
+
+        // 적 캐릭터 공격력
         float EnemyAtk = a_charAtk;
         float a_dmg;
 
+        if (isAtkPtg == true)
+        {
+            EnemyAtk = EnemyAtk * m_stgAtk;
+            Debug.Log("Strong EnemyAtk : " + EnemyAtk);
+            // 치명타 이펙트          
+            // 치명타 이펙트
+        }
+        else
+        {
+            Debug.Log("EnemyAtk : " + EnemyAtk);
+        }
+        
         if (m_def >= EnemyAtk)
             a_dmg = 1;
         else
@@ -292,9 +353,12 @@ public class CharController : MonoBehaviour
 
             Invoke("VanishChar", 3.0f);
         }
+        // 적 캐릭터 공격력
 
-        Debug.Log("a_dmg : " + a_dmg);
-        Debug.Log("m_curHp : " + m_curHp);
+        Debug.Log("------------------------------- ");
+        Debug.Log("UserChar Damaged : " + a_dmg);
+        Debug.Log("UserChar CurHp : " + m_curHp);
+        Debug.Log("------------------------------- ");
 
         return a_dmg;
     }

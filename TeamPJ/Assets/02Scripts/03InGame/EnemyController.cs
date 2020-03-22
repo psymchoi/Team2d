@@ -16,15 +16,24 @@ public class EnemyController : MonoBehaviour
     public bool m_isDeath = false;
 
     // 적 관련 변수
-    public float m_hp;
-    public float m_curHp;
+    [SerializeField] float m_hp;
+    [SerializeField] float m_curHp;
+    [SerializeField] float m_mp;                  // 캐릭터 마나
+    [SerializeField] float m_curMp;              // 캐릭터 현재 마나
+    [SerializeField] float m_maxMp;             // 꽉찬 마나
     public float m_atk;
-    public int m_def;
-    public int m_atkRange;               // 해당 객체 공격범위
-    public int m_movSpeed;          // 캐릭터 이동 속도
-    public int m_price;
+    public float m_skillAtk;                           // 스킬 공격력
+    [SerializeField] float m_def;
+    [SerializeField] float m_magicDef;             // 마법 방어력
+    [SerializeField] float m_atkSpeed;          // 공격속도
+    [SerializeField] float m_atkRange;               // 해당 객체 공격범위
+    public float m_stgAtkPtg;                      // 치명타 확률
+    public float m_stgAtk;                          // 치명타 공격력
+    [SerializeField] float m_movSpeed;           // 캐릭터 이동 속도
+    [SerializeField] int m_price;                    // 처치했을 시 유저에게 줄 골드
 
     float dist;                     // 가장 가까운 적과의 거리
+    float m_atkSpd;             // 공격속도 계산용
 
     GameObject m_targetChar;
     // 적 관련 변수
@@ -89,7 +98,20 @@ public class EnemyController : MonoBehaviour
                     }
                     else
                     {
-                        eAState = eAniState.Run;
+                        if (Vector2.Distance(transform.position, m_targetChar.transform.position) <= m_atkRange)
+                        {
+                            m_atkSpd += Time.deltaTime / m_atkSpeed;
+                            Debug.Log("Enemy m_atkSpd : " + m_atkSpd);
+                            if (m_atkSpd >= 1.0f)
+                            {
+                                m_atkSpd = 0;
+                                eAState = eAniState.Attack;
+                            }
+                        }
+                        else
+                        {
+                            eAState = eAniState.Run;
+                        }
                     }
 
                     break;
@@ -124,7 +146,8 @@ public class EnemyController : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, m_targetChar.transform.position, mov);
                     if (Vector2.Distance(transform.position, m_targetChar.transform.position) <= m_atkRange)
                     {
-                        eAState = eAniState.Attack;         // 내 위치와 적 위치가 공격범위 안쪽이면 공격!
+                        // eAState = eAniState.Attack;         // 내 위치와 적 위치가 공격범위 안쪽이면 공격!
+                        eAState = eAniState.Idle;
                     }
                     //----- 적과 관련 -----
 
@@ -143,19 +166,60 @@ public class EnemyController : MonoBehaviour
                     m_aniCtrl.SetTrigger("Death");
                     break;
             }
+
             m_aniCtrl.SetInteger("AniState", (int)eAState);
+            if (eAState == eAniState.Attack)
+                eAState = eAniState.Idle;
+
+            // mp++
+            if (m_curMp >= m_maxMp)
+            {
+                Debug.Log("Max Mp");
+                m_curMp = m_maxMp;
+                return;
+            }
+
+            m_curMp += Time.deltaTime * 1.5f;
+            //Debug.Log("m_curMp : " + m_curMp); 
+            // mp++
         }
     }
 
+    /// <summary>
+    /// 유저 캐릭터가 적을 쳤을 때 일어나는 일반공격 함수
+    /// </summary>
+    /// <param name="a_charAtk"> 유저 캐릭터 일반공격력 </param>
+    /// <returns></returns>
     public float Hit(float a_charAtk)
     {
         if (m_isDeath == true)
             return 0;
 
         EffectActive.EffectInstance.CharacterAttack(this.transform);
-        
+
+        // 치명타 확률
+        int stgAtkPtg = Random.Range(1, 101);
+        bool isAtkPtg = false;
+
+        if (stgAtkPtg <= 25)
+            isAtkPtg = true;
+        // 치명타 확률
+
+        // 유저 캐릭터 공격력
         float playerAtk = a_charAtk;
         float a_dmg;
+
+        if (isAtkPtg == true)
+        {
+            playerAtk = playerAtk * m_stgAtk;
+            Debug.Log("Strong EnemyAtk : " + playerAtk);
+            // 치명타 이펙트
+            // 치명타 이펙트
+        }
+        else
+        {
+            Debug.Log("EnemyAtk : " + playerAtk);
+        }
 
         if (m_def >= playerAtk)
             a_dmg = 1;
@@ -173,9 +237,12 @@ public class EnemyController : MonoBehaviour
 
             Invoke("VanishEmy", 3.0f);
         }
+        // 유저 캐릭터 공격력
 
-        //  Debug.Log("a_dmg : " + a_dmg);
-        // Debug.Log("m_curHp : " + m_curHp);
+        Debug.Log("------------------------------- ");
+        Debug.Log("Enemy Damaged : " + a_dmg);
+        Debug.Log("Enemy CurHp : " + m_curHp);
+        Debug.Log("------------------------------- ");
 
         return a_dmg;
     }

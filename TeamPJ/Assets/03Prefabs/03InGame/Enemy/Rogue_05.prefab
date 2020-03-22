@@ -958,11 +958,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isDeath: 0
-  m_hp: 300
+  m_hp: 600
   m_curHp: 0
-  m_atk: 17
-  m_def: 1
-  m_atkRange: 2
+  m_mp: 0
+  m_curMp: 0
+  m_maxMp: 100
+  m_atk: 50
+  m_skillAtk: 100
+  m_def: 25
+  m_magicDef: 20
+  m_atkSpeed: 0.6
+  m_atkRange: 4.5
+  m_stgAtkPtg: 25
+  m_stgAtk: 150
   m_movSpeed: 5
   m_price: 30
 --- !u!61 &3005609535254060117
