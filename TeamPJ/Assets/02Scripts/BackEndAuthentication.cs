@@ -23,7 +23,7 @@ public class BackEndAuthentication : MonoBehaviour
         }
         else
         {
-            BackEndManager.MyInstance.ShowErrorUI(BRO);
+            // BackEndManager.MyInstance.ShowErrorUI(BRO);
         }
 
         Debug.Log("동기 방식 끝줄 ================================");
@@ -40,7 +40,7 @@ public class BackEndAuthentication : MonoBehaviour
         }
         else
         {
-            BackEndManager.MyInstance.ShowErrorUI(BRO);
+            // BackEndManager.MyInstance.ShowErrorUI(BRO);
         }
 
         Debug.Log("동기 방식 끝줄 ================================");
